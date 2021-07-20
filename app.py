@@ -1,12 +1,20 @@
 from flask import Flask, render_template, jsonify, request
-
-app = Flask(__name__)
+from flask_admin import Admin
+from flask_admin.base import AdminIndexView
 
 from pymongo import MongoClient
 
+app = Flask(__name__)
+
+#set optional bootswatch theme
+app.config['FLASK_ADMIN_SWATCH'] = 'Darkly'
+
+#set flask_admin
+admin = Admin(app, name ='bluenight', template_mode='bootstrap3')
+
+# 클라이언트이름은 bluenight? 찬성
 client = MongoClient('localhost', 27017)
 db = client.dbsparta
-# 클라이언트이름은 bluenight?
 
 
 ## HTML을 주는 부분
