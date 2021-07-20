@@ -22,6 +22,10 @@ db = client.dbsparta
 def home():
     return render_template('index.html')
 
+@app.route('/mypage')
+def objetdata():
+    return render_template('objectdatap.html')
+
 
 
 if __name__ == '__main__':
