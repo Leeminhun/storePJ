@@ -7,7 +7,7 @@ from pymongo import MongoClient
 app = Flask(__name__)
 
 #set optional bootswatch theme
-app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
+app.config['FLASK_ADMIN_SWATCH'] = 'Darkly'
 
 #set flask_admin
 admin = Admin(app, name ='bluenight', template_mode='bootstrap3')
