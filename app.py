@@ -24,10 +24,22 @@ db = client.dbsparta
 def home():
     return render_template('index.html')
 
+<<<<<<< HEAD
 @app.route('/order-list')
 def order_list():
     return render_template('/admin/order-list.html')
 
+=======
+@app.route('/mypage')
+def objetdata():
+    return render_template('objectdatap.html')
+
+@app.route('/mypage/do', methods=['POST'])
+def post_test():
+    sample_receive = request.form['sample_give']
+    print(sample_receive)
+    return jsonify({'msg': 'like 연결되었습니다!'})
+>>>>>>> dodo
 
 
 if __name__ == '__main__':
