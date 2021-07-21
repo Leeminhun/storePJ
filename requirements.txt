@@ -1,0 +1,4 @@
+    flask
+    flask-admin
+    pymongo
+    requests

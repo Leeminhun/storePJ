@@ -1,19 +1,16 @@
 from os import name
-from flask.templating import render_template
-import pymongo
+import flask
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-
-from flask import Flask
 import flask_admin as admin
-from pymongo.mongo_client import MongoClient
-
+import pymongo
 from wtforms import form, fields
 
 from flask_admin.form import Select2Widget
 from flask_admin.contrib.pymongo import ModelView, filters
 
 from flask import Flask, render_template, jsonify, request
+
 
 # Create application
 app = Flask(__name__)
@@ -47,11 +44,11 @@ class menuView(ModelView):
 
     form = menuForm
 
-    def on_model_change(self, form, model, is_created):
-        user_id = model.get('user_id')
-        model['user_id'] = ObjectId(user_id)
+    # def on_model_change(self, form, model, is_created):
+    #     user_id = model.get('user_id')
+    #     model['user_id'] = ObjectId(user_id)
 
-        return model
+    #     return model
 
 
 
@@ -92,3 +89,6 @@ if __name__ == '__main__':
 
     # Start app
     app.run(debug=True)
+
+    
+    
