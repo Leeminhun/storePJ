@@ -1,11 +1,8 @@
 from os import name
-import flask
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import flask_admin as admin
-import pymongo
 from wtforms import form, fields
-
 from flask_admin.form import Select2Widget
 from flask_admin.contrib.pymongo import ModelView, filters
 
