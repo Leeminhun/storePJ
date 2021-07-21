@@ -2,6 +2,7 @@
 <html lang="ko">
 
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,12 +76,24 @@
             left: 10%;
         }
     </style>
+    <script>
+        function testjax() {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/mypage/do',
+                            data: {sample_give:'샘플데이터'},
+                            success: function (response) {
+                                alert(response['msg']);
+                            }
+                        });
+                    }
+    </script>
 </head>
 
 <body class="bodycs">
     <nav class="menu">
         <ul class="menu_item">
-            <li><a href="#" id ="item">로그인</a> </li>
+            <li><a herf="#" id ="item">로그인</a> </li>
             <li><a href="#" id ="item">장바구니</a> </li>
             <li><a href="#" id ="item">주문조회</a> </li>
         </ul>
@@ -107,7 +120,7 @@
                 <li>등등</li>
                 <li>뭔가요~</li>
             </ul>
-            <button> test</button>
+            <button onclick=testjax()> test</button>
             <button> test</button>
         </div>
     </div>
