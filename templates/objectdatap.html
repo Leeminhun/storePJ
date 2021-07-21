@@ -1,91 +1,126 @@
 <!DOCTYPE html>
-<html lang="ko"> <!--en: 영어 ko: 한글-->
+<html lang="ko">
+
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <title>제품 확인</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
     <style>
-        .body{
-            margin: auto;
-            width: 800px;
+        .menu {
+            width: 100%;
+            display: inline-block;
+            vertical-align: middle;
         }
-        .center-block {
+        .toolbar{
+            width: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .menu_item{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            float: right;
+        }
+        .section{
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .toolbaritem{
+            list-style: none;
+            margin: auto;
+            padding: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #item {
+            display: block;
+            text-align: center;
+            margin: .25rem;
+            padding: .5rem 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            color: black;
+            border: solid 2px aqua;
+            
+        }
+        #tolitem{
+            display: block;
+            text-align: center;
+            margin: 10px 10px auto;
+            padding-left: 50px;
+            padding-right: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            color: black;
+            border: solid 2px aqua;
+        }
+        .logo{
+            width: 150px;
+            height: auto;
+            margin: 50px auto;
             text-align: center;
         }
-        #navset{
-            margin: 10px auto;
-            display: flex;
-            text-align: center
+        .bodycs{
+            text-align: center;
+            left: 10%;
         }
     </style>
-    <script>
-        $.ajax({
-                type: "GET",
-                url: "URL",
-                data: {},
-                success: function(response){
-                console.log(response)
-                }
-        })
-    </script>
-
-
 </head>
-<body class="body">
-    <div style="float: right;">
-        
-        <button > ssss</button>
-        <button > ssss</button>
-        <button > ssss</button>
+
+<body class="bodycs">
+    <nav class="menu">
+        <ul class="menu_item">
+            <li><a href="#" id ="item">로그인</a> </li>
+            <li><a href="#" id ="item">장바구니</a> </li>
+            <li><a href="#" id ="item">주문조회</a> </li>
+        </ul>
+    </nav>
+    <header>
+        <img src="../static/img/logo.png" alt="이미지로딩" class="logo">
+    </header>
+    <nav class="toolbar">
+        <ul class="toolbaritem">
+            <li><a href="#" id ="tolitem">매뉴</a> </li>
+            <li><a href="#" id ="tolitem">매뉴2</a> </li>
+            <li><a href="#" id ="tolitem">매뉴3</a> </li>
+        </ul>
+    </nav>
+    <div class="section">
+        <div id = "tolitem">
+            <img src="../static/img/logo.png" alt="이미지 로딩안됨" class = "logo">
+        </div>
+        <div id = "tolitem">
+            <ul>
+                <li>가격</li>
+                <li>수량</li>
+                <li>내용</li>
+                <li>등등</li>
+                <li>뭔가요~</li>
+            </ul>
+            <button> test</button>
+            <button> test</button>
+        </div>
     </div>
-    <br>
-    <div class="center-block">
-        <img src="../static/img/logo.png" alt="myimg" style="margin-left: auto; margin-right: auto; width: 200px; height: auto;">
-        <nav id = "navset">
-            <a href="./mypage.html" style="flex: 1;">이런</a> |
-            <a href="./mypage.html" style="flex: 1;">이런</a> |
-            <a href="./mypage.html" style="flex: 1;">이런</a> |
-            <a href="./mypage.html" style="flex: 1;">이런</a>
+    <div>
+        <nav class="toolbar">
+            <ul class="toolbaritem">
+                <li><a href="#" id ="tolitem">매뉴</a> </li>
+                <li><a href="#" id ="tolitem">매뉴2</a> </li>
+                <li><a href="#" id ="tolitem">매뉴3</a> </li>
+            </ul>
         </nav>
     </div>
-    <ul class="media-list">
-        <li class="media">
-          <div class="media-left">
-            <a href="./mypage.html">
-              <img class="media-object" src="../static/img/logo.png" alt="..."style="margin-left: auto; margin-right: auto; width: 200px; height: auto;">
-            </a>
-          </div>
-          <div class="media-body">
-            <h4 class="media-heading">상품 내용 내용..!!</h4>
-            이러한 내용내용!!
-          </div>
-          <div style="float: right;">
-            <button>버튼</button>
-            <button>버튼</button>
-            <button>버튼</button>
-            </div>
-        </li>
-    </ul>
-    <nav id = "navset">
-        <a href="./mypage.html" style="flex: 1;">유휴</a> |
-        <a href="./mypage.html" style="flex: 1;">으앗</a> |
-        <a href="./mypage.html" style="flex: 1;">가나</a> |
-        <a href="./mypage.html" style="flex: 1;">드가자</a>
-    </nav>
+
 </body>
+
 </html>
