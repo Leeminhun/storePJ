@@ -73,11 +73,11 @@ def main():
 def objetdata():
     return render_template('objectdatap.html')
 
-@app.route('/mypage/do', methods=['POST'])
+@app.route('/mypage/do', methods=['GET'])
 def post_test():
-    sample_receive = request.form['sample_give']
-    print(sample_receive)
-    return jsonify({'msg': 'like 연결되었습니다!'})
+    
+    
+    return jsonify({'msg': '연결되었습니다!'})
 
 
 
