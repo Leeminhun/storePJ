@@ -1,11 +1,11 @@
 from os import name
-from flask_admin.base import expose
+from flask_admin import model
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import flask_admin as admin
 from wtforms import form, fields
 from flask_admin.form import Select2Widget
-from flask_admin.contrib.pymongo import ModelView, filters
+from flask_admin.contrib.pymongo import ModelView, filters, view
 
 from flask import Flask, render_template, jsonify, request
 
@@ -18,7 +18,7 @@ app.config['SECRET_KEY'] = '123456790'
 
 # Create models
 conn = MongoClient()
-db = conn.test
+db = conn.bdd
 
 
 # User admin
@@ -33,14 +33,23 @@ class menu_form(form.Form):
 
     # DB에 저장할때 사용하는 key = fields.StringField('name') < value 값이 저장되는 inputbox
 
+class order_form(form.Form):
+    state = fields.SelectField ('주문 상태', choices= [('입금확인', '입금확인'),('배송중','배송중'),('배송완료','배송완료')])
 
 
 class menu_view(ModelView):
 
     column_list = ('img', 'menu', 'price','category') #db에서 불러올때 사용하는 key값
-    # column_sortable_list = ('img', 'menu', 'price') # list 정렬가능한 컬렉션
+    
 
     form = menu_form
+
+class order_view(ModelView):
+    column_list = ('name', 'menu', 'number', 'address', 'price', 'state' )
+    column_sortable_list = ('name', 'menu', 'number', 'address', 'price', 'state')
+    can_edit = True
+
+    form = order_form
 
     
     # def on_model_change(self, form, model, is_created):
@@ -48,21 +57,12 @@ class menu_view(ModelView):
     #     model['user_id'] = ObjectId(user_id)
 
     #     return model
-
-
-
+    
 # Flask views
 
 @app.route('/')
 def main():
     return render_template('index.html')
-
-# 일단 보류
-# @app.route('/habit_s', methods=['GET'])
-# def show_habit():
-#     orders = list(db.user.find({}, {'_id': False}))
-
-#     return jsonify({'all_order': orders})
 
 
 @app.route('/mypage')
@@ -82,9 +82,9 @@ if __name__ == '__main__':
     admin = admin.Admin(app, name='맘스키친', url='/bluenight')
     
     # Add views
-    admin.add_view(menu_view(db.user, '상품관리'))
-    # admin.add_view(orderView(db.order, '주문내역'))
-    
+    admin.add_view(menu_view(db.menu, '상품관리', url='/Product_management'))
+    admin.add_view(order_view(db.user, '주문내역', url='/Order_details'))
+
     # Start app
     app.run(debug=True)
 
