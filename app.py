@@ -7,7 +7,6 @@ from wtforms import form, fields
 from flask_admin.form import Select2Widget
 from flask_admin.contrib.pymongo import ModelView, filters, view
 from bson.json_util import dumps
-from bson import json_util
 import json
 from bson import json_util
 
@@ -22,10 +21,10 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '123456790'
 
 # Create models
-#conn = MongoClient()
-conn = MongoClient('localhost', 27017)
+conn = MongoClient()
 db = conn.bdd
-dbt = conn.test
+conn = MongoClient('localhost', 27017)
+db = conn.test
 
 
 # User admin
@@ -105,10 +104,13 @@ def test11():
 
 @app.route('/mypage/do', methods=['GET'])
 def post_test():
-    test = list(dbt.user.find({},{'_id': False}))
-    #di = dumps(test)
+    test = list(db.user.find({},{'_id': False}))
+    #test = [doc for doc in db.user.find({},{'_id': False})]
+    print(type(test))
+    
+    
 
-    return [jsonify({'test': di})]
+    return jsonify({'data': dumps(test)})
     raise TypeError('타입 에러 확인')
 
 

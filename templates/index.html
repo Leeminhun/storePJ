@@ -49,8 +49,37 @@
                                 url: '/mypage/do?sample_give=샘플데이터',
                                 data: {},
                                 success: function (response) {
-                                        let articles = response['test'];
-                                        console.log(articles)
+                                        let articles = response['data'];
+                                        let a = JSON.parse(articles)
+                                        console.log(a)
+                                        for(let i = 0 ; i < a.length ; i++){
+                                                let img = a[i]["img"]
+                                                let menu = a[i]['menu']
+                                                let price = a[i]['price']
+                                                let hide = a[i]['hide']
+
+                                                // console.log(img,menu,price,hide)
+
+                                                let temp_html = `
+                                                <div class="card">
+                                                        <img class="card-img-top"
+                                                        src="${img}"
+                                                        alt="Card image cap"
+                                                        style="width: 100px; height: auto;">
+                                                        <div class="card-body">
+                                                        <a target="_blank" href="#" class="card-title">${menu}</a>
+                                                        <p class="card-text">가격 : ${price}</p>
+                                                        <p class="card-text comment">대충 수량 넣는곳 + -</p>
+                                                        <button onclick=test()>장바구니 On</button>
+                                                        <button>바로주문.</button>
+                                                        </div>
+                                                </div>
+                                                `
+                                                if(hide == 0){
+                                                        $("#cards-box").append(temp_html)
+                                                }
+                                                
+                                        }
                                         
 
                                 }
@@ -82,17 +111,7 @@
                     <button onclick=test()>장바구니 On</button>
                     <button>바로주문.</button>
                 </div>
-                <div class="card">
-                    <img class="card-img-top"
-                         src="../static/img/KakaoTalk_20210719_190856996_23.jpg"
-                         alt="Card image cap"style="width: 100px; height: auto;">
-                    <div class="card-body">
-                        <a target="_blank" href="#" class="card-title">반찬이름!!</a>
-                        <p class="card-text">가격 : 34000000000</p>
-                        <p class="card-text comment">대충 수량 넣는곳 + -</p>
-                        <button>장바구니 On</button>
-                        <button>바로주문.</button>
-                </div>
+            </div>
                     
         </div>
 
