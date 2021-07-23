@@ -6,6 +6,8 @@ import flask_admin as admin
 from wtforms import form, fields
 from flask_admin.form import Select2Widget
 from flask_admin.contrib.pymongo import ModelView, filters, view
+from bson.json_util import dumps
+import json
 
 from flask import Flask, render_template, jsonify, request
 
@@ -17,8 +19,10 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '123456790'
 
 # Create models
-conn = MongoClient()
+#conn = MongoClient()
+conn = MongoClient('localhost', 27017)
 db = conn.bdd
+dbt = conn.test
 
 
 # User admin
@@ -55,11 +59,11 @@ class order_view(ModelView):
     # def on_model_change(self, form, model, is_created):
     #     user_id = model.get('user_id')
     #     model['user_id'] = ObjectId(user_id)
-# class JSONEncoder(json.JSONEncoder):
-#     def default(self, o):
-#         if isinstance(o, ObjectId):
-#             return str(o)
-#         return json.JSONEncoder.default(self, o)
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
 
 
 
@@ -71,13 +75,13 @@ class order_view(ModelView):
 def main():
     return render_template('index.html')
 
-# @app.route('/header.html')
-# def dotest():
-#     return render_template('header.html')
+@app.route('/header.html')
+def dotest():
+    return render_template('header.html')
 
-# @app.route('/footer.html')
-# def do1test():
-#     return render_template('footer.html')
+@app.route('/footer.html')
+def do1test():
+    return render_template('footer.html')
 
 # 일단 보류
 # @app.route('/habit_s', methods=['GET'])
@@ -87,18 +91,18 @@ def main():
 #     return jsonify({'all_order': orders})
 
 
-# @app.route('/mypage')
-# def objetdata():
-#     return render_template('objectdatap.html')
+@app.route('/mypage')
+def objetdata():
+    return render_template('objectdatap.html')
 
 
-# @app.route('/test')
-# def test11():
-#     return render_template('test.html')
+@app.route('/test')
+def test11():
+    return render_template('test.html')
 
 @app.route('/mypage/do', methods=['GET'])
 def post_test():
-    test = list(db.user.find({},{'_id': False}))
+    test = list(dbt.user.find({},{'_id': False}))
     #test = [doc for doc in db.user.find({},{'_id': False})]
     print(type(test))
     alss = []
