@@ -1,17 +1,7 @@
 from os import name
-<<<<<<< HEAD
 from flask_admin import model
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-=======
-from flask.templating import render_template
-from pymongo import MongoClient
-from bson.objectid import ObjectId
-import json
-from bson.json_util import dumps
-
-from flask import Flask
->>>>>>> dodo
 import flask_admin as admin
 from wtforms import form, fields
 from flask_admin.form import Select2Widget
@@ -27,13 +17,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '123456790'
 
 # Create models
-<<<<<<< HEAD
 conn = MongoClient()
 db = conn.bdd
-=======
-conn = MongoClient('localhost', 27017)
-db = conn.test
->>>>>>> dodo
 
 
 # User admin
@@ -66,20 +51,12 @@ class order_view(ModelView):
 
     form = order_form
 
-<<<<<<< HEAD
     
     # def on_model_change(self, form, model, is_created):
     #     user_id = model.get('user_id')
     #     model['user_id'] = ObjectId(user_id)
-=======
-class JSONEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, ObjectId):
-            return str(o)
-        return json.JSONEncoder.default(self, o)
 
 
->>>>>>> dodo
 
     #     return model
     
@@ -89,8 +66,6 @@ class JSONEncoder(json.JSONEncoder):
 def main():
     return render_template('index.html')
 
-<<<<<<< HEAD
-=======
 @app.route('/header.html')
 def dotest():
     return render_template('header.html')
@@ -106,7 +81,6 @@ def do1test():
 
 #     return jsonify({'all_order': orders})
 
->>>>>>> dodo
 
 @app.route('/mypage')
 def objetdata():
