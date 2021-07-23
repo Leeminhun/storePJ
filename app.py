@@ -1,7 +1,17 @@
 from os import name
+from flask_admin import model
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import flask_admin as admin
+from wtforms import form, fields
+from flask_admin.form import Select2Widget
+from flask_admin.contrib.pymongo import ModelView, filters, view
+
+from flask import Flask, render_template, jsonify, request
+
+
+# Create application
+app = Flask(__name__)
 
 # Create dummy secrey key so we can use sessions
 app.config['SECRET_KEY'] = '123456790'
@@ -45,11 +55,11 @@ class order_view(ModelView):
     # def on_model_change(self, form, model, is_created):
     #     user_id = model.get('user_id')
     #     model['user_id'] = ObjectId(user_id)
-class JSONEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, ObjectId):
-            return str(o)
-        return json.JSONEncoder.default(self, o)
+# class JSONEncoder(json.JSONEncoder):
+#     def default(self, o):
+#         if isinstance(o, ObjectId):
+#             return str(o)
+#         return json.JSONEncoder.default(self, o)
 
 
 
