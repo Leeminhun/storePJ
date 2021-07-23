@@ -1,7 +1,17 @@
 from os import name
+<<<<<<< HEAD
 from flask_admin import model
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+=======
+from flask.templating import render_template
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+import json
+from bson.json_util import dumps
+
+from flask import Flask
+>>>>>>> dodo
 import flask_admin as admin
 from wtforms import form, fields
 from flask_admin.form import Select2Widget
@@ -17,8 +27,13 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '123456790'
 
 # Create models
+<<<<<<< HEAD
 conn = MongoClient()
 db = conn.bdd
+=======
+conn = MongoClient('localhost', 27017)
+db = conn.test
+>>>>>>> dodo
 
 
 # User admin
@@ -51,10 +66,20 @@ class order_view(ModelView):
 
     form = order_form
 
+<<<<<<< HEAD
     
     # def on_model_change(self, form, model, is_created):
     #     user_id = model.get('user_id')
     #     model['user_id'] = ObjectId(user_id)
+=======
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
+
+
+>>>>>>> dodo
 
     #     return model
     
@@ -64,16 +89,48 @@ class order_view(ModelView):
 def main():
     return render_template('index.html')
 
+<<<<<<< HEAD
+=======
+@app.route('/header.html')
+def dotest():
+    return render_template('header.html')
+
+@app.route('/footer.html')
+def do1test():
+    return render_template('footer.html')
+
+# 일단 보류
+# @app.route('/habit_s', methods=['GET'])
+# def show_habit():
+#     orders = list(db.user.find({}, {'_id': False}))
+
+#     return jsonify({'all_order': orders})
+
+>>>>>>> dodo
 
 @app.route('/mypage')
 def objetdata():
     return render_template('objectdatap.html')
 
-@app.route('/mypage/do', methods=['POST'])
+
+@app.route('/test')
+def test11():
+    return render_template('test.html')
+
+@app.route('/mypage/do', methods=['GET'])
 def post_test():
-    sample_receive = request.form['sample_give']
-    print(sample_receive)
-    return jsonify({'msg': 'like 연결되었습니다!'})
+    test = list(db.user.find({},{'_id': False}))
+    #test = [doc for doc in db.user.find({},{'_id': False})]
+    print(type(test))
+    alss = []
+    for do in test:
+        alss.append(dumps(do))
+    print(alss)
+
+    return jsonify({'data': alss})
+    raise TypeError('타입 에러 확인')
+
+
 
 
 
