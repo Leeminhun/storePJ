@@ -83,32 +83,46 @@
                             url: '/mypage/do?sample_give=샘플데이터',
                             data: {},
                             success: function (response) {
-                                alert(response["msg"]);
+                                a = response["data"]
+                                
+                                for(let b = 0 ; b < a.length; b++){
+                                    console.log(a[b])
+                                }
                             }
                         });
                     }
-        $('#item').on('click', testjax());
+            function includeHTML() {
+                var z, i, elmnt, file, xhttp;
+                /* Loop through a collection of all HTML elements: */
+                z = document.getElementsByTagName("*");
+                for (i = 0; i < z.length; i++) {
+                        elmnt = z[i];
+                        /*search for elements with a certain atrribute:*/
+                        file = elmnt.getAttribute("w3-include-html");
+                        if (file) {
+                                /* Make an HTTP request using the attribute value as the file name: */
+                                xhttp = new XMLHttpRequest();
+                                xhttp.onreadystatechange = function () {
+                                        if (this.readyState == 4) {
+                                                if (this.status == 200) { elmnt.innerHTML = this.responseText; }
+                                                if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
+                                                /* Remove the attribute, and call this function once more: */
+                                                elmnt.removeAttribute("w3-include-html");
+                                                includeHTML();
+                                        }
+                                }
+                                xhttp.open("GET", file, true);
+                                xhttp.send();
+                                /* Exit the function: */
+                                return;
+                        }
+                }
+        }
     </script>
 </head>
 
 <body class="bodycs">
-    <nav class="menu">
-        <ul class="menu_item">
-            <li><a href="#" id ="item" onclick="testjax()">로그인</a> </li>
-            <li><a href="#" id ="item">장바구니</a> </li>
-            <li><a href="#" id ="item">주문조회</a> </li>
-        </ul>
-    </nav>
-    <header>
-        <img src="../static/img/logo.png" alt="이미지로딩" class="logo">
-    </header>
-    <nav class="toolbar">
-        <ul class="toolbaritem">
-            <li><a href="#" id ="tolitem">매뉴</a> </li>
-            <li><a href="#" id ="tolitem">매뉴2</a> </li>
-            <li><a href="#" id ="tolitem">매뉴3</a> </li>
-        </ul>
-    </nav>
+    <header w3-include-html="header.html"></header>
     <div class="section">
         <div id = "tolitem">
             <img src="../static/img/logo.png" alt="이미지 로딩안됨" class = "logo">
@@ -134,7 +148,9 @@
             </ul>
         </nav>
     </div>
-
+    <script>
+        includeHTML();
+    </script>
 </body>
 
 </html>

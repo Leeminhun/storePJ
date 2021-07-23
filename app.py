@@ -1,8 +1,9 @@
 from os import name
 from flask.templating import render_template
-import pymongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+import json
+from bson.json_util import dumps
 
 from flask import Flask
 import flask_admin as admin
@@ -22,7 +23,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '123456790'
 
 # Create models
-conn = MongoClient()
+conn = MongoClient('localhost', 27017)
 db = conn.test
 
 
@@ -54,12 +55,27 @@ class menuView(ModelView):
         return model
 
 
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
+
+
 
 # Flask views
 
 @app.route('/')
 def main():
     return render_template('index.html')
+
+@app.route('/header.html')
+def dotest():
+    return render_template('header.html')
+
+@app.route('/footer.html')
+def do1test():
+    return render_template('footer.html')
 
 # 일단 보류
 # @app.route('/habit_s', methods=['GET'])
@@ -73,11 +89,25 @@ def main():
 def objetdata():
     return render_template('objectdatap.html')
 
+
+@app.route('/test')
+def test11():
+    return render_template('test.html')
+
 @app.route('/mypage/do', methods=['GET'])
 def post_test():
-    
-    
-    return jsonify({'msg': '연결되었습니다!'})
+    test = list(db.user.find({},{'_id': False}))
+    #test = [doc for doc in db.user.find({},{'_id': False})]
+    print(type(test))
+    alss = []
+    for do in test:
+        alss.append(dumps(do))
+    print(alss)
+
+    return jsonify({'data': alss})
+    raise TypeError('타입 에러 확인')
+
+
 
 
 
