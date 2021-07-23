@@ -6,8 +6,14 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        
         <title>test</title>
         <link rel="stylesheet" type="text/css" href = "../static/css/main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
                 function includeHTML() {
                         var z, i, elmnt, file, xhttp;
@@ -43,17 +49,19 @@
                                 url: '/mypage/do?sample_give=샘플데이터',
                                 data: {},
                                 success: function (response) {
-                                        a = response["data"]
+                                        let articles = response['test'];
+                                        console.log(articles)
+                                        
 
-                                        for (let b = 0; b < a.length; b++) {
-                                                console.log(a[b])
-                                        }
                                 }
                         });
                 }
                 function test(){
                         alert("장바구니 확인!!")
                 }
+                $(document).ready(function () {
+                        testjax();
+                });
         </script>
 </head>
 

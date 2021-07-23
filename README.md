@@ -3,4 +3,5 @@
 ## 가상환경 패키지list
 bs4 , flask , flask-Admin , requests
 pymongo
+임포트 json <<---- 꼭해야됩니다..
 

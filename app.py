@@ -7,7 +7,10 @@ from wtforms import form, fields
 from flask_admin.form import Select2Widget
 from flask_admin.contrib.pymongo import ModelView, filters, view
 from bson.json_util import dumps
+from bson import json_util
 import json
+from bson import json_util
+
 
 from flask import Flask, render_template, jsonify, request
 
@@ -103,14 +106,9 @@ def test11():
 @app.route('/mypage/do', methods=['GET'])
 def post_test():
     test = list(dbt.user.find({},{'_id': False}))
-    #test = [doc for doc in db.user.find({},{'_id': False})]
-    print(type(test))
-    alss = []
-    for do in test:
-        alss.append(dumps(do))
-    print(alss)
+    #di = dumps(test)
 
-    return jsonify({'data': alss})
+    return [jsonify({'test': di})]
     raise TypeError('타입 에러 확인')
 
 
