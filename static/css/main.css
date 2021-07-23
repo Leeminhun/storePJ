@@ -1,0 +1,74 @@
+
+.menu {
+        width: 100%;
+        display: inline-block;
+        vertical-align: middle;
+}
+
+.toolbar {
+        width: 100%;
+        display: inline-block;
+        vertical-align: middle;
+}
+
+.menu_item {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        float: right;
+}
+
+.section {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+.toolbaritem {
+        list-style: none;
+        margin: auto;
+        padding: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+#item {
+        display: block;
+        text-align: center;
+        margin: .25rem;
+        padding: .5rem 1rem;
+        text-decoration: none;
+        font-weight: bold;
+        color: black;
+        border: solid 2px aqua;
+
+}
+
+#tolitem {
+        display: block;
+        text-align: center;
+        margin: 10px 10px auto;
+        padding-left: 50px;
+        padding-right: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        color: black;
+        border: solid 2px aqua;
+}
+
+.logo {
+        width: 150px;
+        height: auto;
+        margin: 50px auto;
+        text-align: center;
+}
+
+.bodycs {
+        text-align: center;
+        left: 10%;
+}

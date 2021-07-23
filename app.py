@@ -56,6 +56,8 @@ class order_view(ModelView):
     #     user_id = model.get('user_id')
     #     model['user_id'] = ObjectId(user_id)
 
+
+
     #     return model
     
 # Flask views
@@ -64,16 +66,45 @@ class order_view(ModelView):
 def main():
     return render_template('index.html')
 
+@app.route('/header.html')
+def dotest():
+    return render_template('header.html')
+
+@app.route('/footer.html')
+def do1test():
+    return render_template('footer.html')
+
+# 일단 보류
+# @app.route('/habit_s', methods=['GET'])
+# def show_habit():
+#     orders = list(db.user.find({}, {'_id': False}))
+
+#     return jsonify({'all_order': orders})
+
 
 @app.route('/mypage')
 def objetdata():
     return render_template('objectdatap.html')
 
-@app.route('/mypage/do', methods=['POST'])
+
+@app.route('/test')
+def test11():
+    return render_template('test.html')
+
+@app.route('/mypage/do', methods=['GET'])
 def post_test():
-    sample_receive = request.form['sample_give']
-    print(sample_receive)
-    return jsonify({'msg': 'like 연결되었습니다!'})
+    test = list(db.user.find({},{'_id': False}))
+    #test = [doc for doc in db.user.find({},{'_id': False})]
+    print(type(test))
+    alss = []
+    for do in test:
+        alss.append(dumps(do))
+    print(alss)
+
+    return jsonify({'data': alss})
+    raise TypeError('타입 에러 확인')
+
+
 
 
 
