@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <!-- 부트스트랩! -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MomsKitchen - Cart</title>
+    <style>
+        table.type07 {
+            border-collapse: collapse;
+            text-align: left;
+            line-height: 1.5;
+            border: 1px solid #ccc;
+            margin: 20px 10px;
+        }
+
+        table.type07 thead {
+            border-right: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            background: #e7708d;
+        }
+
+        table.type07 thead th {
+            padding: 10px;
+            font-weight: bold;
+            vertical-align: top;
+            color: #fff;
+        }
+
+        table.type07 tbody th {
+            width: 150px;
+            padding: 10px;
+            font-weight: bold;
+            vertical-align: top;
+            border-bottom: 1px solid #ccc;
+            background: #fcf1f4;
+        }
+
+        table.type07 td {
+            width: 350px;
+            padding: 10px;
+            vertical-align: top;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            showOrders();
+        });
+
+        function showOrders(){
+            let temp_html = ``;
+            let menu = '';
+            let price = 0;
+            let count = 0;
+            let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
+            if (localStorage.length > 0) {
+                for (let i = 1; i < localStorage.length+1; i++) {
+                    let cartItem = JSON.parse(localStorage.getItem(i))
+                    index = cartItem.id;
+                    menu = cartItem.menu;
+                    price = cartItem.price;
+                    count = cartItem.count;
+                    temp_html += `
+                        <tr>
+                            <td>${index}</td>
+                            <td>${menu}</td>
+                            <td>${count}</td>
+                            <td>${price}</td>
+                        </tr>
+                    `;
+                }
+            }
+
+            $("#orderTable").append(temp_html)
+        }
+
+    </script>
+</head>
+<body>
+    <table class="type07">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>메뉴</th>
+                <th>수량</th>
+                <th>가격</th>
+            </tr>
+        </thead>
+        <tbody id="orderTable">
+
+        </tbody>
+    </table>
+
+</body>
+</html>
