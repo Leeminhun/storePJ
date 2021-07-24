@@ -59,6 +59,7 @@
             let price = 0;
             let count = 0;
             let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
+            let price_all = 0;
             if (localStorage.length > 0) {
                 for (let i = 1; i < localStorage.length+1; i++) {
                     let cartItem = JSON.parse(localStorage.getItem(i))
@@ -66,12 +67,14 @@
                     menu = cartItem.menu;
                     price = cartItem.price;
                     count = cartItem.count;
+                    price_all += Number(price)
                     temp_html += `
                         <tr>
                             <td>${index}</td>
                             <td>${menu}</td>
                             <td>${count}</td>
-                            <td>${price}</td>
+                            <td>${price}원</td>
+                            <td>${price_all}</td>
                         </tr>
                     `;
                 }
