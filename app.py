@@ -34,7 +34,7 @@ class menu_form(form.Form):
     # DB에 저장할때 사용하는 key = fields.StringField('name') < value 값이 저장되는 inputbox
 
 class order_form(form.Form):
-    state = fields.SelectField ('주문 상태', choices= [('입금확인', '입금확인'),('배송중','배송중'),('배송완료','배송완료')])
+    state = fields.SelectField ('주문 상태', choices= [('입금대기','입금대기'),('결제완료', '결제완료'),('상품준비중','상품준비중'),('배송중','배송중'),('배송완료','배송완료')])
 
 
 class menu_view(ModelView):
@@ -45,8 +45,8 @@ class menu_view(ModelView):
     form = menu_form
 
 class order_view(ModelView):
-    column_list = ('name', 'menu', 'number', 'address', 'price', 'state' )
-    column_sortable_list = ('name', 'menu', 'number', 'address', 'price', 'state')
+    column_list = ('name', 'menu', 'number', 'address', 'price', 'state','date' )
+    column_sortable_list = ('name', 'menu', 'number', 'address', 'price', 'state','date')
     can_edit = True
 
     form = order_form
