@@ -105,23 +105,18 @@
             let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
             let isSame = false; //중복되는 메뉴가 있는지
             let value = [];
-            //console.log(isSame)
-            if (localStorage.length > 0) {
-                for (let i = 0; i < localStorage.length; i++) {
-                    if (Number(index) < Number(localStorage.key(i))) { //maxIndex 구하기
-                        index = localStorage.key(i);
-                        let cartItem = JSON.parse(localStorage.getItem(localStorage.key(i)));
-                        console.log(i);
-                        console.log(index);
-                        console.log(cartItem.menu);
 
-                        //menu이 같으면 같은 메뉴
+            if (localStorage.length > 0) {
+                for (let i = 1; i < localStorage.length+1; i++) {
+                    if (Number(index) < i) { //maxIndex 구하기
+                        let cartItem = JSON.parse(localStorage.getItem(i))
+                        index = cartItem.id;
+
+                        //menu 이름이 같으면 같은 메뉴
                         if(JSON.stringify(cartItem.menu) === JSON.stringify(menu)){
                             isSame = true;
                             price = cartItem.price;
-                            //console.log(price)
                             count = cartItem.count;
-                            //console.log(count)
                             break;
                         }
                     }
@@ -145,68 +140,8 @@
             }
 
             localStorage.setItem(index, JSON.stringify(value)); //localStorage에 저장
-            //console.log(isSame)
-
-            //let product = $(this).closest('.card-text');
-            // console.log(menu, price, count);
-            // let index = localStorage.length;
-            // index = Number(index) + 1;
-            /*
-            const value = {
-                id: index,
-                menu: menu,
-                price: price,
-                count: count,
-            };
-
-            */
-        }
-        //console.log(localStorage)
-        /*
-
-        let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
-        var isSame = false; //중복되는 메뉴가 있는지
-        var price = 0;
-        var count = 0;
-        if (localStorage.length > 0) {
-            for (let i = 0; i < localStorage.length; i++) {
-                if (Number(index) < Number(localStorage.key(i))) { //maxIndex 구하기
-                    index = localStorage.key(i);
-                    var cartItem = JSON.parse(localStorage.getItem(localStorage.key(i)));
-                    if ( //menu와 option이 같으면 같은 메뉴이므로 price와 count만 바꿔준다
-                        JSON.stringify(cartItem.menu) == JSON.stringify(menu) &&
-                        JSON.stringify(cartItem.option) == JSON.stringify(option)
-                    ) {
-                        isSame = true;
-                        price = cartItem.price;
-                        count = cartItem.count;
-                        break;
-                    }
-                }
-            }
-        }
-        if (isSame == true) { //중복되는 물건이 장바구니에 있는 경우 price와 count만 바꿔준다
-            var value = {
-                id: index,
-                menu: menu,
-                option: option,
-                price: this.price + price,
-                count: this.count + count,
-            };
-        } else { //새로운 메뉴인 경우 maxIndex + 1을 key로 하여 저장한다
-            index = Number(index) + 1;
-            value = {
-                id: index,
-                menu: menu,
-                option: option,
-                price: this.price,
-                count: this.count,
-            };
         }
 
-        localStorage.setItem(index, JSON.stringify(value)); //localStorage에 저장
-
-         */
 
     </script>
 </head>
@@ -238,7 +173,7 @@
                 <a target="_blank" href="#" class="card-title">어묵볶음_1</a>
                 <p class="card-text">가격 : <span class="price">3000</span></p>
                 <p class="card-text comment">대충 수량 넣는곳 + -<span class="count">1</span></p>
-                <button id="1" onclick="addToCart(this)">장바구니 넣기</button>
+                <button onclick="addToCart(this)">장바구니 넣기</button>
             </div>
         </div>
         <div class="card">
@@ -248,8 +183,8 @@
             <div class="card-body">
                 <a target="_blank" href="#" class="card-title">어묵볶음_2</a>
                 <p class="card-text">가격 : <span class="price">4000</span></p>
-                <p class="card-text comment">대충 수량 넣는곳 + -<span class="count">1</span></p>
-                <button id="2" onclick="addToCart(this)">장바구니 넣기</button>
+                <p class="card-text comment">수량 : <span class="count">1</span></p>
+                <button onclick="addToCart(this)">장바구니 넣기</button>
             </div>
         </div>
     </div>
