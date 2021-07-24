@@ -1,10 +1,257 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
+    <!-- 부트스트랩! -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <style>
+        .menu {
+            width: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .toolbar {
+            width: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .menu_item {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            float: right;
+        }
+
+        .section {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .toolbaritem {
+            list-style: none;
+            margin: auto;
+            padding: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #item {
+            display: block;
+            text-align: center;
+            margin: .25rem;
+            padding: .5rem 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            color: black;
+            border: solid 2px aqua;
+
+        }
+
+        #tolitem {
+            display: block;
+            text-align: center;
+            margin: 10px 10px auto;
+            padding-left: 50px;
+            padding-right: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            color: black;
+            border: solid 2px aqua;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .bodycs {
+            text-align: center;
+            left: 10%;
+        }
+    </style>
+    <script>
+        /*
+        const CART_LS = 'cart';
+        let product = [];
+
+        function saveProduct(){
+            localStorage.setItem(CART_LS, JSON.stringify(product));
+        }
+        */
+
+        function addToCart(e){
+            const menu = $(e).closest('div').find('a').text();
+            //let price = $(e).closest('div').find('.price').text();
+            //let count = $(e).closest('div').find('.count').text();
+            let price = 0;
+            let count = 0;
+            let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
+            let isSame = false; //중복되는 메뉴가 있는지
+            let value = [];
+            //console.log(isSame)
+            if (localStorage.length > 0) {
+                for (let i = 0; i < localStorage.length; i++) {
+                    if (Number(index) < Number(localStorage.key(i))) { //maxIndex 구하기
+                        index = localStorage.key(i);
+                        let cartItem = JSON.parse(localStorage.getItem(localStorage.key(i)));
+                        //menu이 같으면 같은 메뉴
+                        if(JSON.stringify(cartItem.menu) === JSON.stringify(menu)){
+                            isSame = true;
+                            console.log(cartItem.price);
+                            price = cartItem.price;
+                            //console.log(price)
+                            count = cartItem.count;
+                            console.log(count)
+                            break;
+                        }
+                    }
+                }
+            }
+            if (isSame == true) { //중복되는 물건이 장바구니에 있는 경우 price와 count만 바꿔준다
+                value = {
+                    id: index,
+                    menu: menu,
+                    price: this.price + price,
+                    count: this.count + count,
+                };
+            } else { //새로운 메뉴인 경우 maxIndex + 1을 key로 하여 저장한다
+                index = Number(index) + 1;
+                value = {
+                    id: index,
+                    menu: menu,
+                    price: this.price,
+                    count: this.count,
+                };
+            }
+
+            localStorage.setItem(index, JSON.stringify(value)); //localStorage에 저장
+            //console.log(isSame)
+
+            //let product = $(this).closest('.card-text');
+            // console.log(menu, price, count);
+            // let index = localStorage.length;
+            // index = Number(index) + 1;
+            /*
+            const value = {
+                id: index,
+                menu: menu,
+                price: price,
+                count: count,
+            };
+
+            */
+        }
+        //console.log(localStorage)
+        /*
+
+        let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
+        var isSame = false; //중복되는 메뉴가 있는지
+        var price = 0;
+        var count = 0;
+        if (localStorage.length > 0) {
+            for (let i = 0; i < localStorage.length; i++) {
+                if (Number(index) < Number(localStorage.key(i))) { //maxIndex 구하기
+                    index = localStorage.key(i);
+                    var cartItem = JSON.parse(localStorage.getItem(localStorage.key(i)));
+                    if ( //menu와 option이 같으면 같은 메뉴이므로 price와 count만 바꿔준다
+                        JSON.stringify(cartItem.menu) == JSON.stringify(menu) &&
+                        JSON.stringify(cartItem.option) == JSON.stringify(option)
+                    ) {
+                        isSame = true;
+                        price = cartItem.price;
+                        count = cartItem.count;
+                        break;
+                    }
+                }
+            }
+        }
+        if (isSame == true) { //중복되는 물건이 장바구니에 있는 경우 price와 count만 바꿔준다
+            var value = {
+                id: index,
+                menu: menu,
+                option: option,
+                price: this.price + price,
+                count: this.count + count,
+            };
+        } else { //새로운 메뉴인 경우 maxIndex + 1을 key로 하여 저장한다
+            index = Number(index) + 1;
+            value = {
+                id: index,
+                menu: menu,
+                option: option,
+                price: this.price,
+                count: this.count,
+            };
+        }
+
+        localStorage.setItem(index, JSON.stringify(value)); //localStorage에 저장
+
+         */
+
+    </script>
 </head>
-<body>
+
+<body class="bodycs">
+    <nav class="menu">
+        <ul class="menu_item">
+            <li><a href="#" id="item">로그인</a></li>
+            <li><a href="#" id="item">장바구니</a></li>
+            <li><a href="#" id="item">주문조회</a></li>
+        </ul>
+    </nav>
+    <header>
+        <img src="../static/img/logo.png" alt="이미지로딩" class="logo">
+    </header>
+    <nav class="toolbar">
+        <ul class="toolbaritem">
+            <li><a href="#" id="tolitem">매뉴</a></li>
+            <li><a href="#" id="tolitem">매뉴2</a></li>
+            <li><a href="#" id="tolitem">매뉴3</a></li>
+        </ul>
+    </nav>
+    <div id="cards-box" class="card-columns">
+        <div class="card">
+            <img class="card-img-top"
+                 src="../static/img/KakaoTalk_20210719_190856996_23.jpg"
+                 alt="Card image cap">
+            <div class="card-body">
+                <a target="_blank" href="#" class="card-title">어묵볶음_1</a>
+                <p class="card-text">가격 : <span class="price">3000</span></p>
+                <p class="card-text comment">대충 수량 넣는곳 + -<span class="count">1</span></p>
+                <button id="1" onclick="addToCart(this)">장바구니 넣기</button>
+            </div>
+        </div>
+        <div class="card">
+            <img class="card-img-top"
+                 src="../static/img/KakaoTalk_20210719_190856996_23.jpg"
+                 alt="Card image cap">
+            <div class="card-body">
+                <a target="_blank" href="#" class="card-title">어묵볶음_2</a>
+                <p class="card-text">가격 : <span class="price">4000</span></p>
+                <p class="card-text comment">대충 수량 넣는곳 + -<span class="count">1</span></p>
+                <button id="2" onclick="addToCart(this)">장바구니 넣기</button>
+            </div>
+        </div>
+    </div>
+
 
 </body>
+
 </html>
