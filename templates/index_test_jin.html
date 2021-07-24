@@ -98,8 +98,8 @@
 
         function addToCart(e){
             const menu = $(e).closest('div').find('a').text();
-            //let price = $(e).closest('div').find('.price').text();
-            //let count = $(e).closest('div').find('.count').text();
+            let price_new = $(e).closest('div').find('.price').text();
+            let count_new = $(e).closest('div').find('.count').text();
             let price = 0;
             let count = 0;
             let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
@@ -111,33 +111,36 @@
                     if (Number(index) < Number(localStorage.key(i))) { //maxIndex 구하기
                         index = localStorage.key(i);
                         let cartItem = JSON.parse(localStorage.getItem(localStorage.key(i)));
+                        console.log(i);
+                        console.log(index);
+                        console.log(cartItem.menu);
+
                         //menu이 같으면 같은 메뉴
                         if(JSON.stringify(cartItem.menu) === JSON.stringify(menu)){
                             isSame = true;
-                            console.log(cartItem.price);
                             price = cartItem.price;
                             //console.log(price)
                             count = cartItem.count;
-                            console.log(count)
+                            //console.log(count)
                             break;
                         }
                     }
                 }
             }
-            if (isSame == true) { //중복되는 물건이 장바구니에 있는 경우 price와 count만 바꿔준다
+            if (isSame === true) { //중복되는 물건이 장바구니에 있는 경우 price와 count만 바꿔준다
                 value = {
-                    id: index,
+                    id: Number(index),
                     menu: menu,
-                    price: this.price + price,
-                    count: this.count + count,
+                    price: Number(price) + Number(price_new),
+                    count: Number(count) + Number(count_new)
                 };
             } else { //새로운 메뉴인 경우 maxIndex + 1을 key로 하여 저장한다
                 index = Number(index) + 1;
                 value = {
-                    id: index,
+                    id: Number(index),
                     menu: menu,
-                    price: this.price,
-                    count: this.count,
+                    price: Number(price_new),
+                    count: Number(count_new)
                 };
             }
 
