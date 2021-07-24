@@ -117,7 +117,7 @@ if __name__ == '__main__':
     admin.add_view(order_view(db.user, '주문내역', url='/Order_details'))
 
     # Start app
-    app.run(debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
 
     
     
