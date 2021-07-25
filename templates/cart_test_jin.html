@@ -49,7 +49,7 @@
         }
 
         .thumbnail{
-            width:50px;
+            width:90px;
         }
     </style>
     <script>
@@ -109,7 +109,7 @@
             //총 가격에서 개수를 나눠 단가를 계산한 뒤, num을 곱해 +인지 -인지 결정
             let price = cartItem.price + num*(cartItem.price/cartItem.count);
             let count = cartItem.count + num;
-            img_url = cartItem.img_url;
+            let img_url = cartItem.img_url;
             let value = {
                 id: id,
                 menu: menu,
@@ -117,9 +117,8 @@
                 count: count,
                 img_url: img_url
             };
-            //지금 새로 등록하려는 데이터를 localStorage에서 삭제(삭제하지 않으면 중복으로 남아있게 됨)
-            localStorage.removeItem(target);
-            localStorage.setItem(index, JSON.stringify(value)); //localStorage에 저장
+
+            localStorage.setItem(index, JSON.stringify(value)); //localStorage에 저장(덮어쓰기됨)
             window.location.reload();
         }
 
