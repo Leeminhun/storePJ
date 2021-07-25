@@ -70,17 +70,23 @@
                     price_all += Number(price)
                     temp_html += `
                         <tr>
-                            <td>${index}</td>
+                            <td><input type=checkbox> ${index}</td>
                             <td>${menu}</td>
-                            <td>${count}</td>
+                            <td>${count} <b>+ -</b></td>
                             <td>${price}원</td>
-                            <td>${price_all}</td>
+                            <td><button onclick="deleteMenu(this)">삭제</button></td>
                         </tr>
                     `;
+
+
                 }
             }
 
             $("#orderTable").append(temp_html)
+        }
+
+        function deleteAll(){
+
         }
 
     </script>
@@ -93,6 +99,7 @@
                 <th>메뉴</th>
                 <th>수량</th>
                 <th>가격</th>
+                <th><button onclick="deleteAll()">전체삭제</button></th>
             </tr>
         </thead>
         <tbody id="orderTable">
