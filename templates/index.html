@@ -10,39 +10,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
                 integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
                 crossorigin="anonymous"></script>
-        
-        <title>test</title>
-        <!-- css 분리부분 -->
-        <link rel="stylesheet" type="text/css" href = "../static/css/main.css">
-        
+        <title>맘스 키친 | Mos's Kitchen</title>
+        <link rel="stylesheet" type="text/css" href = "../static/css/common.css">
+        <script src="../static/js/common.js"> </script>
+        <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
         <script>
-                function includeHTML() {
-                        var z, i, elmnt, file, xhttp;
-                        /* Loop through a collection of all HTML elements: */
-                        z = document.getElementsByTagName("*");
-                        for (i = 0; i < z.length; i++) {
-                                elmnt = z[i];
-                                /*search for elements with a certain atrribute:*/
-                                file = elmnt.getAttribute("w3-include-html");
-                                if (file) {
-                                        /* Make an HTTP request using the attribute value as the file name: */
-                                        xhttp = new XMLHttpRequest();
-                                        xhttp.onreadystatechange = function () {
-                                                if (this.readyState == 4) {
-                                                        if (this.status == 200) { elmnt.innerHTML = this.responseText; }
-                                                        if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
-                                                        /* Remove the attribute, and call this function once more: */
-                                                        elmnt.removeAttribute("w3-include-html");
-                                                        includeHTML();
-                                                }
-                                        }
-                                        xhttp.open("GET", file, true);
-                                        xhttp.send();
-                                        /* Exit the function: */
-                                        return;
-                                }
-                        }
-                }
 
                 function testjax() {
                         $.ajax({
@@ -93,27 +65,50 @@
                         testjax();
                 });
         </script>
+
+
 </head>
 
 <body class="bodycs">
         <!-- <header w3-include-html = "header.html"></herder> -->
         <header w3-include-html="header.html"></header>
-        <button>일단 일괄 주문버튼도 있어야겟지?</button>
-        <div id="cards-box" class="card-columns">
-            <div class="card">
-                <img class="card-img-top"
-                     src="../static/img/KakaoTalk_20210719_190856996_23.jpg"
-                     alt="Card image cap"
-                     style="width: 100px; height: auto;">
-                <div class="card-body">
-                    <a target="_blank" href="#" class="card-title">반찬이름!!</a>
-                    <p class="card-text">가격 : 34000000000</p>
-                    <p class="card-text comment">대충 수량 넣는곳 + -</p>
-                    <button onclick=test()>장바구니 On</button>
-                    <button>바로주문.</button>
-                </div>
-            </div>
-                    
+        <div class="list">
+            <label>판매 목록</label>
+            <select id="banchan_list">
+                    <option value="all" selected>전체</option>
+                    <option value="kimch">김치</option>
+                    <option value="maleun">마른반찬</option>
+                    <option value="namul">나물</option>
+                    <option value="gug">국/탕/찌개</option>
+                    <option value="jolim">조림/구이</option>
+                    <option value="twigim">튀김/전</option>
+                    <option value="dosilag">도시락</option>
+                    <option value="jesa">제사/명절</option>
+            </select>
+        </div>
+        <div id="tab01" class="tab_contents">
+                탭 1
+        </div>
+        <div id="tab02" class="tab_contents">
+                탭 2
+        </div>
+        <div id="tab03" class="tab_contents">
+                탭 3
+        </div>
+        <div id="tab04" class="tab_contents">
+                탭 4
+        </div>
+        <div id="tab05" class="tab_contents">
+                탭 5
+        </div>
+        <div id="tab06" class="tab_contents">
+                탭 6
+        </div>
+        <div id="tab07" class="tab_contents">
+                탭 7
+        </div>
+        <div id="tab08" class="tab_contents">
+                탭 8
         </div>
 
         <script>
