@@ -106,9 +106,12 @@
             let isSame = false; //중복되는 메뉴가 있는지
             let value = [];
 
+            //console.log(localStorage.getItem(1))
+            //return false;
+
             if (localStorage.length > 0) {
                 for (let i = 1; i < localStorage.length+1; i++) {
-                    if (Number(index) < i) { //maxIndex 구하기
+                    if (Number(index) < i && localStorage.getItem(i) !== null) {
                         let cartItem = JSON.parse(localStorage.getItem(i))
                         index = cartItem.id;
 
@@ -172,7 +175,7 @@
             <div class="card-body">
                 <a target="_blank" href="#" class="card-title">어묵볶음_1</a>
                 <p class="card-text">가격 : <span class="price">3000</span></p>
-                <p class="card-text comment">대충 수량 넣는곳 + -<span class="count">1</span></p>
+                <p class="card-text comment">수량 : <span class="count">1</span></p>
                 <button onclick="addToCart(this)">장바구니 넣기</button>
             </div>
         </div>
