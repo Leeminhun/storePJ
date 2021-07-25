@@ -117,7 +117,6 @@
                 count: count,
                 img_url: img_url
             };
-
             localStorage.setItem(index, JSON.stringify(value)); //localStorage에 저장(덮어쓰기됨)
             window.location.reload();
         }
@@ -143,7 +142,7 @@
                         let menu = cartItem.menu;
                         let price = cartItem.price;
                         let count = cartItem.count;
-                        img_url = cartItem.img_url;
+                        let img_url = cartItem.img_url;
                         let value = {
                             id: id,
                             menu: menu,
