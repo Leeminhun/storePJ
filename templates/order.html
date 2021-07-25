@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>주문하기 페이지</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!--부트스트랩-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <!--사라질 style 코드-->
+    <style>
+        div {
+            backgroung-color : green;
+            width : 80%;
+            margin : auto;
+        }
+
+        .logo {
+        width: 150px;
+        height: auto;
+        margin: 50px auto;
+        text-align: center;
+    }
+    </style>
+    <script>
+        function postcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    var addr = ''; // 주소 변수
+                    var extraAddr = ''; // 참고항목 변수
+                    <!--//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.-->
+                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                        addr = data.roadAddress;
+                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                        addr = data.jibunAddress;
+                    }
+                    <!--// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.-->
+                    if (data.userSelectedType === 'R') {
+                       <!-- // 법정동명이 있을 경우 추가한다. (법정리는 제외)-->
+                        <!--// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.-->
+                        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                            extraAddr += data.bname;
+                        }
+                        <!--// 건물명이 있고, 공동주택일 경우 추가한다.-->
+                        if (data.buildingName !== '' && data.apartment === 'Y') {
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        <!--// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.-->
+                        if (extraAddr !== '') {
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                       <!-- // 조합된 참고항목을 해당 필드에 넣는다.-->
+                        document.getElementById("extraAddress").value = extraAddr;
+                    } else {
+                        document.getElementById("extraAddress").value = '';
+                    }
+                   <!-- // 우편번호와 주소 정보를 해당 필드에 넣는다.-->
+                    document.getElementById('postcode').value = data.zonecode;
+                    document.getElementById("address").value = addr;
+                    <!--// 커서를 상세주소 필드로 이동한다.-->
+                    document.getElementById("extraAddress").focus();
+                }
+            }).open();
+        }
+
+        function saveOrder() {
+            let name = $('#name').val()
+            let addr = $('#address').val() + ' ' + $('#extraAddress').val()
+            let code = $('#postcode').val()
+            let phone = $('#phone1').val() + '-' + $('#phone2').val() + '-' + $('#phone3').val()
+            if (name == "") {
+                alert("이름을 입력해주세요!");
+                return false;
+            } else if (code == "") {
+                alert("우편번호를 입력해주세요!");
+                return false;
+            } else if (addr == "") {
+                alert("주소를 입력해주세요!");
+                return false;
+            } else if (phone2 == "") {
+                alert("핸드폰번호를 전부 입력해주세요!");
+                return false;
+            } else if (phone3 == "") {
+                alert("핸드폰번호를 전부 입력해주세요!");
+                return false;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/order",
+                data: {
+                    "name": name,
+                    "addr": addr,
+                    "code": code,
+                    "phone": phone
+                },
+                success: function (response) {
+                    alert(response['msg']);
+                    window.location.reload()
+                }
+            })
+        }
+
+    </script>
+</head>
+<body>
+<!--헤더영역-->
+<header w3-include-html="header.html"></header>
+<!--삭제될 것-->
+<div>
+    <p>주문과정 <img src="#"></p>
+    <!--로고(css는 합칠 떄 수정할 예정 )-->
+    <img src="static/img/logo.png" class="logo">
+    <!--프로필사진-->
+    <img src="#">
+</div>
+<!--맘스키친 주문하기-->
+<div>
+    <p>맘스키친 주문하기</p>
+    <p>주문 과정</p>
+    <table border="1">
+        <tr>
+            <th>상품명</th>
+            <th>수량</th>
+            <th>가격</th>
+        </tr>
+        <tr>
+            <td>
+                <!--for문사용-->
+            </td>
+            <td>
+                <!--for문사용-->
+            </td>
+            <td>
+                <!--for문사용-->
+            </td>
+        </tr>
+    </table>
+    <p>결제하실 금액은 n원 입니다</p><hr>
+</div>
+<!--맘스키친 배송 날짜 선택-->
+<div>
+    <p>배송 날짜 선택</p>
+    <p align="center">배송 받으실 날짜를 선택해 주세요</p>
+    <form action ="#" method="POST">
+        <p align="center"> <input type="date"></p>
+        <!--날짜를 선택하면 n월 n일을 선택하셨습니다 뜨게-->
+
+        <p align="center"><textarea placeholder="배송 시 주의사항에 대해 입력해 주세요." cols="80%" rows="5" ></textarea></p>
+
+    </form>
+    <hr>
+</div>
+
+<!--맘스키친 개인정보 입력 폼-->
+<div style="background-color : gray;" align="center" >
+    <pre style="color : white">"계좌번호로 입금해주셔야 배송됩니다"
+    (계좌번호 : 기업 0100-00-0000)</pre>
+</div>
+<div style="width : 80%">
+    <form action="#">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text">이름 </label>
+            </div>
+            <p><input type="text"></p>
+        </div>
+
+        <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text">전화번호  </label>
+                </div>
+                <select class="custom-select" id="phone1">
+                    <option selected>선택</option>
+                    <option value="010">010</option>
+                    <option value="011">011</option>
+                    <option value="016">016</option>
+                    <option value="017">017</option>
+                    <option value="018">018</option>
+                    <option value="019">019</option>
+                </select>
+                -
+                <input type='tel' class="form-control" id="phone2" maxlength="4">
+                -
+                <input type='tel' class="form-control" id="phone3" maxlength="4">
+            </div>
+        <!--우편 API 해서 찾아보기 -->
+        <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">우편번호</span>
+                </div>
+                <input type="text" class="form-control" placeholder="우측 버튼을 클릭해 우편번호 검색하기" aria-label="address"
+                    aria-describedby="basic-addon1" id="postcode" readonly>
+                <button onclick="postcode()" type="submit" class="btn btn-primary">우편번호 찾기</button>
+            </div>
+        <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">배송 주소</span>
+                </div>
+                <input type="text" class="form-control" placeholder="주소" aria-label="address"
+                    aria-describedby="basic-addon1" id="address">
+                <input type="text" class="form-control" placeholder="상세주소" aria-label="address"
+                    aria-describedby="basic-addon1" id="extraAddress">
+            </div>
+    </form>
+
+</div>
+<div>
+    <!--주문 접수하기! 버튼 -->
+    <button type="button" class="btn btn-primary btn-lg btn-block">주문 접수하기!</button>
+</div>
+<!--푸터영역-->
+<header w3-include-html="footer.html"></header>
+</body>
+</html>
