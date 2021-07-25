@@ -47,6 +47,10 @@
             vertical-align: top;
             border-bottom: 1px solid #ccc;
         }
+
+        .thumbnail{
+            width:50px;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -68,12 +72,14 @@
                         menu = cartItem.menu;
                         price = cartItem.price;
                         count = cartItem.count;
+                        img_url = cartItem.img_url;
                         price_all += Number(price)
 
                         // 주의: index 앞뒤로 공백이 있으면 삭제버튼에서 index값을 불러올 때 공백까지 불러와서 에러 발생
                         temp_html += `
                             <tr>
                                 <td class="index">${index}</td>
+                                <td><img class="thumbnail" src="${img_url}" /></td>
                                 <td class="menu">${menu}</td>
                                 <td>${count}<button onclick="updateCount(this,1)" class="plus">+</buttn><button onclick="updateCount(this,-1)" class="minus">-</button></td>
                                 <td>${price}원</td>
@@ -103,11 +109,13 @@
             //총 가격에서 개수를 나눠 단가를 계산한 뒤, num을 곱해 +인지 -인지 결정
             let price = cartItem.price + num*(cartItem.price/cartItem.count);
             let count = cartItem.count + num;
+            img_url = cartItem.img_url;
             let value = {
                 id: id,
                 menu: menu,
                 price: price,
-                count: count
+                count: count,
+                img_url: img_url
             };
             //지금 새로 등록하려는 데이터를 localStorage에서 삭제(삭제하지 않으면 중복으로 남아있게 됨)
             localStorage.removeItem(target);
@@ -136,11 +144,13 @@
                         let menu = cartItem.menu;
                         let price = cartItem.price;
                         let count = cartItem.count;
+                        img_url = cartItem.img_url;
                         let value = {
                             id: id,
                             menu: menu,
                             price: price,
-                            count: count
+                            count: count,
+                            img_url: img_url
                         };
                         //지금 새로 등록하려는 데이터를 localStorage에서 삭제(삭제하지 않으면 중복으로 남아있게 됨)
                         localStorage.removeItem(i);
@@ -163,6 +173,7 @@
         <thead>
             <tr>
                 <th>번호</th>
+                <th>이미지</th>
                 <th>메뉴</th>
                 <th>수량</th>
                 <th>가격</th>

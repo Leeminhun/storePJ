@@ -100,6 +100,7 @@
             const menu = $(e).closest('div').find('a').text();
             let price_new = $(e).closest('div').find('.price').text();
             let count_new = $(e).closest('div').find('.count').text();
+            let img_url = $(e).closest('div').siblings('img').attr('src');
             let price = 0;
             let count = 0;
             let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
@@ -130,7 +131,8 @@
                     id: Number(index),
                     menu: menu,
                     price: Number(price) + Number(price_new),
-                    count: Number(count) + Number(count_new)
+                    count: Number(count) + Number(count_new),
+                    img_url: img_url
                 };
             } else { //새로운 메뉴인 경우 maxIndex + 1을 key로 하여 저장한다
                 index = Number(index) + 1;
@@ -138,7 +140,8 @@
                     id: Number(index),
                     menu: menu,
                     price: Number(price_new),
-                    count: Number(count_new)
+                    count: Number(count_new),
+                    img_url: img_url
                 };
             }
 
