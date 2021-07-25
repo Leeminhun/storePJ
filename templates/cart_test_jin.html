@@ -49,7 +49,7 @@
         }
 
         .thumbnail{
-            width:50px;
+            width:90px;
         }
     </style>
     <script>
@@ -107,8 +107,6 @@
          * @author 김진회
          */
         function updateCount(e, num){
-            console.log(e)
-            return false;
             //현재 고치려고 하는 데이터의 index값 찾기
             let target = $(e).closest('tr').find('.index').text();
             //해당 index의 데이터 불러오기

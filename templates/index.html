@@ -6,36 +6,11 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>test</title>
-        <link rel="stylesheet" type="text/css" href = "../static/css/main.css">
+        <title>맘스 키친 | Mos's Kitchen</title>
+        <link rel="stylesheet" type="text/css" href = "../static/css/common.css">
+        <script src="../static/js/common.js"> </script>
+        <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
         <script>
-                function includeHTML() {
-                        var z, i, elmnt, file, xhttp;
-                        /* Loop through a collection of all HTML elements: */
-                        z = document.getElementsByTagName("*");
-                        for (i = 0; i < z.length; i++) {
-                                elmnt = z[i];
-                                /*search for elements with a certain atrribute:*/
-                                file = elmnt.getAttribute("w3-include-html");
-                                if (file) {
-                                        /* Make an HTTP request using the attribute value as the file name: */
-                                        xhttp = new XMLHttpRequest();
-                                        xhttp.onreadystatechange = function () {
-                                                if (this.readyState == 4) {
-                                                        if (this.status == 200) { elmnt.innerHTML = this.responseText; }
-                                                        if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
-                                                        /* Remove the attribute, and call this function once more: */
-                                                        elmnt.removeAttribute("w3-include-html");
-                                                        includeHTML();
-                                                }
-                                        }
-                                        xhttp.open("GET", file, true);
-                                        xhttp.send();
-                                        /* Exit the function: */
-                                        return;
-                                }
-                        }
-                }
 
                 function testjax() {
                         $.ajax({
@@ -51,14 +26,54 @@
                                 }
                         });
                 }
+
+
+
         </script>
+
+
 </head>
 
 <body class="bodycs">
         <!-- <header w3-include-html = "header.html"></herder> -->
         <header w3-include-html="header.html"></header>
-        <div>
-                가나다라 마바사아자차카
+        <div class="list">
+            <label>판매 목록</label>
+            <select id="banchan_list">
+                    <option value="all" selected>전체</option>
+                    <option value="kimch">김치</option>
+                    <option value="maleun">마른반찬</option>
+                    <option value="namul">나물</option>
+                    <option value="gug">국/탕/찌개</option>
+                    <option value="jolim">조림/구이</option>
+                    <option value="twigim">튀김/전</option>
+                    <option value="dosilag">도시락</option>
+                    <option value="jesa">제사/명절</option>
+            </select>
+        </div>
+        <div id="tab01" class="tab_contents">
+                탭 1
+        </div>
+        <div id="tab02" class="tab_contents">
+                탭 2
+        </div>
+        <div id="tab03" class="tab_contents">
+                탭 3
+        </div>
+        <div id="tab04" class="tab_contents">
+                탭 4
+        </div>
+        <div id="tab05" class="tab_contents">
+                탭 5
+        </div>
+        <div id="tab06" class="tab_contents">
+                탭 6
+        </div>
+        <div id="tab07" class="tab_contents">
+                탭 7
+        </div>
+        <div id="tab08" class="tab_contents">
+                탭 8
         </div>
 
         <script>
