@@ -87,15 +87,13 @@
         }
     </style>
     <script>
-        /*
-        const CART_LS = 'cart';
-        let product = [];
 
-        function saveProduct(){
-            localStorage.setItem(CART_LS, JSON.stringify(product));
-        }
-        */
-
+        /**
+         * @brief localStorage (장바구니)에 클릭한 상품을 저장(추가)
+         * @param {object} 현재 클릭된 버튼 태그의 this
+         * @returns {}
+         * @author 김진회
+         */
         function addToCart(e){
             const menu = $(e).closest('div').find('a').text();
             let price_new = $(e).closest('div').find('.price').text();
@@ -106,9 +104,6 @@
             let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
             let isSame = false; //중복되는 메뉴가 있는지
             let value = [];
-
-            //console.log(localStorage.getItem(1))
-            //return false;
 
             if (localStorage.length > 0) {
                 for (let i = 1; i < localStorage.length+1; i++) {
