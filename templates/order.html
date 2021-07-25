@@ -113,6 +113,7 @@
 
         function showOrders(){
             let temp_html = ``;
+            let temp_html2 = ``;
             let menu = '';
             let price = 0;
             let count = 0;
@@ -145,6 +146,8 @@
                 }
             }
             $("#orderTable").append(temp_html)
+            temp_html2 = `결제하실 금액은 ${price_all}원 입니다`
+            $("#pricesum").html(temp_html2)
         }
 
          /**
@@ -233,8 +236,12 @@
          * @author 김진회
          */
         function deleteAll(){
-            window.localStorage.clear();
-            window.location.reload();
+            let answer = confirm("모든 상품을 삭제하시겟습니까?");
+            if(answer){
+                window.localStorage.clear();
+                window.location.reload();
+            }
+            
         }
 
 
@@ -247,7 +254,7 @@
 <div>
     <p>주문과정 <img src="#"></p>
     <!--로고(css는 합칠 떄 수정할 예정 )-->
-    <img src="../static/img/logo.png" class="logo">
+    <a href="/"><img src="../static/img/logo.png" class="logo"></a>
     <!--프로필사진-->
     <img src="#">
 </div>
@@ -263,7 +270,7 @@
                 <th>이름</th>
                 <th>수량</th>
                 <th>가격</th>
-                <th>주문 취소</th>
+                <th><button onclick="deleteAll()">전체삭제</button></th>
             </tr>
         </thead>
         <tbody id="orderTable">
@@ -271,7 +278,7 @@
         </tbody>
     </table>
 
-    <p>결제하실 금액은 n원 입니다</p>
+    <p id = "pricesum"></p>
     <hr>
 </div>
 <!--맘스키친 배송 날짜 선택-->

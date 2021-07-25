@@ -102,9 +102,9 @@ def objetdata():
 def test11():
     return render_template('test.html')
 
-@app.route('/testjin')
-def testjin():
-    return render_template('index_test_jin.html')
+@app.route('/order')
+def order():
+    return render_template('order.html')
 
 @app.route('/toto')
 def testdo():
