@@ -57,12 +57,19 @@
             showOrders();
         });
 
+        /**
+         * @brief localStorage에 저장된 장바구니 항목들을 가져와서 html을 작성합니다.
+         * @param {}
+         * @returns {}
+         * @author 김진회
+         */
         function showOrders(){
             let temp_html = ``;
             let menu = '';
             let price = 0;
             let count = 0;
-            let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
+            let index = 0;
+            let img_url = '';
             let price_all = 0;
             if (localStorage.length > 0) {
                 for (let i = 1; i < localStorage.length+1; i++) {
@@ -73,7 +80,7 @@
                         price = cartItem.price;
                         count = cartItem.count;
                         img_url = cartItem.img_url;
-                        price_all += Number(price)
+                        price_all += Number(price);
 
                         // 주의: index 앞뒤로 공백이 있으면 삭제버튼에서 index값을 불러올 때 공백까지 불러와서 에러 발생
                         temp_html += `
@@ -92,7 +99,16 @@
             $("#orderTable").append(temp_html)
         }
 
+        /**
+         * @brief localStorage 장바구니에 저장된 상품수량을 변경합니다.
+         * @param {object} 현재 클릭된 버튼 태그의 this
+         * @param {number} 현재 수량에 더할 숫자(+1 or -1)
+         * @returns {}
+         * @author 김진회
+         */
         function updateCount(e, num){
+            console.log(e)
+            return false;
             //현재 고치려고 하는 데이터의 index값 찾기
             let target = $(e).closest('tr').find('.index').text();
             //해당 index의 데이터 불러오기
@@ -121,6 +137,12 @@
             window.location.reload();
         }
 
+        /**
+         * @brief localStorage 장바구니에 저장된 상품을 삭제하고 key 순서를 재정렬합니다.
+         * @param {object} 현재 클릭된 버튼 태그의 this
+         * @returns {}
+         * @author 김진회
+         */
         function deleteMenu(e){
             //현재 버튼 누른 메뉴의 index값 불러와서 localStorage에서 삭제
             let del_index = $(e).closest('tr').find('.index').text();
@@ -159,6 +181,10 @@
             window.location.reload();
         }
 
+        /**
+         * @brief localStorage 데이터(장바구니) 전체 삭제
+         * @author 김진회
+         */
         function deleteAll(){
             window.localStorage.clear();
             window.location.reload();
