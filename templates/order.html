@@ -23,6 +23,11 @@
         margin: 50px auto;
         text-align: center;
     }
+
+    .thumbnail{
+            width:90px;
+        }
+
     </style>
     <script>
         function postcode() {
@@ -102,6 +107,137 @@
             })
         }
 
+        $(document).ready(function () {
+            showOrders();
+        });
+
+        function showOrders(){
+            let temp_html = ``;
+            let menu = '';
+            let price = 0;
+            let count = 0;
+            let index = 0;
+            let img_url = '';
+            let price_all = 0;
+            if (localStorage.length > 0) {
+                for (let i = 1; i < localStorage.length+1; i++) {
+                    if(localStorage.getItem(i) !== null){
+                        let cartItem = JSON.parse(localStorage.getItem(i))
+                        index = cartItem.id;
+                        menu = cartItem.menu;
+                        price = cartItem.price;
+                        count = cartItem.count;
+                        img_url = cartItem.img_url;
+                        price_all += Number(price);
+
+                        // 주의: index 앞뒤로 공백이 있으면 삭제버튼에서 index값을 불러올 때 공백까지 불러와서 에러 발생
+                        temp_html += `
+                            <tr>
+                                <td class="index">${index}</td>
+                                <td><img class="thumbnail" src="${img_url}" /></td>
+                                <td class="menu">${menu}</td>
+                                <td>${count}<button onclick="updateCount(this,1)" class="plus">+</buttn><button onclick="updateCount(this,-1)" class="minus">-</button></td>
+                                <td>${price}원</td>
+                                <td><button onclick="deleteMenu(this)">삭제</button></td>
+                            </tr>
+                        `;
+                    }
+                }
+            }
+            $("#orderTable").append(temp_html)
+        }
+
+         /**
+         * @brief localStorage 장바구니에 저장된 상품수량을 변경합니다.
+         * @param {object} 현재 클릭된 버튼 태그의 this
+         * @param {number} 현재 수량에 더할 숫자(+1 or -1)
+         * @returns {}
+         * @author 김진회
+         */
+         function updateCount(e, num){
+
+            //현재 고치려고 하는 데이터의 index값 찾기
+            let target = $(e).closest('tr').find('.index').text();
+            //해당 index의 데이터 불러오기
+            let cartItem = JSON.parse(localStorage.getItem(target))
+            //가져온 데이터에서 수량값이 현재 1이거나 그 이하이고 마이너스버튼을 눌렀을 경우엔 안내메시지 띄우고 중단
+            if(cartItem.count < 2 && num === -1){
+                alert("수량은 최소 1개입니다. 삭제를 원하실 경우 삭제버튼을 이용해주세요.");
+                return false;
+            }
+            //나머지는 그대로, 수량count과 가격price만 변경하여 기존 데이터를 삭제하고 다시 넣기
+            let index = Number(target);
+            let id = Number(index);
+            let menu = cartItem.menu;
+            //총 가격에서 개수를 나눠 단가를 계산한 뒤, num을 곱해 +인지 -인지 결정
+            let price = cartItem.price + num*(cartItem.price/cartItem.count);
+            let count = cartItem.count + num;
+            let img_url = cartItem.img_url;
+            let value = {
+                id: id,
+                menu: menu,
+                price: price,
+                count: count,
+                img_url: img_url
+            };
+            localStorage.setItem(index, JSON.stringify(value)); //localStorage에 저장(덮어쓰기됨)
+            window.location.reload();
+        }
+
+        /**
+         * @brief localStorage 장바구니에 저장된 상품을 삭제하고 key 순서를 재정렬합니다.
+         * @param {object} 현재 클릭된 버튼 태그의 this
+         * @returns {}
+         * @author 김진회
+         */
+        function deleteMenu(e){
+            //현재 버튼 누른 메뉴의 index값 불러와서 localStorage에서 삭제
+            let del_index = $(e).closest('tr').find('.index').text();
+            localStorage.removeItem(del_index);
+
+            //localStorage의 남은 값들을 모두 불러와서 index를 앞쪽숫자부터 다시 부여해서 순서대로 재등록(index와 cart페이지의 for문이 정상적으로 돌도록)
+            if (localStorage.length > 0) {
+                //새로운 index를 앞에서부터 차례로 부여해주기 위한 j 변수 선언
+                let j = 0;
+                //+2인 이유: 0부터가 아닌 1부터 시작하므로 +1, 이미 지워진 하나때문에 값이 하나씩 밀려있으므로 getItem(i)가 끝까지 다 가려면 +1
+                for (let i = 1; i < localStorage.length+2; i++) {
+                    if (localStorage.getItem(i) !== null) {
+                        j++;
+                        //전부 가져와서 그대로 재등록하기.(key, id값만 변경됨)
+                        let cartItem = JSON.parse(localStorage.getItem(i))
+                        //console.log(cartItem)
+                        let index = j;
+                        let id = Number(index);
+                        let menu = cartItem.menu;
+                        let price = cartItem.price;
+                        let count = cartItem.count;
+                        let img_url = cartItem.img_url;
+                        let value = {
+                            id: id,
+                            menu: menu,
+                            price: price,
+                            count: count,
+                            img_url: img_url
+                        };
+                        //지금 새로 등록하려는 데이터를 localStorage에서 삭제(삭제하지 않으면 중복으로 남아있게 됨)
+                        localStorage.removeItem(i);
+                        localStorage.setItem(index, JSON.stringify(value)); //localStorage에 저장
+                    }
+                }
+            }
+            window.location.reload();
+        }
+
+        /**
+         * @brief localStorage 데이터(장바구니) 전체 삭제
+         * @author 김진회
+         */
+        function deleteAll(){
+            window.localStorage.clear();
+            window.location.reload();
+        }
+
+
     </script>
 </head>
 <body>
@@ -111,7 +247,7 @@
 <div>
     <p>주문과정 <img src="#"></p>
     <!--로고(css는 합칠 떄 수정할 예정 )-->
-    <img src="static/img/logo.png" class="logo">
+    <img src="../static/img/logo.png" class="logo">
     <!--프로필사진-->
     <img src="#">
 </div>
@@ -119,42 +255,41 @@
 <div>
     <p>맘스키친 주문하기</p>
     <p>주문 과정</p>
-    <table border="1">
-        <tr>
-            <th>상품명</th>
-            <th>수량</th>
-            <th>가격</th>
-        </tr>
-        <tr>
-            <td>
-                <!--for문사용-->
-            </td>
-            <td>
-                <!--for문사용-->
-            </td>
-            <td>
-                <!--for문사용-->
-            </td>
-        </tr>
+    <table border=1>
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>이미지</th>
+                <th>이름</th>
+                <th>수량</th>
+                <th>가격</th>
+                <th>주문 취소</th>
+            </tr>
+        </thead>
+        <tbody id="orderTable">
+
+        </tbody>
     </table>
-    <p>결제하실 금액은 n원 입니다</p><hr>
+
+    <p>결제하실 금액은 n원 입니다</p>
+    <hr>
 </div>
 <!--맘스키친 배송 날짜 선택-->
 <div>
     <p>배송 날짜 선택</p>
     <p align="center">배송 받으실 날짜를 선택해 주세요</p>
-    <form action ="#" method="POST">
-        <p align="center"> <input type="date"></p>
+    <form action="#" method="POST">
+        <p align="center"><input type="date"></p>
         <!--날짜를 선택하면 n월 n일을 선택하셨습니다 뜨게-->
 
-        <p align="center"><textarea placeholder="배송 시 주의사항에 대해 입력해 주세요." cols="80%" rows="5" ></textarea></p>
+        <p align="center"><textarea placeholder="배송 시 주의사항에 대해 입력해 주세요." cols="80%" rows="5"></textarea></p>
 
     </form>
     <hr>
 </div>
 
 <!--맘스키친 개인정보 입력 폼-->
-<div style="background-color : gray;" align="center" >
+<div style="background-color : gray;" align="center">
     <pre style="color : white">"계좌번호로 입금해주셔야 배송됩니다"
     (계좌번호 : 기업 0100-00-0000)</pre>
 </div>
@@ -162,47 +297,48 @@
     <form action="#">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <label class="input-group-text">이름 </label>
+                <span class="input-group-text" id="basic-addon1">이름</span>
             </div>
-            <p><input type="text"></p>
+            <input type="text" class="form-control" placeholder="이름을 입력해주세요" aria-label="name"
+                   aria-describedby="basic-addon1" id="name">
         </div>
 
         <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text">전화번호  </label>
-                </div>
-                <select class="custom-select" id="phone1">
-                    <option selected>선택</option>
-                    <option value="010">010</option>
-                    <option value="011">011</option>
-                    <option value="016">016</option>
-                    <option value="017">017</option>
-                    <option value="018">018</option>
-                    <option value="019">019</option>
-                </select>
-                -
-                <input type='tel' class="form-control" id="phone2" maxlength="4">
-                -
-                <input type='tel' class="form-control" id="phone3" maxlength="4">
+            <div class="input-group-prepend">
+                <label class="input-group-text">전화번호 </label>
             </div>
+            <select class="custom-select" id="phone1">
+                <option selected>선택</option>
+                <option value="010">010</option>
+                <option value="011">011</option>
+                <option value="016">016</option>
+                <option value="017">017</option>
+                <option value="018">018</option>
+                <option value="019">019</option>
+            </select>
+            -
+            <input type='tel' class="form-control" id="phone2" maxlength="4">
+            -
+            <input type='tel' class="form-control" id="phone3" maxlength="4">
+        </div>
         <!--우편 API 해서 찾아보기 -->
         <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">우편번호</span>
-                </div>
-                <input type="text" class="form-control" placeholder="우측 버튼을 클릭해 우편번호 검색하기" aria-label="address"
-                    aria-describedby="basic-addon1" id="postcode" readonly>
-                <button onclick="postcode()" type="submit" class="btn btn-primary">우편번호 찾기</button>
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">우편번호</span>
             </div>
+            <input type="text" class="form-control" placeholder="우측 버튼을 클릭해 우편번호 검색하기" aria-label="address"
+                   aria-describedby="basic-addon1" id="postcode" readonly>
+            <button onclick="postcode()" type="submit" class="btn btn-primary">우편번호 찾기</button>
+        </div>
         <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">배송 주소</span>
-                </div>
-                <input type="text" class="form-control" placeholder="주소" aria-label="address"
-                    aria-describedby="basic-addon1" id="address">
-                <input type="text" class="form-control" placeholder="상세주소" aria-label="address"
-                    aria-describedby="basic-addon1" id="extraAddress">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">배송 주소</span>
             </div>
+            <input type="text" class="form-control" placeholder="주소" aria-label="address"
+                   aria-describedby="basic-addon1" id="address">
+            <input type="text" class="form-control" placeholder="상세주소" aria-label="address"
+                   aria-describedby="basic-addon1" id="extraAddress">
+        </div>
     </form>
 
 </div>
@@ -211,6 +347,6 @@
     <button type="button" class="btn btn-primary btn-lg btn-block">주문 접수하기!</button>
 </div>
 <!--푸터영역-->
-<header w3-include-html="footer.html"></header>
+<footer w3-include-html="footer.html"></footer>
 </body>
 </html>
