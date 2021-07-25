@@ -109,7 +109,7 @@
             //총 가격에서 개수를 나눠 단가를 계산한 뒤, num을 곱해 +인지 -인지 결정
             let price = cartItem.price + num*(cartItem.price/cartItem.count);
             let count = cartItem.count + num;
-            img_url = cartItem.img_url;
+            let img_url = cartItem.img_url;
             let value = {
                 id: id,
                 menu: menu,
@@ -142,7 +142,7 @@
                         let menu = cartItem.menu;
                         let price = cartItem.price;
                         let count = cartItem.count;
-                        img_url = cartItem.img_url;
+                        let img_url = cartItem.img_url;
                         let value = {
                             id: id,
                             menu: menu,
