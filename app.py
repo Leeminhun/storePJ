@@ -91,6 +91,10 @@ def objetdata():
 def test11():
     return render_template('test.html')
 
+@app.route('/testjin')
+def testjin():
+    return render_template('index_test_jin.html')
+
 @app.route('/mypage/do', methods=['GET'])
 def post_test():
     test = list(db.user.find({},{'_id': False}))
