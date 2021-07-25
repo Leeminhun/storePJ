@@ -16,6 +16,61 @@
         <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
         <script>
 
+                 /**
+         * @brief localStorage (장바구니)에 클릭한 상품을 저장(추가)
+         * @param {object} 현재 클릭된 버튼 태그의 this
+         * @returns {}
+         * @author 김진회
+         */
+        function addToCart(e){
+            const menu = $(e).closest('div').find('a').text();
+            let price_new = $(e).closest('div').find('.price').text();
+            let count_new = $(e).closest('div').find('.count').text();
+            let img_url = $(e).closest('div').siblings('img').attr('src');
+            let price = 0;
+            let count = 0;
+            let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
+            let isSame = false; //중복되는 메뉴가 있는지
+            let value = [];
+
+            if (localStorage.length > 0) {
+                for (let i = 1; i < localStorage.length+1; i++) {
+                    if (Number(index) < i && localStorage.getItem(i) !== null) {
+                        let cartItem = JSON.parse(localStorage.getItem(i))
+                        index = cartItem.id;
+
+                        //menu 이름이 같으면 같은 메뉴
+                        if(JSON.stringify(cartItem.menu) === JSON.stringify(menu)){
+                            isSame = true;
+                            price = cartItem.price;
+                            count = cartItem.count;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (isSame === true) { //중복되는 물건이 장바구니에 있는 경우 price와 count만 바꿔준다
+                value = {
+                    id: Number(index),
+                    menu: menu,
+                    price: Number(price) + Number(price_new),
+                    count: Number(count) + Number(count_new),
+                    img_url: img_url
+                };
+            } else { //새로운 메뉴인 경우 maxIndex + 1을 key로 하여 저장한다
+                index = Number(index) + 1;
+                value = {
+                    id: Number(index),
+                    menu: menu,
+                    price: Number(price_new),
+                    count: Number(count_new),
+                    img_url: img_url
+                };
+            }
+
+            localStorage.setItem(index, JSON.stringify(value)); //localStorage에 저장
+        }
+
                 function testjax() {
                         $.ajax({
                                 type: 'GET',
@@ -24,35 +79,75 @@
                                 success: function (response) {
                                         let articles = response['data'];
                                         let a = JSON.parse(articles)
-                                        console.log(a)
+                                        //console.log(a)
+                                        let temp_html = ``;
                                         for(let i = 0 ; i < a.length ; i++){
                                                 let img = a[i]["img"]
                                                 let menu = a[i]['menu']
                                                 let price = a[i]['price']
                                                 let hide = a[i]['hide']
-
-                                                // console.log(img,menu,price,hide)
-
-                                                let temp_html = `
-                                                <div class="card">
-                                                        <img class="card-img-top"
-                                                        src="${img}"
-                                                        alt="Card image cap"
-                                                        style="width: 100px; height: auto;">
-                                                        <div class="card-body">
-                                                        <a target="_blank" href="#" class="card-title">${menu}</a>
-                                                        <p class="card-text">가격 : ${price}</p>
-                                                        <p class="card-text comment">대충 수량 넣는곳 + -</p>
-                                                        <button onclick=test()>장바구니 On</button>
-                                                        <button>바로주문.</button>
-                                                        </div>
-                                                </div>
-                                                `
-                                                if(hide == 0){
-                                                        $("#cards-box").append(temp_html)
+                                                let rc = a[i]['category']
+                                                
+                                                console.log($("#banchan_list option:checked").text())
+                                                
+                                                //console.log(typeof(rc))
+                                                
+                                                
+                                                if( $("#banchan_list option:checked").text() == '전체' && hide == 0){
+                                                        temp_html += `
+                                                                <div class="card">
+                                                                        <img class="card-img-top"
+                                                                        src="${img}"
+                                                                        alt="Card image cap"
+                                                                        style="width: 100px; height: auto;">
+                                                                        <div class="card-body">
+                                                                        <a target="_blank" href="#" class="card-title">${menu}</a>
+                                                                        <p class="card-text">가격 : <span class="price">${price}</span></p>
+                                                                        <p class="card-text comment">수량 : <span class="count">1</span></p>
+                                                                        <button onclick=addToCart(this)>장바구니 On</button>
+                                                                        </div>
+                                                                </div>
+                                                                `
                                                 }
+                                                else if(rc == $("#banchan_list option:checked").text() && hide == 0){
+                                                        temp_html += `
+                                                                <div class="card">
+                                                                        <img class="card-img-top"
+                                                                        src="${img}"
+                                                                        alt="Card image cap"
+                                                                        style="width: 100px; height: auto;">
+                                                                        <div class="card-body">
+                                                                        <a target="_blank" href="#" class="card-title">${menu}</a>
+                                                                        <p class="card-text">가격 : ${price}</p>
+                                                                        <p class="card-text comment">대충 수량 넣는곳 + -</p>
+                                                                        <button onclick=addToCart(this)>장바구니 On</button>
+                                                                        </div>
+                                                                </div>
+                                                                `
+                                                }
+
+                                                // let temp_html = `
+                                                // <div class="card">
+                                                //         <img class="card-img-top"
+                                                //         src="${img}"
+                                                //         alt="Card image cap"
+                                                //         style="width: 100px; height: auto;">
+                                                //         <div class="card-body">
+                                                //         <a target="_blank" href="#" class="card-title">${menu}</a>
+                                                //         <p class="card-text">가격 : ${price}</p>
+                                                //         <p class="card-text comment">대충 수량 넣는곳 + -</p>
+                                                //         <button onclick=test()>장바구니 On</button>
+                                                //         <button>바로주문.</button>
+                                                //         </div>
+                                                // </div>
+                                                // `
+                                                // if(hide == 0){
+                                                //         //$("#cards-box").append(temp_html)
+                                                //         $("#cards-box").html(temp_html)
+                                                // }
                                                 
                                         }
+                                        $("#cards-box").html(temp_html)
                                         
 
                                 }
@@ -74,7 +169,7 @@
         <header w3-include-html="header.html"></header>
         <div class="list">
             <label>판매 목록</label>
-            <select id="banchan_list">
+            <select id="banchan_list" onchange="testjax()">
                     <option value="all" selected>전체</option>
                     <option value="kimch">김치</option>
                     <option value="maleun">마른반찬</option>
@@ -86,29 +181,9 @@
                     <option value="jesa">제사/명절</option>
             </select>
         </div>
-        <div id="tab01" class="tab_contents">
-                탭 1
-        </div>
-        <div id="tab02" class="tab_contents">
-                탭 2
-        </div>
-        <div id="tab03" class="tab_contents">
-                탭 3
-        </div>
-        <div id="tab04" class="tab_contents">
-                탭 4
-        </div>
-        <div id="tab05" class="tab_contents">
-                탭 5
-        </div>
-        <div id="tab06" class="tab_contents">
-                탭 6
-        </div>
-        <div id="tab07" class="tab_contents">
-                탭 7
-        </div>
-        <div id="tab08" class="tab_contents">
-                탭 8
+        <div id="cards-box" class="card-columns">
+             
+                        
         </div>
 
         <script>

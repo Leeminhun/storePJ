@@ -24,7 +24,7 @@ app.config['SECRET_KEY'] = '123456790'
 conn = MongoClient()
 db = conn.bdd
 conn = MongoClient('localhost', 27017)
-db = conn.test
+db = conn.bdd
 
 
 # User admin
@@ -106,11 +106,15 @@ def test11():
 def testjin():
     return render_template('index_test_jin.html')
 
+@app.route('/toto')
+def testdo():
+    return render_template('cart_test_jin.html')
+
 @app.route('/mypage/do', methods=['GET'])
 def post_test():
-    test = list(db.user.find({},{'_id': False}))
+    test = list(db.menu.find({},{'_id': False}))
     #test = [doc for doc in db.user.find({},{'_id': False})]
-    print(type(test))
+    print(test)
     
     
 
