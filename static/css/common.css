@@ -1,0 +1,106 @@
+/*header*/
+body{
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: darkblue;
+    padding: 8px 12px;
+}
+
+.navbar_logo{
+    font-size: 24px;
+    color: darkgrey;
+}
+.navbar_logo i {
+    color: orange;
+}
+
+.navbar_menu {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+}
+
+.navbar_menu li {
+    padding : 8px 12px;
+}
+.navbar_menu li:hover {
+    background-color: orange;
+    border-radius: 3px;
+}
+.navbar_icons{
+    list-style: none;
+    color: white;
+    display: flex;
+    padding-left: 0;
+}
+
+.navbar_icons li {
+ padding : 8px 12px;
+}
+
+.navbar_toogleBtn {
+    display: none;
+    position : absolute;
+    right: 32px;
+    font-size: 24px;
+    color: orange;
+}
+
+/* header 모바일 화면
+@media screen and (max-width : 768px){
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding : 8px 24px;
+    }
+
+    .navbar_menu {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+
+    }
+
+    .navbar_menu li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navbar_icons {
+        display: none;
+        width: 100%;
+        justify-content: center;
+
+    }
+    .navbar_toogleBtn{
+        display: block;
+    }
+
+    .navbar_menu.active,
+    .navbar_icons.active{
+        display: flex;
+    }
+
+} */
+
+/*tab Menu*/
+.big_tab ul{overflow: hidden; width: 100%;}
+.big_tab ul li{width: 25%; box-sizing: border-box; float: left; list-style-type: none; border: 1px solid #ccc; text-align: center; line-height: 40px;}
+.big_tab ul li.activeClass{font-weight: bold; font-size: 20px;}
+.sm_select {display: none;}
+.sm_select select {width:100%; height: 40px; }
+
+
+@media (max-width:500px){
+      .sm_select {display: block;}
+      .big_tab{display: none;}
+ }
