@@ -121,7 +121,14 @@ def post_test():
     return jsonify({'data': dumps(test)})
     raise TypeError('타입 에러 확인')
 
-
+@app.route('/bluenight/check', methods=['POST'])
+def admin_pass():
+    something = request.form['pass']
+    correct = "cha'smom"
+    if(something == correct):
+       return jsonify({'chk':'true'})
+    else:
+       return jsonify({'chk':'false','msg':'틀렸습니다'})
 
 
 
