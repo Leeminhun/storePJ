@@ -105,7 +105,11 @@ def test11():
 def order():
     return render_template('order.html')
 
-@app.route('/orderlist/find')
+@app.route('/orderlist')
+def orderlist():
+    return render_template('orderlist.html')
+
+@app.route('/orderlist/find', methods=['POST'])
 def find_orderlist():
     phone = request.form['phone']
     orderlist = list(db.menu.find({'phone':phone}, {'_id': False}))
