@@ -31,6 +31,9 @@ a {
 .navbar_menu li {
     padding : 8px 12px;
 }
+.navbar_menu li a {
+    color: whitesmoke;
+}
 .navbar_menu li:hover {
     background-color: orange;
     border-radius: 3px;
@@ -46,6 +49,10 @@ a {
  padding : 8px 12px;
 }
 
+.navbar_icons li a {
+    color: whitesmoke;
+}
+
 .navbar_toogleBtn {
     display: none;
     position : absolute;
@@ -54,6 +61,21 @@ a {
     color: orange;
 }
 
+/*판매목록*/
+.list {
+    text-align: center;
+    margin-top: 30px;
+}
+#banchan_list{  
+    width: 60%;
+    height: 20%;
+    text-align-last: center;
+    
+}
+
+#banchan_list option{
+
+}
 /* header 모바일 화면
 @media screen and (max-width : 768px){
     .navbar {
@@ -93,14 +115,14 @@ a {
 } */
 
 /*tab Menu*/
-.big_tab ul{overflow: hidden; width: 100%;}
-.big_tab ul li{width: 25%; box-sizing: border-box; float: left; list-style-type: none; border: 1px solid #ccc; text-align: center; line-height: 40px;}
-.big_tab ul li.activeClass{font-weight: bold; font-size: 20px;}
-.sm_select {display: none;}
-.sm_select select {width:100%; height: 40px; }
+.menu_card {
+    width: 65%;
+    margin: auto;
+    display: table;
+    position: relative;
+}
 
-
-@media (max-width:500px){
-      .sm_select {display: block;}
-      .big_tab{display: none;}
- }
+.menu_card div.card {
+    width: 50%;
+    float: left;
+}
