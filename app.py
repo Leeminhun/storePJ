@@ -112,7 +112,9 @@ def orderlist():
 @app.route('/orderlist/find', methods=['POST'])
 def find_orderlist():
     phone = request.form['phone']
-    orderlist = list(db.menu.find({'phone':phone}, {'_id': False}))
+    print(phone)
+    orderlist = list(db.order.find({'phon':phone}, {'_id': False}))
+    print(orderlist)
     return jsonify({'orderlist':orderlist, 'msg':'조회완료!'})
 
 @app.route('/toto')
