@@ -105,6 +105,12 @@ def test11():
 def order():
     return render_template('order.html')
 
+@app.route('/orderlist/find')
+def find_orderlist():
+    phone = request.form['phone']
+    orderlist = list(db.menu.find({'phone':phone}, {'_id': False}))
+    return jsonify({'orderlist':orderlist, 'msg':'조회완료!'})
+
 @app.route('/toto')
 def testdo():
     return render_template('cart_test_jin.html')
