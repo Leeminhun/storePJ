@@ -1,3 +1,4 @@
+
 from os import name
 from flask_admin import model
 from pymongo import MongoClient
@@ -9,10 +10,8 @@ from flask_admin.contrib.pymongo import ModelView, filters, view
 from bson.json_util import dumps
 import json
 from bson import json_util
-
-
+import html
 from flask import Flask, render_template, jsonify, request
-
 
 # Create application
 app = Flask(__name__)
@@ -106,6 +105,12 @@ def test11():
 def order():
     return render_template('order.html')
 
+@app.route('/orderlist/find', methods=['POST'])
+def find_orderlist():
+    phone = request.form['phone']
+    orderlist = list(db.menu.find({'phone':phone}, {'_id': False}))
+    return jsonify({'orderlist':orderlist, 'msg':'조회완료!'})
+
 @app.route('/toto')
 def testdo():
     return render_template('cart_test_jin.html')
@@ -115,38 +120,18 @@ def post_test():
     test = list(db.menu.find({},{'_id': False}))
     #test = [doc for doc in db.user.find({},{'_id': False})]
     print(test)
-    
 
     return jsonify({'data': dumps(test)})
     raise TypeError('타입 에러 확인')
-@app.route('/order/do', methods=['POST'])
-def orderseve():
-   
-    name_receive = request.form['name']
-    addr_receive = request.form['addr']
-    code_receive = request.form['code']
-    phone_receive = request.form['phone']
-    orderlist_receive = request.form.getlist('orderlist[]')
-    date_receive = request.form['date']
-    ero_receive = request.form['ero']
-    doc = {
-        'name':name_receive,
-        'addr':addr_receive,
-        'code':code_receive,
-        'phon':phone_receive,
-        'listorder':orderlist_receive,
-        'date':date_receive,
-        'ero':ero_receive
-    }
-    # 오더 리스트의 0:매뉴이름 1:가격 2:수량
-    print(doc)
-    db.order.insert_one(doc)
 
-    return jsonify({'msg':'이름: '+name_receive})
-
-@app.route('/doto')
-def test123():
-    return render_template('dotest.html')
+@app.route('/bluenight/check', methods=['POST'])
+def admin_pass():
+    something = request.form['pass']
+    correct = "cha"
+    if(something == correct):
+       return jsonify({'chk':'true'})
+    else:
+       return jsonify({'chk':'false','msg':'틀렸습니다'})
 
 
 

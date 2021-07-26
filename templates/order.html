@@ -75,17 +75,13 @@
             let addr = $('#address').val() + ' ' + $('#extraAddress').val()
             let code = $('#postcode').val()
             let phone = $('#phone1').val() + '-' + $('#phone2').val() + '-' + $('#phone3').val()
+            let phone2 = $('#phone2').val()
+            let phone3 = $('#phone3').val()
             let date = $('#datedata').val()
             let ero = $('#error').val()
 
             if (name == "") {
                 alert("이름을 입력해주세요!");
-                return false;
-            } else if (code == "") {
-                alert("우편번호를 입력해주세요!");
-                return false;
-            } else if (addr == "") {
-                alert("주소를 입력해주세요!");
                 return false;
             } else if (phone2 == "") {
                 alert("핸드폰번호를 전부 입력해주세요!");
@@ -93,17 +89,21 @@
             } else if (phone3 == "") {
                 alert("핸드폰번호를 전부 입력해주세요!");
                 return false;
+            }else if (code == "") {
+                alert("우편번호를 입력해주세요!");
+                return false;
+            } else if (addr == "") {
+                alert("주소를 입력해주세요!");
+                return false;
             }else if ( date == "") {
                 alert("날자를 입력해주세요");
                 return false;
-            } else if (code == null) {
+            } else if (ero == "") {
                 let answer = confirm("배송시 주의사항이 필요없으신가요?");
                 if (answer == false){
                     return false;   
                 }    
             }
-
-            
             let menu = '';
             let price = 0;
             let count = 0;
@@ -195,7 +195,8 @@
                 }
             }
             $("#orderTable").append(temp_html)
-            temp_html2 = `결제하실 금액은 ${price_all}원 입니다`
+            temp_html2 = `<p>총 상품가격 ${price_all}원 입니다</p><br><p>배송비 4000원 포함</p><br> 
+            <p>총 결제하실 가격 ${price_all+4000}원`
             $("#pricesum").html(temp_html2)
         }
 
@@ -364,8 +365,7 @@
                 <label class="input-group-text">전화번호 </label>
             </div>
             <select class="custom-select" id="phone1">
-                <option selected>선택</option>
-                <option value="010">010</option>
+                <option value="010" selected>010</option>
                 <option value="011">011</option>
                 <option value="016">016</option>
                 <option value="017">017</option>
