@@ -1,0 +1,128 @@
+/*header*/
+body{
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: red;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: darkblue;
+    padding: 8px 12px;
+}
+
+.navbar_logo{
+    font-size: 24px;
+    color: darkgrey;
+}
+.navbar_logo i {
+    color: orange;
+}
+
+.navbar_menu {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+}
+
+.navbar_menu li {
+    padding : 8px 12px;
+}
+.navbar_menu li a {
+    color: whitesmoke;
+}
+.navbar_menu li:hover {
+    background-color: orange;
+    border-radius: 3px;
+}
+.navbar_icons{
+    list-style: none;
+    color: white;
+    display: flex;
+    padding-left: 0;
+}
+
+.navbar_icons li {
+ padding : 8px 12px;
+}
+
+.navbar_icons li a {
+    color: whitesmoke;
+}
+
+.navbar_toogleBtn {
+    display: none;
+    position : absolute;
+    right: 32px;
+    font-size: 24px;
+    color: orange;
+}
+
+/*판매목록*/
+.list {
+    text-align: center;
+    margin-top: 30px;
+}
+#banchan_list{  
+    width: 60%;
+    height: 20%;
+    text-align-last: center;
+    
+}
+
+#banchan_list option{
+
+}
+/* header 모바일 화면
+@media screen and (max-width : 768px){
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding : 8px 24px;
+    }
+
+    .navbar_menu {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+
+    }
+
+    .navbar_menu li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navbar_icons {
+        display: none;
+        width: 100%;
+        justify-content: center;
+
+    }
+    .navbar_toogleBtn{
+        display: block;
+    }
+
+    .navbar_menu.active,
+    .navbar_icons.active{
+        display: flex;
+    }
+
+} */
+
+/*tab Menu*/
+.menu_card {
+    width: 65%;
+    margin: auto;
+    display: table;
+    position: relative;
+}
+
+.menu_card div.card {
+    width: 50%;
+    float: left;
+}

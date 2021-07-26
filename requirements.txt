@@ -2,3 +2,4 @@
     flask-admin
     pymongo
     requests
+    flask-login

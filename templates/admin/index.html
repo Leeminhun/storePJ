@@ -1,9 +1,28 @@
 {% extends 'admin/master.html' %}
 
 {% block body %}
-<p>버튼 텍스트 변경(master.index를 가져와서 수정해야하나) / 완료</p>
-<p>주문 내역 리스트 만들기 , 주문 상태 변경 / 완료</p>
-<p>주문 내역 리스트 주문 상태만 변경 가능하게 끔 / 일단 더알아보는거로</p>
-<p>이미지 파일 넣기 (파일 주소?)</p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    const inputString = prompt("?")
+    if(inputString === ""){
+        alert("아무것도 입력하지 않았습니다.")
+        window.location.reload()
+    } else {
+        $.ajax({
+            type: 'POST',
+            url: '/bluenight/check',
+            data: {pass: inputString},
+            success: function (response) {
+                if(response.chk === 'true'){
+
+                } else {
+                    alert(response.msg)
+                    window.location.reload()
+                }
+            }
+        })
+    }
+</script>
+<h2>사진은 이미지경로를 입력해주세요 (예시:static/img/logo.jpg)</h2>
 <p>admin 페이지 접근, 보안 구현</p>
 {% endblock %}
