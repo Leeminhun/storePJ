@@ -116,12 +116,37 @@ def post_test():
     #test = [doc for doc in db.user.find({},{'_id': False})]
     print(test)
     
-    
 
     return jsonify({'data': dumps(test)})
     raise TypeError('타입 에러 확인')
+@app.route('/order/do', methods=['POST'])
+def orderseve():
+   
+    name_receive = request.form['name']
+    addr_receive = request.form['addr']
+    code_receive = request.form['code']
+    phone_receive = request.form['phone']
+    orderlist_receive = request.form.getlist('orderlist[]')
+    date_receive = request.form['date']
+    ero_receive = request.form['ero']
+    doc = {
+        'name':name_receive,
+        'addr':addr_receive,
+        'code':code_receive,
+        'phon':phone_receive,
+        'listorder':orderlist_receive,
+        'date':date_receive,
+        'ero':ero_receive
+    }
+    # 오더 리스트의 0:매뉴이름 1:가격 2:수량
+    print(doc)
+    db.order.insert_one(doc)
 
+    return jsonify({'msg':'이름: '+name_receive})
 
+@app.route('/doto')
+def test123():
+    return render_template('dotest.html')
 
 
 
