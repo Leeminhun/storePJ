@@ -129,7 +129,7 @@ def post_test():
 @app.route('/bluenight/check', methods=['POST'])
 def admin_pass():
     something = request.form['pass']
-    correct = "cha'smom"
+    correct = "cha"
     if(something == correct):
        return jsonify({'chk':'true'})
     else:
