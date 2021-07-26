@@ -113,7 +113,6 @@ def orderlist():
 def find_orderlist():
     phone = request.form['phone']
     orderlist = list(db.order.find({'phone':phone}, {'_id': False}))
-
     return jsonify({'orderlist':orderlist, 'msg':'조회완료!'})
 
 @app.route('/toto')
@@ -166,6 +165,8 @@ def orderseve():
     db.order.insert_one(doc)
 
     return jsonify({'msg':'이름: '+name_receive})
+
+
 
 
 if __name__ == '__main__':
