@@ -105,10 +105,14 @@ def test11():
 def order():
     return render_template('order.html')
 
+@app.route('/orderlist')
+def orderlist():
+    return render_template('orderlist.html')
+
 @app.route('/orderlist/find', methods=['POST'])
 def find_orderlist():
     phone = request.form['phone']
-    orderlist = list(db.menu.find({'phone':phone}, {'_id': False}))
+    orderlist = list(db.order.find({'phone':phone}, {'_id': False}))
     return jsonify({'orderlist':orderlist, 'msg':'조회완료!'})
 
 @app.route('/toto')
@@ -120,6 +124,8 @@ def post_test():
     test = list(db.menu.find({},{'_id': False}))
     #test = [doc for doc in db.user.find({},{'_id': False})]
     print(test)
+    
+    
 
     return jsonify({'data': dumps(test)})
     raise TypeError('타입 에러 확인')
@@ -132,6 +138,34 @@ def admin_pass():
        return jsonify({'chk':'true'})
     else:
        return jsonify({'chk':'false','msg':'틀렸습니다'})
+
+@app.route('/order/do', methods=['POST'])
+def orderseve():
+
+    name_receive = request.form['name']
+    addr_receive = request.form['addr']
+    code_receive = request.form['code']
+    phone_receive = request.form['phone']
+    orderlist_receive = request.form.getlist('orderlist[]')
+    date_receive = request.form['date']
+    ero_receive = request.form['ero']
+    priceall_receive = request.form['price_all']
+    doc = {
+        'name':name_receive,
+        'addr':addr_receive,
+        'code':code_receive,
+        'phone':phone_receive,
+        'listorder':orderlist_receive,
+        'date':date_receive,
+        'ero':ero_receive,
+        'price_all':priceall_receive
+    }
+    # 오더 리스트의 0:매뉴이름 1:가격 2:수량
+    print(doc)
+    db.order.insert_one(doc)
+
+    return jsonify({'msg':'이름: '+name_receive})
+
 
 
 
