@@ -3,5 +3,7 @@
 ## 가상환경 패키지list
 bs4 , flask , flask-Admin , requests
 pymongo
+ESLint
+git 프로잭트 git view history
 임포트 json <<---- 꼭해야됩니다..
 
