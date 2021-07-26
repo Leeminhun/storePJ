@@ -112,13 +112,8 @@ def orderlist():
 @app.route('/orderlist/find', methods=['POST'])
 def find_orderlist():
     phone = request.form['phone']
-<<<<<<< HEAD
-    print(phone)
-    orderlist = list(db.order.find({'phon':phone}, {'_id': False}))
-    print(orderlist)
-=======
     orderlist = list(db.order.find({'phone':phone}, {'_id': False}))
->>>>>>> 85d6c23888df3344ccffd429e8622d62d106bc90
+
     return jsonify({'orderlist':orderlist, 'msg':'조회완료!'})
 
 @app.route('/toto')
@@ -145,6 +140,32 @@ def admin_pass():
     else:
        return jsonify({'chk':'false','msg':'틀렸습니다'})
 
+@app.route('/order/do', methods=['POST'])
+def orderseve():
+
+    name_receive = request.form['name']
+    addr_receive = request.form['addr']
+    code_receive = request.form['code']
+    phone_receive = request.form['phone']
+    orderlist_receive = request.form.getlist('orderlist[]')
+    date_receive = request.form['date']
+    ero_receive = request.form['ero']
+    priceall_receive = request.form['price_all']
+    doc = {
+        'name':name_receive,
+        'addr':addr_receive,
+        'code':code_receive,
+        'phone':phone_receive,
+        'listorder':orderlist_receive,
+        'date':date_receive,
+        'ero':ero_receive,
+        'price_all':priceall_receive
+    }
+    # 오더 리스트의 0:매뉴이름 1:가격 2:수량
+    print(doc)
+    db.order.insert_one(doc)
+
+    return jsonify({'msg':'이름: '+name_receive})
 
 
 if __name__ == '__main__':
