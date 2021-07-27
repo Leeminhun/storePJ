@@ -11,9 +11,9 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: darkblue;
+    background-color: lightseagreen;
     padding: 8px 12px;
-    flex-wrap: nowrap;
+   
 }
 
 .navbar_logo{
@@ -32,7 +32,7 @@ a {
 
 .navbar_menu li {
     padding : 8px 12px;
-    font-size: 25px;
+    font-size: 22px;
 }
 .navbar_menu li a {
     color: whitesmoke;
