@@ -54,3 +54,4 @@ $('.big_tab li').first().addClass("activeClass");
     });
 
 })
+
