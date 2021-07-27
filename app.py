@@ -116,6 +116,10 @@ def find_orderlist():
     orderlist = list(db.order.find({'phone':phone}, {'_id': False}))
     return jsonify({'orderlist':orderlist, 'msg':'조회완료!'})
 
+@app.route('/details')
+def details():
+    return render_template('details.html')
+
 
 @app.route('/mypage/do', methods=['GET'])
 def post_test():
