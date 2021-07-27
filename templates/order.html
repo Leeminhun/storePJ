@@ -34,6 +34,33 @@
 
     </style>
     <script>
+        //페이지 로드시 실행되는 부분
+        $(document).ready(function () {
+            setOrderDate();
+            showOrders();
+        });
+
+        /**
+        * @brief 배송희망일을 내일 날짜부터 지정할 수 있게 만든다다
+        * @author 김진회
+        */
+        function setOrderDate(){
+            let targetdate = new Date(); // 현재 날짜시각정보 date객체로 가져오기
+            Date(targetdate.setDate(targetdate.getDate() + 1)); // date객체값을 내일로 변경 setting하기
+
+            let year = targetdate.getFullYear(); // 년도
+            let month = targetdate.getMonth()+1;  // 월
+            let date = targetdate.getDate();  // 날짜
+            if(month < 10){
+                month = "0"+month
+            }
+            if(date < 10){
+                date = "0"+date
+            }
+            document.getElementById('datedata').setAttribute('min', year+'-'+month+'-'+date);
+            //console.log(year+'-'+month+'-'+date);
+        }
+
         function istest() {
             new daum.Postcode({
                 oncomplete: function (data) {
@@ -160,9 +187,6 @@
             })
         }
 
-        $(document).ready(function () {
-            showOrders();
-        });
 
         function showOrders(){
             let temp_html = ``;
@@ -299,6 +323,7 @@
         }
 
 
+
     </script>
 </head>
 <body>
@@ -340,10 +365,10 @@
     <p>배송 날짜 선택</p>
     <p align="center">배송 받으실 날짜를 선택해 주세요</p>
     <form action="#" method="POST">
-        <p align="center"><input id = 'datedata'type="date"></p>
+        <p align="center"><input id ='datedata' type="date"></p>
         <!--날짜를 선택하면 n월 n일을 선택하셨습니다 뜨게-->
 
-        <p align="center"><textarea id = 'error'placeholder="배송 시 주의사항에 대해 입력해 주세요." cols="80%" rows="5"></textarea></p>
+        <p align="center"><textarea id = 'error' placeholder="배송 시 주의사항에 대해 입력해 주세요." cols="80%" rows="5"></textarea></p>
 
     </form>
     <hr>
@@ -354,7 +379,7 @@
     <pre style="color : white">"선택하신 택배발송일 D-1 17시 전까지 아래 계좌로 입금해주셔야 주문이 최종접수됩니다"
     (계좌번호 : 하나 348-910231-61607 차민지)</pre>
 </div>
-<div style="width : 80%">
+<div style="">
     <form action="#">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
