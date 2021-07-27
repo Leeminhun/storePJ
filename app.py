@@ -121,6 +121,10 @@ def details():
     return render_template('details.html')
 
 
+@app.route('/maps')
+def kakaomaps():
+    return render_template('maps.html')
+
 @app.route('/mypage/do', methods=['GET'])
 def post_test():
     test = list(db.menu.find({},{'_id': False}))
