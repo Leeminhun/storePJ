@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- 부트스트랩! -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MomsKitchen</title>
+    <style>
+        .menu {
+            width: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .toolbar {
+            width: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .menu_item {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            float: right;
+        }
+
+        .section {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .toolbaritem {
+            list-style: none;
+            margin: auto;
+            padding: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #item {
+            display: block;
+            text-align: center;
+            margin: .25rem;
+            padding: .5rem 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            color: black;
+            border: solid 2px aqua;
+
+        }
+
+        #tolitem {
+            display: block;
+            text-align: center;
+            margin: 10px 10px auto;
+            padding-left: 50px;
+            padding-right: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            color: black;
+            border: solid 2px aqua;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .bodycs {
+            text-align: center;
+            left: 10%;
+        }
+    </style>
+    <script>
+
+        /**
+         * @brief localStorage (장바구니)에 클릭한 상품을 저장(추가)
+         * @param {object} 현재 클릭된 버튼 태그의 this
+         * @returns {}
+         * @author 김진회
+         */
+        function addToCart(e){
+            const menu = $(e).closest('div').find('a').text();
+            let price_new = $(e).closest('div').find('.price').text();
+            let count_new = $(e).closest('div').find('.count').text();
+            let img_url = $(e).closest('div').siblings('img').attr('src');
+            let price = 0;
+            let count = 0;
+            let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
+            let isSame = false; //중복되는 메뉴가 있는지
+            let value = [];
+
+            if (localStorage.length > 0) {
+                for (let i = 1; i < localStorage.length+1; i++) {
+                    if (Number(index) < i && localStorage.getItem(i) !== null) {
+                        let cartItem = JSON.parse(localStorage.getItem(i))
+                        index = cartItem.id;
+
+                        //menu 이름이 같으면 같은 메뉴
+                        if(JSON.stringify(cartItem.menu) === JSON.stringify(menu)){
+                            isSame = true;
+                            price = cartItem.price;
+                            count = cartItem.count;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (isSame === true) { //중복되는 물건이 장바구니에 있는 경우 price와 count만 바꿔준다
+                value = {
+                    id: Number(index),
+                    menu: menu,
+                    price: Number(price) + Number(price_new),
+                    count: Number(count) + Number(count_new),
+                    img_url: img_url
+                };
+            } else { //새로운 메뉴인 경우 maxIndex + 1을 key로 하여 저장한다
+                index = Number(index) + 1;
+                value = {
+                    id: Number(index),
+                    menu: menu,
+                    price: Number(price_new),
+                    count: Number(count_new),
+                    img_url: img_url
+                };
+            }
+
+            localStorage.setItem(index, JSON.stringify(value)); //localStorage에 저장
+        }
+
+
+    </script>
+</head>
+
+<body class="bodycs">
+    <nav class="menu">
+        <ul class="menu_item">
+            <li><a href="#" id="item">로그인</a></li>
+            <li><a href="#" id="item">장바구니</a></li>
+            <li><a href="#" id="item">주문조회</a></li>
+        </ul>
+    </nav>
+    <header>
+        <img src="../static/img/logo.png" alt="이미지로딩" class="logo">
+    </header>
+    <nav class="toolbar">
+        <ul class="toolbaritem">
+            <li><a href="#" id="tolitem">매뉴</a></li>
+            <li><a href="#" id="tolitem">매뉴2</a></li>
+            <li><a href="#" id="tolitem">매뉴3</a></li>
+        </ul>
+    </nav>
+    <div id="cards-box" class="card-columns">
+        <div class="card">
+            <img class="card-img-top"
+                 src="../static/img/KakaoTalk_20210719_190856996_23.jpg"
+                 alt="Card image cap">
+            <div class="card-body">
+                <a target="_blank" href="#" class="card-title">어묵볶음_1</a>
+                <p class="card-text">가격 : <span class="price">3000</span></p>
+                <p class="card-text comment">수량 : <span class="count">1</span></p>
+                <button onclick="addToCart(this)">장바구니 넣기</button>
+            </div>
+        </div>
+        <div class="card">
+            <img class="card-img-top"
+                 src="../static/img/KakaoTalk_20210719_190856996_23.jpg"
+                 alt="Card image cap">
+            <div class="card-body">
+                <a target="_blank" href="#" class="card-title">어묵볶음_2</a>
+                <p class="card-text">가격 : <span class="price">4000</span></p>
+                <p class="card-text comment">수량 : <span class="count">1</span></p>
+                <button onclick="addToCart(this)">장바구니 넣기</button>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
