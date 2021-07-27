@@ -15,6 +15,12 @@
     <title>엄마의 부엌 | 주문확인</title>
 
     <script>
+        /**
+         * @brief 주문시 입력한 핸드폰번호로 해당 주문내역을 조회합니다.
+         * @param {}
+         * @returns {}
+         * @author 김진회, 김도형
+         */
         function showOrderList(){
             let phone = $('#phone1').val() + '-' + $('#phone2').val() + '-' + $('#phone3').val()
 
@@ -57,6 +63,8 @@
                 }
             })
         }
+
+        //배송추적 API
         function showdelivery(){
             $.ajax({
                 type: "GET",
@@ -69,6 +77,8 @@
                 }
             })
         }
+
+        //배송추적 API
         function showdelivcom(){
             $.ajax({
                 type: "GET",
@@ -80,10 +90,11 @@
                 }
             })
         }
+
         $(document).ready(function () {
-                        showdelivery();
-                        showdelivcom();
-                });
+            showdelivery();
+            showdelivcom();
+        });
     </script>
 </head>
 <body class="bodycs">
