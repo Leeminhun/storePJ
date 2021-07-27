@@ -18,7 +18,7 @@
                 url: "/orderlist/find",
                 data: {'phone':phone},
                 success: function (response) {
-                    console.log(response)
+                    //console.log(response)
                     const data = response['orderlist']
                     for (let i = 0; i < data.length; i++) {
                         let data_name = data[i]['name']
@@ -26,7 +26,7 @@
                         let data_addr = data[i]['addr']
                         let data_phone = data[i]['phone']
                         let data_listorder = data[i]['listorder']
-                        console.log(typeof(data_listorder))
+                        //console.log(typeof(data_listorder))
                         
                         for( let a = 0 ; a < data_listorder.length; a++){
                             temp_html2 += "매뉴" +data_listorder[a].split(',')[0]

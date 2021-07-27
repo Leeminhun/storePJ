@@ -136,8 +136,8 @@
                 }
             }
             
-            console.log(date, ero)
-            console.log(name, addr, code, phone, orderlist, price_all)
+            //console.log(date, ero)
+            //console.log(name, addr, code, phone, orderlist, price_all)
             $.ajax({
                 dataType:"json",
                 traditional: true,
@@ -200,7 +200,7 @@
             }
             $("#orderTable").append(temp_html)
             temp_html2 = `<p>총 상품가격 ${price_all}원 입니다</p><br><p>배송비 4000원 포함</p><br> 
-            <p>총 결제하실 가격 ${price_all+4000}원`
+            <p>총 결제하실 금액 ${price_all+4000}원`
             $("#pricesum").html(temp_html2)
         }
 
@@ -351,8 +351,8 @@
 
 <!--맘스키친 개인정보 입력 폼-->
 <div style="background-color : gray;" align="center">
-    <pre style="color : white">"계좌번호로 입금해주셔야 배송됩니다"
-    (계좌번호 : 기업 0100-00-0000)</pre>
+    <pre style="color : white">"선택하신 택배발송일 D-1 17시 전까지 아래 계좌로 입금해주셔야 주문이 최종접수됩니다"
+    (계좌번호 : 하나 348-910231-61607 차민지)</pre>
 </div>
 <div style="width : 80%">
     <form action="#">
