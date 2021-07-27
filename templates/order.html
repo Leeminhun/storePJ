@@ -9,30 +9,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
-    <script src="../static/js/common.js"> </script>
-    <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
-    
-    <!--사라질 style 코드-->
-    <style>
-        div {
-            backgroung-color : green;
-            width : 80%;
-            margin : auto;
-        }
-
-        .logo {
-        width: 150px;
-        height: auto;
-        margin: 50px auto;
-        text-align: center;
-    }
-
-    .thumbnail{
-            width:90px;
-        }
-
-    </style>
+          <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+          <link rel="stylesheet" type="text/css" href="../static/css/order.css">
+          <script src="../static/js/common.js"> </script>
+          <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
+   
     <script>
         $(document).ready(function () {
             setOrderDate();
@@ -209,14 +190,44 @@
 
                         // 주의: index 앞뒤로 공백이 있으면 삭제버튼에서 index값을 불러올 때 공백까지 불러와서 에러 발생
                         temp_html += `
-                            <tr>
-                                <td class="index">${index}</td>
-                                <td><img class="thumbnail" src="${img_url}" /></td>
-                                <td class="menu">${menu}</td>
-                                <td>${count}<button onclick="updateCount(this,1)" class="plus">+</buttn><button onclick="updateCount(this,-1)" class="minus">-</button></td>
-                                <td>${price}원</td>
-                                <td><button onclick="deleteMenu(this)">삭제</button></td>
-                            </tr>
+                        <div class="order_inner">
+            <img src="../static/img/trash.png" style="width: 30px; height: 30px;" onclick="deleteAll()"/>
+            <li>
+                <img src="${img_url}" alt="${menu}" >
+            </li>
+            <dl>
+                <dt>
+                    <div>
+                        <h1>${menu}</h1>
+                        <span>주문수량 : ${count} 개</span>
+                    </div>
+                </dt>
+            </dl>
+
+        </div>
+
+            <ul class="title">
+                <li class="title_p">
+                    주문가격
+                </li>
+                <li>
+                    <span>
+                        <span>${price}</span>
+
+                    원</span>
+                </li>
+            </ul>
+            <p>
+
+                </p>
+
+
+
+
+
+
+
+
                         `;
                     }
                 }
@@ -327,33 +338,48 @@
 <body>
 <!--헤더영역-->
 <header w3-include-html="header.html"></header>
-<!--삭제될 것-->
-<div>
-    <p>주문과정 <img src="#"></p>
-    <!--로고(css는 합칠 떄 수정할 예정 )-->
-    <a href="/"><img src="../static/img/logo.png" class="logo"></a>
-    <!--프로필사진-->
-    <img src="#">
-</div>
+
 <!--맘스키친 주문하기-->
 <div>
     <p>맘스키친 주문하기</p>
-    <p>주문 과정</p>
-    <table border=1>
-        <thead>
-            <tr>
-                <th>번호</th>
-                <th>이미지</th>
-                <th>이름</th>
-                <th>수량</th>
-                <th>가격</th>
-                <th><button onclick="deleteAll()">전체삭제</button></th>
-            </tr>
-        </thead>
-        <tbody id="orderTable">
+   <div id="orderDiv">
+        <div class="order_inner">
+            <img src="../static/img/trash.png" style="width: 30px; height: 30px;"/>
+            <li>
+                <img src="../static/img/KakaoTalk_20210719_190856996_27.jpg" alt="" >
+            </li>
 
-        </tbody>
-    </table>
+            <dl>
+                <dt>
+                    <div>
+                        <h1>감자조림</h1>
+                        <span>주문수량 : 10 개</span>
+
+                    </div>
+
+                </dt>
+            </dl>
+
+        </div>
+
+            <ul class="title">
+                <li class="title_p">
+                    주문가격
+                </li>
+                <li>
+                    <span>
+                        <span>100000</span>
+
+                    원</span>
+                </li>
+            </ul>
+            <p>
+
+                </p>
+
+
+      </div>
+
 
     <p id = "pricesum"></p>
     <hr>
@@ -366,7 +392,7 @@
         <p align="center"><input id = 'datedata'type="date"></p>
         <!--날짜를 선택하면 n월 n일을 선택하셨습니다 뜨게-->
 
-        <p align="center"><textarea id = 'error'placeholder="배송 시 주의사항에 대해 입력해 주세요." cols="80%" rows="5"></textarea></p>
+        <p align="center"><textarea id = 'error'placeholder="배송 시 주의사항에 대해 입력해 주세요." cols="80%" rows="5" style="width: 95%; resize: none;"></textarea></p>
 
     </form>
     <hr>
@@ -377,20 +403,14 @@
     <pre style="color : white">"계좌번호로 입금해주셔야 배송됩니다"
     (계좌번호 : 기업 0100-00-0000)</pre>
 </div>
-<div style="width : 80%">
+<div style="width : 100%; margin: auto;" >
     <form action="#">
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">이름</span>
-            </div>
             <input type="text" class="form-control" placeholder="이름을 입력해주세요" aria-label="name"
                    aria-describedby="basic-addon1" id="name">
         </div>
 
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text">전화번호 </label>
-            </div>
             <select class="custom-select" id="phone1">
                 <option value="010" selected>010</option>
                 <option value="011">011</option>
@@ -406,10 +426,7 @@
         </div>
         <!--우편 API 해서 찾아보기 -->
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">우편번호</span>
-            </div>
-            <input type="text" class="form-control" placeholder="우측 버튼을 클릭해 우편번호 검색하기" aria-label="address"
+            <input type="text" class="form-control" placeholder="우편번호 찾기를 눌러주세요" aria-label="address"
                    aria-describedby="basic-addon1" id="postcode" readonly>
             <button onclick="istest()" type="submit" class="btn btn-primary">우편번호 찾기</button>
         </div>
@@ -429,10 +446,11 @@
     <!--주문 접수하기! 버튼 -->
     <button type="button" onclick="saveOrder()" class="btn btn-primary btn-lg btn-block">주문 접수하기!</button>
 </div>
-<!--푸터영역-->
-<footer w3-include-html="footer.html"></footer>
 <script>
     includeHTML();
 </script>
+<!--푸터영역-->
+<footer w3-include-html="footer.html"></footer>
+
 </body>
 </html>
