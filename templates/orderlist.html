@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--부트스트랩-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -9,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="../static/css/common.css">
     <script src="../static/js/common.js"> </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <title>Title</title>
+    <title>Mom'sKitchen - Order List</title>
 
     <script>
         function showOrderList(){
@@ -22,15 +24,15 @@
                 url: "/orderlist/find",
                 data: {'phone':phone},
                 success: function (response) {
-                    console.log(response)
+                    //console.log(response)
                     const data = response['orderlist']
                     for (let i = 0; i < data.length; i++) {
                         let data_name = data[i]['name']
-                        //let data_cnt = data[i]['cnt']
+                        let data_menus = data[i]['orderlist']
                         let data_addr = data[i]['addr']
                         let data_phone = data[i]['phone']
                         let data_listorder = data[i]['listorder']
-                        console.log(typeof(data_listorder))
+                        //console.log(typeof(data_listorder))
                         
                         for( let a = 0 ; a < data_listorder.length; a++){
                             temp_html2 += "매뉴" +data_listorder[a].split(',')[0]
@@ -41,6 +43,7 @@
                         temp_html += `
                                 <tr>
                                     <td>${data_name}</td>
+                                    <td>${data_menus}</td>
                                     <td>${data_addr}</td>
                                     <td>${data_phone}</td>
                                     <td>${temp_html2}</td>
@@ -56,7 +59,6 @@
     </script>
 </head>
 <body class="bodycs">
-        <!-- <header w3-include-html = "header.html"></herder> -->
         <header w3-include-html="header.html"></header>
 
         <div class="input-group mb-3">
@@ -81,12 +83,9 @@
 
         </table>
 
-
-        <script>
-                includeHTML();
-        </script>
-
-        <footer w3-include-html="footer.html"></footer>
-
+<footer w3-include-html="footer.html"></footer>
+<script>
+        includeHTML();
+</script>
 </body>
 </html>

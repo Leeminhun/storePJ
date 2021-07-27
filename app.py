@@ -25,8 +25,9 @@ conn = MongoClient('localhost', 27017)
 db = conn.bdd
 
 
-# User admin
 
+# User admin
+# author 배성현
 class menu_form(form.Form):
     img = fields.StringField('사진')
     menu = fields.StringField('메뉴')
@@ -37,17 +38,24 @@ class menu_form(form.Form):
 
     # DB에 저장할때 사용하는 key = fields.StringField('name') < value 값이 저장되는 inputbox
 
+
+# User admin
+# author 배성현
 class order_form(form.Form):
     state = fields.SelectField ('주문 상태', choices= [('입금대기','입금대기'),('결제완료', '결제완료'),('상품준비중','상품준비중'),('배송중','배송중'),('배송완료','배송완료')])
 
 
+# User admin
+# author 배성현
 class menu_view(ModelView):
 
     column_list = ('img', 'menu', 'price','category') #db에서 불러올때 사용하는 key값
-
+    
 
     form = menu_form
 
+# User admin
+# author 배성현
 class order_view(ModelView):
     column_list = ('name', 'menu', 'number', 'address', 'price', 'state','date' )
     column_sortable_list = ('name', 'menu', 'number', 'address', 'price', 'state','date')
@@ -55,10 +63,13 @@ class order_view(ModelView):
 
     form = order_form
 
-    
+
     # def on_model_change(self, form, model, is_created):
     #     user_id = model.get('user_id')
     #     model['user_id'] = ObjectId(user_id)
+
+# User admin
+# author 배성현
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, ObjectId):
@@ -75,6 +86,13 @@ class JSONEncoder(json.JSONEncoder):
 def main():
     return render_template('index.html')
 
+@app.route('/header.html')
+def dotest():
+    return render_template('header.html')
+
+@app.route('/footer.html')
+def do1test():
+    return render_template('footer.html')
 
 # 일단 보류
 # @app.route('/habit_s', methods=['GET'])
@@ -98,6 +116,9 @@ def find_orderlist():
     orderlist = list(db.order.find({'phone':phone}, {'_id': False}))
     return jsonify({'orderlist':orderlist, 'msg':'조회완료!'})
 
+@app.route('/details')
+def details():
+    return render_template('details.html')
 
 
 @app.route('/maps')
@@ -109,9 +130,6 @@ def post_test():
     test = list(db.menu.find({},{'_id': False}))
     #test = [doc for doc in db.user.find({},{'_id': False})]
     print(test)
-    
-    
-
     return jsonify({'data': dumps(test)})
     raise TypeError('타입 에러 확인')
 
@@ -127,14 +145,14 @@ def admin_pass():
 @app.route('/order/do', methods=['POST'])
 def ordersave():
 
-    name_receive = request.form['name']
-    addr_receive = request.form['addr']
-    code_receive = request.form['code']
-    phone_receive = request.form['phone']
+    name_receive = html.escape(request.form['name'])
+    addr_receive = html.escape(request.form['addr'])
+    code_receive = html.escape(request.form['code'])
+    phone_receive = html.escape(request.form['phone'])
     orderlist_receive = request.form.getlist('orderlist[]')
-    date_receive = request.form['date']
-    ero_receive = request.form['ero']
-    priceall_receive = request.form['price_all']
+    date_receive = html.escape(request.form['date'])
+    ero_receive = html.escape(request.form['ero'])
+    priceall_receive = html.escape(request.form['price_all'])
     doc = {
         'name':name_receive,
         'addr':addr_receive,
