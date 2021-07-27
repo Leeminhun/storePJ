@@ -21,6 +21,7 @@ app.config['SECRET_KEY'] = '123456790'
 
 # Create models
 conn = MongoClient()
+db = conn.bdd
 conn = MongoClient('localhost', 27017)
 db = conn.bdd
 
@@ -44,7 +45,7 @@ class order_form(form.Form):
 class menu_view(ModelView):
 
     column_list = ('img', 'menu', 'price','category') #db에서 불러올때 사용하는 key값
-
+    
 
     form = menu_form
 
@@ -75,6 +76,13 @@ class JSONEncoder(json.JSONEncoder):
 def main():
     return render_template('index.html')
 
+@app.route('/header.html')
+def dotest():
+    return render_template('header.html')
+
+@app.route('/footer.html')
+def do1test():
+    return render_template('footer.html')
 
 # 일단 보류
 # @app.route('/habit_s', methods=['GET'])
@@ -83,6 +91,15 @@ def main():
 
 #     return jsonify({'all_order': orders})
 
+
+@app.route('/mypage')
+def objetdata():
+    return render_template('objectdatap.html')
+
+
+@app.route('/test')
+def test11():
+    return render_template('test.html')
 
 @app.route('/order')
 def order():
@@ -98,7 +115,9 @@ def find_orderlist():
     orderlist = list(db.order.find({'phone':phone}, {'_id': False}))
     return jsonify({'orderlist':orderlist, 'msg':'조회완료!'})
 
-
+@app.route('/toto')
+def testdo():
+    return render_template('cart_test_jin.html')
 
 @app.route('/mypage/do', methods=['GET'])
 def post_test():
@@ -121,7 +140,7 @@ def admin_pass():
        return jsonify({'chk':'false','msg':'틀렸습니다'})
 
 @app.route('/order/do', methods=['POST'])
-def ordersave():
+def orderseve():
 
     name_receive = request.form['name']
     addr_receive = request.form['addr']
