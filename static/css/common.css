@@ -1,19 +1,17 @@
 /*header*/
 body{
     margin: 0;
-    font-family: 'Sunflower', sans-serif;
 }
 a {
     text-decoration: none;
     color: red;
 }
-#navbar {
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: darkblue;
     padding: 8px 12px;
-    flex-wrap: nowrap;
 }
 
 .navbar_logo{
@@ -32,7 +30,6 @@ a {
 
 .navbar_menu li {
     padding : 8px 12px;
-    font-size: 25px;
 }
 .navbar_menu li a {
     color: whitesmoke;
@@ -41,7 +38,6 @@ a {
     background-color: orange;
     border-radius: 3px;
 }
-
 .navbar_icons{
     list-style: none;
     color: white;
@@ -64,10 +60,6 @@ a {
     font-size: 24px;
     color: orange;
 }
-/*footer*/
-footer {
-    margin-top  : 30px;
-    }
 
 /*판매목록*/
 .list {
@@ -123,11 +115,6 @@ footer {
 } */
 
 /*tab Menu*/
-.sell_list {
-    margin :auto;
-    text-align: center;
-    width: 70%;
-}
 .menu_card {
     width: 65%;
     margin: auto;
