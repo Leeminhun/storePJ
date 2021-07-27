@@ -52,11 +52,12 @@
         function showdelivery(){
             $.ajax({
                 type: "GET",
-                url: "https://apis.tracker.delivery/carriers/:carrier_id/tracks/:track_id",
+                url: "https://apis.tracker.delivery/carriers/kr.lotte/tracks/241560564195",
                 data: {},
                 success: function (response) {
-                    let test = response['message']
+                    let test = response['state']['text']
                     console.log(response)
+                    console.log(test)
                 }
             })
         }
