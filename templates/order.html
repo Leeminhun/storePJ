@@ -2,39 +2,21 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>주문하기 페이지</title>
+    <title style="color: yellow">엄마의 부엌 | 주문하기</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="stylesheet" href="../static/css/common.css">
+    <link rel="stylesheet" href="../static/css/order.css">
+    <script src="../static/js/common.js"></script>
+     <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
+
     <!--부트스트랩-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
-    <script src="../static/js/common.js"> </script>
-    <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
-    
     <!--사라질 style 코드-->
-    <style>
-        div {
-            backgroung-color : green;
-            width : 80%;
-            margin : auto;
-        }
-
-        .logo {
-        width: 150px;
-        height: auto;
-        margin: 50px auto;
-        text-align: center;
-    }
-
-    .thumbnail{
-            width:90px;
-        }
-
-    </style>
     <script>
-        function istest() {
+        function postcode() {
             new daum.Postcode({
                 oncomplete: function (data) {
                     var addr = ''; // 주소 변수
@@ -79,13 +61,14 @@
             let addr = $('#address').val() + ' ' + $('#extraAddress').val()
             let code = $('#postcode').val()
             let phone = $('#phone1').val() + '-' + $('#phone2').val() + '-' + $('#phone3').val()
-            let phone2 = $('#phone2').val()
-            let phone3 = $('#phone3').val()
-            let date = $('#datedata').val()
-            let ero = $('#error').val()
-
             if (name == "") {
                 alert("이름을 입력해주세요!");
+                return false;
+            } else if (code == "") {
+                alert("우편번호를 입력해주세요!");
+                return false;
+            } else if (addr == "") {
+                alert("주소를 입력해주세요!");
                 return false;
             } else if (phone2 == "") {
                 alert("핸드폰번호를 전부 입력해주세요!");
@@ -93,65 +76,15 @@
             } else if (phone3 == "") {
                 alert("핸드폰번호를 전부 입력해주세요!");
                 return false;
-            }else if (code == "") {
-                alert("우편번호를 입력해주세요!");
-                return false;
-            } else if (addr == "") {
-                alert("주소를 입력해주세요!");
-                return false;
-            }else if ( date == "") {
-                alert("날자를 입력해주세요");
-                return false;
-            } else if (ero == "") {
-                let answer = confirm("배송시 주의사항이 필요없으신가요?");
-                if (answer == false){
-                    return false;   
-                }    
             }
-            let menu = '';
-            let price = 0;
-            let count = 0;
-            let index = 0;
-            let img_url = '';
-            let asr = [];
-            let price_all = 0;
-            let orderlist = [];
-            if (localStorage.length > 0) {
-                for (let i = 1; i < localStorage.length+1; i++) {
-                    if(localStorage.getItem(i) !== null){
-                        let cartItem = JSON.parse(localStorage.getItem(i))
-                        index = cartItem.id;
-                        menu = cartItem.menu;
-                        price = cartItem.price;
-                        count = cartItem.count;
-                        img_url = cartItem.img_url;
-                        price_all += Number(price);
-                        asr.push(menu);
-                        asr.push(price);
-                        asr.push(count);
-                        orderlist.push(asr);
-                        asr = [];
-                        
-                    }
-                }
-            }
-            
-            console.log(date, ero)
-            console.log(name, addr, code, phone, orderlist, price_all)
             $.ajax({
-                dataType:"json",
-                traditional: true,
                 type: "POST",
-                url: "/order/do",
+                url: "/order",
                 data: {
                     "name": name,
                     "addr": addr,
                     "code": code,
-                    "phone": phone,
-                    "orderlist[]":orderlist,
-                    "date":date,
-                    "ero": ero,
-                    "price_all":price_all
+                    "phone": phone
                 },
                 success: function (response) {
                     alert(response['msg']);
@@ -187,20 +120,47 @@
                         // 주의: index 앞뒤로 공백이 있으면 삭제버튼에서 index값을 불러올 때 공백까지 불러와서 에러 발생
                         temp_html += `
                             <tr>
-                                <td class="index">${index}</td>
-                                <td><img class="thumbnail" src="${img_url}" /></td>
-                                <td class="menu">${menu}</td>
-                                <td>${count}<button onclick="updateCount(this,1)" class="plus">+</buttn><button onclick="updateCount(this,-1)" class="minus">-</button></td>
-                                <td>${price}원</td>
-                                <td><button onclick="deleteMenu(this)">삭제</button></td>
+                               <div class="order_inner">
+            <a><img src="../static/img/trash.png" style="width: 30px; height: 30px;"></a>
+            <li>
+                <img src="${img_url}" alt="${menu} 사진">
+            </li>
+
+            <dl>
+                <dt>
+                    <div>
+                        <h1>${menu}</h1>
+                        <span>주문수량 : ${count} 개</span>
+
+                    </div>
+
+                </dt>
+            </dl>
+
+        </div>
+
+            <ul class="title">
+                <li class="title_p">
+                    주문가격
+                </li>
+                <li>
+                    <span>
+                        <span>${price}</span>
+
+                    원</span>
+                </li>
+            </ul>
+            <p>
+
+                </p>
                             </tr>
                         `;
+
                     }
                 }
             }
-            $("#orderTable").append(temp_html)
-            temp_html2 = `<p>총 상품가격 ${price_all}원 입니다</p><br><p>배송비 4000원 포함</p><br> 
-            <p>총 결제하실 가격 ${price_all+4000}원`
+            $("#orderDiv").append(temp_html)
+            temp_html2 = `결제하실 금액은 총 ${price_all}원 입니다`
             $("#pricesum").html(temp_html2)
         }
 
@@ -295,7 +255,7 @@
                 window.localStorage.clear();
                 window.location.reload();
             }
-            
+
         }
 
 
@@ -308,42 +268,67 @@
 <div>
     <p>주문과정 <img src="#"></p>
     <!--로고(css는 합칠 떄 수정할 예정 )-->
-    <a href="/"><img src="../static/img/logo.png" class="logo"></a>
+   <!-- <a href="/"><img src="../static/img/logo.png" class="logo"></a>-->
     <!--프로필사진-->
     <img src="#">
 </div>
 <!--맘스키친 주문하기-->
 <div>
-    <p>맘스키친 주문하기</p>
-    <p>주문 과정</p>
-    <table border=1>
-        <thead>
-            <tr>
-                <th>번호</th>
-                <th>이미지</th>
-                <th>이름</th>
-                <th>수량</th>
-                <th>가격</th>
-                <th><button onclick="deleteAll()">전체삭제</button></th>
-            </tr>
-        </thead>
+    <p>맘스키친 주문하기</p><hr>
+      <div id="orderDiv">
+        <div class="order_inner">
+            <a><img src="../static/img/trash.png" style="width: 30px; height: 30px;"></a>
+            <li>
+                <img src="../static/img/KakaoTalk_20210719_190856996_27.jpg" alt="">
+            </li>
+
+            <dl>
+                <dt>
+                    <div>
+                        <h1>감자조림</h1>
+                        <span>주문수량 : 10 개</span>
+
+                    </div>
+
+                </dt>
+            </dl>
+
+        </div>
+
+            <ul class="title">
+                <li class="title_p">
+                    주문가격
+                </li>
+                <li>
+                    <span>
+                        <span>100000</span>
+
+                    원</span>
+                </li>
+            </ul>
+            <p>
+
+                </p>
+
+
+      </div>
+
         <tbody id="orderTable">
 
         </tbody>
-    </table>
+
 
     <p id = "pricesum"></p>
     <hr>
 </div>
 <!--맘스키친 배송 날짜 선택-->
 <div>
-    <p>배송 날짜 선택</p>
     <p align="center">배송 받으실 날짜를 선택해 주세요</p>
     <form action="#" method="POST">
-        <p align="center"><input id = 'datedata'type="date"></p>
+        <p align="center"><input type="date"></p>
         <!--날짜를 선택하면 n월 n일을 선택하셨습니다 뜨게-->
 
-        <p align="center"><textarea id = 'error'placeholder="배송 시 주의사항에 대해 입력해 주세요." cols="80%" rows="5"></textarea></p>
+        <p align="center"><textarea placeholder="배송 시 주의사항에 대해 입력해 주세요." cols="80%" rows="5" style="width: 100%; resize: none;"></textarea></p>
 
     </form>
     <hr>
@@ -354,22 +339,18 @@
     <pre style="color : white">"계좌번호로 입금해주셔야 배송됩니다"
     (계좌번호 : 기업 0100-00-0000)</pre>
 </div>
-<div style="width : 80%">
+<div style="width : 80%; margin: 0 auto">
     <form action="#">
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">이름</span>
-            </div>
             <input type="text" class="form-control" placeholder="이름을 입력해주세요" aria-label="name"
                    aria-describedby="basic-addon1" id="name">
         </div>
 
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text">전화번호 </label>
-            </div>
+
             <select class="custom-select" id="phone1">
-                <option value="010" selected>010</option>
+                <option selected>선택</option>
+                <option value="010">010</option>
                 <option value="011">011</option>
                 <option value="016">016</option>
                 <option value="017">017</option>
@@ -383,17 +364,12 @@
         </div>
         <!--우편 API 해서 찾아보기 -->
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">우편번호</span>
-            </div>
-            <input type="text" class="form-control" placeholder="우측 버튼을 클릭해 우편번호 검색하기" aria-label="address"
-                   aria-describedby="basic-addon1" id="postcode" readonly>
-            <button onclick="istest()" type="submit" class="btn btn-primary">우편번호 찾기</button>
+            <input type="text" class="form-control" placeholder="우편번호 찾기로 검색" aria-label="address"
+                   aria-describedby="basic-addon1" id="postcode" style="width: 50%" readonly>
+            <button onclick="postcode()" type="submit" class="btn btn-primary">우편번호 찾기</button>
         </div>
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">배송 주소</span>
-            </div>
+
             <input type="text" class="form-control" placeholder="주소" aria-label="address"
                    aria-describedby="basic-addon1" id="address">
             <input type="text" class="form-control" placeholder="상세주소" aria-label="address"
@@ -404,12 +380,12 @@
 </div>
 <div>
     <!--주문 접수하기! 버튼 -->
-    <button type="button" onclick="saveOrder()" class="btn btn-primary btn-lg btn-block">주문 접수하기!</button>
+    <button type="button" class="btn btn-primary btn-lg btn-block">주문 접수하기!</button>
 </div>
+<script>
+                includeHTML();
+        </script>
 <!--푸터영역-->
 <footer w3-include-html="footer.html"></footer>
-<script>
-    includeHTML();
-</script>
 </body>
 </html>
