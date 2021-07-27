@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!--부트스트랩-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../static/css/common.css">
-    <script src="../static/js/common.js"> </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <title>Mom'sKitchen - Order List</title>
+    <script src="../static/js/common.js"></script>
+    <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
+    <title>엄마의 부엌 | 주문확인</title>
 
     <script>
         function showOrderList(){
@@ -86,30 +87,30 @@
     </script>
 </head>
 <body class="bodycs">
-        <header w3-include-html="header.html"></header>
+    <header w3-include-html="header.html"></header>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text">전화번호 </label>
-            </div>
-            <select class="custom-select" id="phone1">
-                <option value="010" selected>010</option>
-                <option value="011">011</option>
-                <option value="016">016</option>
-                <option value="017">017</option>
-                <option value="018">018</option>
-                <option value="019">019</option>
-            </select>
-            -
-            <input type='tel' class="form-control" id="phone2" maxlength="4">
-            -
-            <input type='tel' class="form-control" id="phone3" maxlength="4">
-            <button onclick="showOrderList()">조회</button>
-            <a href="https://tracker.delivery/#/kr.hanjin/1111111111111" target="_blank">배송조회</a>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text">전화번호 </label>
         </div>
-        <table id="orderTable">
+        <select class="custom-select" id="phone1">
+            <option value="010" selected>010</option>
+            <option value="011">011</option>
+            <option value="016">016</option>
+            <option value="017">017</option>
+            <option value="018">018</option>
+            <option value="019">019</option>
+        </select>
+        -
+        <input type='tel' class="form-control" id="phone2" maxlength="4">
+        -
+        <input type='tel' class="form-control" id="phone3" maxlength="4">
+        <button onclick="showOrderList()">조회</button>
+        <a href="https://tracker.delivery/#/kr.hanjin/1111111111111" target="_blank">배송조회</a>
+    </div>
+    <table id="orderTable">
 
-        </table>
+    </table>
 
 <footer w3-include-html="footer.html"></footer>
 <script>

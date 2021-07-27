@@ -2,25 +2,27 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>주문하기 페이지</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!--부트스트랩-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
-          <link rel="stylesheet" type="text/css" href="../static/css/common.css">
-          <link rel="stylesheet" type="text/css" href="../static/css/order.css">
-          <script src="../static/js/common.js"> </script>
-          <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
-   
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/order.css">
+    <script src="../static/js/common.js"></script>
+    <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
+    <title>엄마의 부엌 | 주문하기</title>
+
     <script>
         $(document).ready(function () {
             setOrderDate();
             showOrders();
         });
         /**
-        * @brief 배송희망일을 내일 날짜부터 지정할 수 있게 만든다다
+        * @brief 배송희망일을 내일 날짜부터 지정할 수 있게 만든다
         * @author 김진회
         */
         function setOrderDate(){
@@ -90,6 +92,7 @@
             let date = $('#datedata').val()
             let ero = $('#error').val()
 
+            //validation - 적절한 값이 입력됐는지 체크
             if (name == "") {
                 alert("이름을 입력해주세요!");
                 return false;
@@ -142,8 +145,8 @@
                 }
             }
             
-            console.log(date, ero)
-            console.log(name, addr, code, phone, orderlist, price_all)
+            //console.log(date, ero)
+            //console.log(name, addr, code, phone, orderlist, price_all)
             $.ajax({
                 dataType:"json",
                 traditional: true,
@@ -234,7 +237,7 @@
             }
             $("#orderTable").append(temp_html)
             temp_html2 = `<p>총 상품가격 ${price_all}원 입니다</p><br><p>배송비 4000원 포함</p><br> 
-            <p>총 결제하실 가격 ${price_all+4000}원`
+            <p>총 결제하실 금액 ${price_all+4000}원`
             $("#pricesum").html(temp_html2)
         }
 
@@ -389,10 +392,10 @@
     <p>배송 날짜 선택</p>
     <p align="center">배송 받으실 날짜를 선택해 주세요</p>
     <form action="#" method="POST">
-        <p align="center"><input id = 'datedata'type="date"></p>
+        <p align="center"><input id='datedata' type="date"></p>
         <!--날짜를 선택하면 n월 n일을 선택하셨습니다 뜨게-->
 
-        <p align="center"><textarea id = 'error'placeholder="배송 시 주의사항에 대해 입력해 주세요." cols="80%" rows="5" style="width: 95%; resize: none;"></textarea></p>
+        <p align="center"><textarea id='error' placeholder="배송 시 주의사항에 대해 입력해 주세요." cols="80%" rows="5" style="width: 95%; resize: none;"></textarea></p>
 
     </form>
     <hr>
@@ -400,8 +403,8 @@
 
 <!--맘스키친 개인정보 입력 폼-->
 <div style="background-color : gray;" align="center">
-    <pre style="color : white">"계좌번호로 입금해주셔야 배송됩니다"
-    (계좌번호 : 기업 0100-00-0000)</pre>
+    <pre style="color : white">"선택하신 택배발송일 하루 전 17시까지 아래 계좌로 입금해주셔야 주문이 최종접수됩니다"
+    (계좌번호 : 하나 348-910231-61607 차민지)</pre>
 </div>
 <div style="width : 100%; margin: auto;" >
     <form action="#">

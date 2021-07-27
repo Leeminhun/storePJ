@@ -2,201 +2,202 @@
 <html lang="ko">
 
 <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                crossorigin="anonymous"></script>
-        <title>엄마의 부엌 | Mos's Kitchen</title>
-        <link rel="stylesheet" type="text/css" href="../static/css/common.css">
-        <script src="../static/js/common.js"> </script>
-        <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-                integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-                crossorigin="anonymous">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <script src="../static/js/common.js"></script>
+    <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>엄마의 부엌 | Mom's Kitchen</title>
 
-                /**
-        * @brief localStorage (장바구니)에 클릭한 상품을 저장(추가)
-        * @param {object} 현재 클릭된 버튼 태그의 this
-        * @returns {}
-        * @author 김진회
-        */
-                function addToCart(e) {
-                        const menu = $(e).closest('div').find('a').text();
-                        let price_new = $(e).closest('div').find('.price').text();
-                        let count_new = $(e).closest('div').find('.count').text();
-                        let img_url = $(e).closest('div').siblings('img').attr('src');
-                        let price = 0;
-                        let count = 0;
-                        let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
-                        let isSame = false; //중복되는 메뉴가 있는지
-                        let value = [];
+    <script>
 
-                        if (localStorage.length > 0) {
-                                for (let i = 1; i < localStorage.length + 1; i++) {
-                                        if (Number(index) < i && localStorage.getItem(i) !== null) {
-                                                let cartItem = JSON.parse(localStorage.getItem(i))
-                                                index = cartItem.id;
+        /**
+         * @brief localStorage (장바구니)에 클릭한 상품을 저장(추가)
+         * @param {object} 현재 클릭된 버튼 태그의 this
+         * @returns {}
+         * @author 김진회
+         */
+        function addToCart(e) {
+            const menu = $(e).closest('div').find('a').text();
+            let price_new = $(e).closest('div').find('.price').text();
+            let count_new = $(e).closest('div').find('.count').text();
+            let img_url = $(e).closest('div').siblings('img').attr('src');
+            let price = 0;
+            let count = 0;
+            let index = 0; //새로운 메뉴가 들어갈 index (maxIndex + 1)
+            let isSame = false; //중복되는 메뉴가 있는지
+            let value = [];
 
-                                                //menu 이름이 같으면 같은 메뉴
-                                                if (JSON.stringify(cartItem.menu) === JSON.stringify(menu)) {
-                                                        isSame = true;
-                                                        price = cartItem.price;
-                                                        count = cartItem.count;
-                                                        break;
-                                                }
-                                        }
-                                }
+            if (localStorage.length > 0) {
+                for (let i = 1; i < localStorage.length + 1; i++) {
+                    if (Number(index) < i && localStorage.getItem(i) !== null) {
+                        let cartItem = JSON.parse(localStorage.getItem(i))
+                        index = cartItem.id;
+
+                        //menu 이름이 같으면 같은 메뉴
+                        if (JSON.stringify(cartItem.menu) === JSON.stringify(menu)) {
+                            isSame = true;
+                            price = cartItem.price;
+                            count = cartItem.count;
+                            break;
                         }
-                        if (isSame === true) { //중복되는 물건이 장바구니에 있는 경우 price와 count만 바꿔준다
-                                value = {
-                                        id: Number(index),
-                                        menu: menu,
-                                        price: Number(price) + Number(price_new),
-                                        count: Number(count) + Number(count_new),
-                                        img_url: img_url
-                                };
-                        } else { //새로운 메뉴인 경우 maxIndex + 1을 key로 하여 저장한다
-                                index = Number(index) + 1;
-                                value = {
-                                        id: Number(index),
-                                        menu: menu,
-                                        price: Number(price_new),
-                                        count: Number(count_new),
-                                        img_url: img_url
-                                };
+                    }
+                }
+            }
+            if (isSame === true) { //중복되는 물건이 장바구니에 있는 경우 price와 count만 바꿔준다
+                value = {
+                    id: Number(index),
+                    menu: menu,
+                    price: Number(price) + Number(price_new),
+                    count: Number(count) + Number(count_new),
+                    img_url: img_url
+                };
+            } else { //새로운 메뉴인 경우 maxIndex + 1을 key로 하여 저장한다
+                index = Number(index) + 1;
+                value = {
+                    id: Number(index),
+                    menu: menu,
+                    price: Number(price_new),
+                    count: Number(count_new),
+                    img_url: img_url
+                };
+            }
+
+            localStorage.setItem(index, JSON.stringify(value)); //localStorage에 저장
+            alert(menu + ": 장바구니에 들어갔어요!")
+        }
+
+        function testjax() {
+            $.ajax({
+                type: 'GET',
+                url: '/mypage/do?sample_give=샘플데이터',
+                data: {},
+                success: function (response) {
+                    let articles = response['data'];
+                    let a = JSON.parse(articles)
+                    //console.log(a)
+                    let temp_html = ``;
+                    for (let i = 0; i < a.length; i++) {
+                        let img = a[i]["img"]
+                        let menu = a[i]['menu']
+                        let price = a[i]['price']
+                        let hide = a[i]['hide']
+                        let rc = a[i]['category']
+
+                        console.log($("#banchan_list option:checked").text())
+
+                        //console.log(typeof(rc))
+
+
+                        if ($("#banchan_list option:checked").text() == '전체' && hide == 0) {
+                            temp_html += `
+                                <div class="card">
+                                    <img class="card-img-top"
+                                    src="${img}"
+                                    alt="Card image cap"
+                                    style="width: 100px; height: auto; margin:auto;">
+                                    <div class="card-body">
+                                    <a target="_blank" href="#" class="card-title">${menu}</a>
+                                    <p class="card-text">가격 : <span class="price">${price}</span></p>
+                                    <p class="card-text comment">수량 : <span class="count">1</span></p>
+                                    <button onclick=addToCart(this)>장바구니 넣기</button>
+                                    </div>
+                                </div>
+                                `
+                        } else if (rc == $("#banchan_list option:checked").text() && hide == 0) {
+                            temp_html += `
+                                <div class="card">
+                                    <img class="card-img-top"
+                                    src="${img}"
+                                    alt="Card image cap"
+                                    style="width: 100px; height: auto;">
+                                    <div class="card-body">
+                                    <a target="_blank" href="#" class="card-title">${menu}</a>
+                                    <p class="card-text">가격 : <span class="price">${price}</span></p>
+                                    <p class="card-text comment">수량 : <span class="count">1</span></p>
+                                    <button onclick=addToCart(this)>장바구니 넣기</button>
+                                    </div>
+                                </div>
+                                `
                         }
 
-                        localStorage.setItem(index, JSON.stringify(value)); //localStorage에 저장
-                        alert(menu + ": 장바구니에 들어갔어요!")
+                        // let temp_html = `
+                        // <div class="card">
+                        //         <img class="card-img-top"
+                        //         src="${img}"
+                        //         alt="Card image cap"
+                        //         style="width: 100px; height: auto;">
+                        //         <div class="card-body">
+                        //         <a target="_blank" href="#" class="card-title">${menu}</a>
+                        //         <p class="card-text">가격 : ${price}</p>
+                        //         <p class="card-text comment">대충 수량 넣는곳 + -</p>
+                        //         <button onclick=test()>장바구니 On</button>
+                        //         <button>바로주문.</button>
+                        //         </div>
+                        // </div>
+                        // `
+                        // if(hide == 0){
+                        //         //$("#cards-box").append(temp_html)
+                        //         $("#cards-box").html(temp_html)
+                        // }
+
+                    }
+                    $("#cards-box").html(temp_html)
+
                 }
+            });
+        }
 
-                function testjax() {
-                        $.ajax({
-                                type: 'GET',
-                                url: '/mypage/do?sample_give=샘플데이터',
-                                data: {},
-                                success: function (response) {
-                                        let articles = response['data'];
-                                        let a = JSON.parse(articles)
-                                        //console.log(a)
-                                        let temp_html = ``;
-                                        for (let i = 0; i < a.length; i++) {
-                                                let img = a[i]["img"]
-                                                let menu = a[i]['menu']
-                                                let price = a[i]['price']
-                                                let hide = a[i]['hide']
-                                                let rc = a[i]['category']
+        function test() {
+            alert("장바구니 확인!!")
+        }
 
-                                                console.log($("#banchan_list option:checked").text())
-
-                                                //console.log(typeof(rc))
-
-
-                                                if ($("#banchan_list option:checked").text() == '전체' && hide == 0) {
-                                                        temp_html += `
-                                                                <div class="card">
-                                                                        <img class="card-img-top"
-                                                                        src="${img}"
-                                                                        alt="Card image cap"
-                                                                        style="width: 100px; height: auto; margin:auto;">
-                                                                        <div class="card-body">
-                                                                        <a target="_blank" href="#" class="card-title">${menu}</a>
-                                                                        <p class="card-text">가격 : <span class="price">${price}</span></p>
-                                                                        <p class="card-text comment">수량 : <span class="count">1</span></p>
-                                                                        <button onclick=addToCart(this)>장바구니 넣기</button>
-                                                                        </div>
-                                                                </div>
-                                                                `
-                                                }
-                                                else if (rc == $("#banchan_list option:checked").text() && hide == 0) {
-                                                        temp_html += `
-                                                                <div class="card">
-                                                                        <img class="card-img-top"
-                                                                        src="${img}"
-                                                                        alt="Card image cap"
-                                                                        style="width: 100px; height: auto;">
-                                                                        <div class="card-body">
-                                                                        <a target="_blank" href="#" class="card-title">${menu}</a>
-                                                                        <p class="card-text">가격 : <span class="price">${price}</span></p>
-                                                                        <p class="card-text comment">수량 : <span class="count">1</span></p>
-                                                                        <button onclick=addToCart(this)>장바구니 넣기</button>
-                                                                        </div>
-                                                                </div>
-                                                                `
-                                                }
-
-                                                // let temp_html = `
-                                                // <div class="card">
-                                                //         <img class="card-img-top"
-                                                //         src="${img}"
-                                                //         alt="Card image cap"
-                                                //         style="width: 100px; height: auto;">
-                                                //         <div class="card-body">
-                                                //         <a target="_blank" href="#" class="card-title">${menu}</a>
-                                                //         <p class="card-text">가격 : ${price}</p>
-                                                //         <p class="card-text comment">대충 수량 넣는곳 + -</p>
-                                                //         <button onclick=test()>장바구니 On</button>
-                                                //         <button>바로주문.</button>
-                                                //         </div>
-                                                // </div>
-                                                // `
-                                                // if(hide == 0){
-                                                //         //$("#cards-box").append(temp_html)
-                                                //         $("#cards-box").html(temp_html)
-                                                // }
-
-                                        }
-                                        $("#cards-box").html(temp_html)
-
-                                }
-                        });
-                }
-                function test() {
-                        alert("장바구니 확인!!")
-                }
-                $(document).ready(function () {
-                        testjax();
-                });
-        </script>
+        $(document).ready(function () {
+            testjax();
+        });
+    </script>
 
 
 </head>
 
 <body class="bodycs">
-        <!-- <header w3-include-html = "header.html"></herder> -->
-        <header w3-include-html="header.html"></header>
-        <div class="list">
-                <label>판매 목록</label>
-                <br>
+<!-- <header w3-include-html = "header.html"></herder> -->
+<header w3-include-html="header.html"></header>
+<div class="list">
+    <label>판매 목록</label>
+    <br>
 
-                <div class="sell_list">
-                        <select id="banchan_list" onchange="testjax()">
-                                <option value="all" selected>전체</option>
-                                <option value="kimch">김치</option>
-                                <option value="maleun">마른반찬</option>
-                                <option value="namul">나물</option>
-                                <option value="gug">국/탕/찌개</option>
-                                <option value="jolim">조림/구이</option>
-                                <option value="twigim">튀김/전</option>
-                                <option value="dosilag">도시락</option>
-                                <option value="jesa">제사/명절</option>
-                        </select>
-                </div>
-        </div>
-        <hr>
-        <div id="cards-box" class="menu_card">
-        </div>
-        <script>
-                includeHTML();
-        </script>
+    <div class="sell_list">
+        <select id="banchan_list" onchange="testjax()">
+            <option value="all" selected>전체</option>
+            <option value="kimch">김치</option>
+            <option value="maleun">마른반찬</option>
+            <option value="namul">나물</option>
+            <option value="gug">국/탕/찌개</option>
+            <option value="jolim">조림/구이</option>
+            <option value="twigim">튀김/전</option>
+            <option value="dosilag">도시락</option>
+            <option value="jesa">제사/명절</option>
+        </select>
+    </div>
+</div>
+<hr>
+<div id="cards-box" class="menu_card">
+</div>
+<script>
+    includeHTML();
+</script>
 
-                        <footer w3-include-html="footer.html"></footer>
+<footer w3-include-html="footer.html"></footer>
 </body>
 
 </html>
