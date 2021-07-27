@@ -49,6 +49,32 @@
                 }
             })
         }
+        function showdelivery(){
+            $.ajax({
+                type: "GET",
+                url: "https://apis.tracker.delivery/carriers/:carrier_id/tracks/:track_id",
+                data: {},
+                success: function (response) {
+                    let test = response['message']
+                    console.log(response)
+                }
+            })
+        }
+        function showdelivcom(){
+            $.ajax({
+                type: "GET",
+                url: "https://apis.tracker.delivery/carriers",
+                data: {},
+                success: function (response) {
+                    let test = response['message']
+                    console.log(response)
+                }
+            })
+        }
+        $(document).ready(function () {
+                        showdelivery();
+                        showdelivcom();
+                });
     </script>
 </head>
 <body class="bodycs">
@@ -72,6 +98,7 @@
             -
             <input type='tel' class="form-control" id="phone3" maxlength="4">
             <button onclick="showOrderList()">조회</button>
+            <a href="https://tracker.delivery/#/kr.hanjin/1111111111111" target="_blank">배송조회</a>
         </div>
         <table id="orderTable">
 
