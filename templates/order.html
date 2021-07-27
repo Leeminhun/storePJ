@@ -34,6 +34,31 @@
 
     </style>
     <script>
+        $(document).ready(function () {
+            setOrderDate();
+            showOrders();
+        });
+        /**
+        * @brief 배송희망일을 내일 날짜부터 지정할 수 있게 만든다다
+        * @author 김진회
+        */
+        function setOrderDate(){
+            let targetdate = new Date(); // 현재 날짜시각정보 date객체로 가져오기
+            Date(targetdate.setDate(targetdate.getDate() + 1)); // date객체값을 내일로 변경 setting하기
+
+            let year = targetdate.getFullYear(); // 년도
+            let month = targetdate.getMonth()+1;  // 월
+            let date = targetdate.getDate();  // 날짜
+            if(month < 10){
+                month = "0"+month
+            }
+            if(date < 10){
+                date = "0"+date
+            }
+            document.getElementById('datedata').setAttribute('min', year+'-'+month+'-'+date);
+            //console.log(year+'-'+month+'-'+date);
+        }
+
         function istest() {
             new daum.Postcode({
                 oncomplete: function (data) {
@@ -160,9 +185,7 @@
             })
         }
 
-        $(document).ready(function () {
-            showOrders();
-        });
+
 
         function showOrders(){
             let temp_html = ``;
