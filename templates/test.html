@@ -4,8 +4,7 @@
 <head>
     <!-- 부트스트랩! -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-              crossorigin="anonymous">
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,20 +15,22 @@
             display: inline-block;
             vertical-align: middle;
         }
-        .toolbar{
+
+        .toolbar {
             width: 100%;
             display: inline-block;
             vertical-align: middle;
         }
 
-        .menu_item{
+        .menu_item {
             list-style: none;
             margin: 0;
             padding: 0;
             display: flex;
             float: right;
         }
-        .section{
+
+        .section {
             width: 100%;
             margin: 0;
             padding: 0;
@@ -37,7 +38,8 @@
             justify-content: center;
             align-items: center;
         }
-        .toolbaritem{
+
+        .toolbaritem {
             list-style: none;
             margin: auto;
             padding: auto;
@@ -55,9 +57,10 @@
             font-weight: bold;
             color: black;
             border: solid 2px aqua;
-            
+
         }
-        #tolitem{
+
+        #tolitem {
             display: block;
             text-align: center;
             margin: 10px 10px auto;
@@ -68,25 +71,57 @@
             color: black;
             border: solid 2px aqua;
         }
-        .logo{
+
+        .logo {
             width: 150px;
             height: auto;
             margin: 50px auto;
             text-align: center;
         }
-        .bodycs{
+
+        .bodycs {
             text-align: center;
             left: 10%;
         }
     </style>
+    <script> 
+        function testjax() {
+            let phone = $("#test").text()
+            $.ajax({
+                type: 'POST',
+                url: 'orderlist/find',
+                data: {
+                    'phone': phone
+                },
+                success: function (response) {
+                    let orderlist = response['orderlist'];
+                    let a = JSON.parse(orderlist)
+                    console.log(a)
+                    let temp_html = ``;
+                    // for (let i = 0; i < a.length; i++) {
+                    //     let img = a[i]["img"]
+                    //     let menu = a[i]['menu']
+                    //     let price = a[i]['price']
+                    //     let hide = a[i]['hide']
+                    //     let rc = a[i]['category']
+                        
+                    // }
+                    // $("#cards-box").html(temp_html)
+                }
+            });
+        }
+        $(document).ready(function () {
+            testjax();
+        });
+    </script>
 </head>
 
 <body class="bodycs">
     <nav class="menu">
         <ul class="menu_item">
-            <li><a href="#" id ="item">로그인</a> </li>
-            <li><a href="#" id ="item">장바구니</a> </li>
-            <li><a href="#" id ="item">주문조회</a> </li>
+            <li><a href="#" id="item">로그인</a> </li>
+            <li><a href="#" id="item">장바구니</a> </li>
+            <li><a href="#" id="item">주문조회</a> </li>
         </ul>
     </nav>
     <header>
@@ -94,39 +129,21 @@
     </header>
     <nav class="toolbar">
         <ul class="toolbaritem">
-            <li><a href="#" id ="tolitem">메뉴</a> </li>
-            <li><a href="#" id ="tolitem">매뉴2</a> </li>
-            <li><a href="#" id ="tolitem">매뉴3</a> </li>
+            <li><a href="#" id="tolitem">메뉴</a> </li>
+            <li><a href="#" id="tolitem">매뉴2</a> </li>
+            <li><a href="#" id="tolitem">매뉴3</a> </li>
         </ul>
     </nav>
+    <div id = "test">0105555555</div>
     <div id="cards-box" class="card-columns">
-        <div class="card">
-            <img class="card-img-top"
-                 src="../static/img/KakaoTalk_20210719_190856996_23.jpg"
-                 alt="Card image cap">
-            <div class="card-body">
-                <a target="_blank" href="#" class="card-title">반찬이름!!</a>
-                <p class="card-text">가격 : 34000000000</p>
-                <p class="card-text comment">대충 수량 넣는곳 + -</p>
-                <button>장바구니 On</button>
-                <button>바로주문.</button>
-            </div>
-            <div class="card">
-                <img class="card-img-top"
-                     src="../static/img/KakaoTalk_20210719_190856996_23.jpg"
-                     alt="Card image cap">
-                <div class="card-body">
-                    <a target="_blank" href="#" class="card-title">반찬이름!!</a>
-                    <p class="card-text">가격 : 34000000000</p>
-                    <p class="card-text comment">대충 수량 넣는곳 + -</p>
-                    <button>장바구니 On</button>
-                    <button>바로주문.</button>
-            </div>
-                
+        <div id="test">
+
+        </div>
+
     </div>
 
 
-   
+
 </body>
 
 </html>

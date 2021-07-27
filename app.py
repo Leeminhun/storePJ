@@ -1,3 +1,4 @@
+
 from os import name
 from flask_admin import model
 from pymongo import MongoClient
@@ -11,7 +12,6 @@ import json
 from bson import json_util
 import html
 from flask import Flask, render_template, jsonify, request
-
 
 # Create application
 app = Flask(__name__)
@@ -138,6 +138,34 @@ def admin_pass():
        return jsonify({'chk':'true'})
     else:
        return jsonify({'chk':'false','msg':'틀렸습니다'})
+
+@app.route('/order/do', methods=['POST'])
+def orderseve():
+
+    name_receive = request.form['name']
+    addr_receive = request.form['addr']
+    code_receive = request.form['code']
+    phone_receive = request.form['phone']
+    orderlist_receive = request.form.getlist('orderlist[]')
+    date_receive = request.form['date']
+    ero_receive = request.form['ero']
+    priceall_receive = request.form['price_all']
+    doc = {
+        'name':name_receive,
+        'addr':addr_receive,
+        'code':code_receive,
+        'phone':phone_receive,
+        'listorder':orderlist_receive,
+        'date':date_receive,
+        'ero':ero_receive,
+        'price_all':priceall_receive
+    }
+    # 오더 리스트의 0:매뉴이름 1:가격 2:수량
+    print(doc)
+    db.order.insert_one(doc)
+
+    return jsonify({'msg':'이름: '+name_receive})
+
 
 
 
