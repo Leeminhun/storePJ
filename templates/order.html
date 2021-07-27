@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <script src="../static/js/common.js"> </script>
+    <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
+    
     <!--사라질 style 코드-->
     <style>
         div {
@@ -151,7 +155,7 @@
                 },
                 success: function (response) {
                     alert(response['msg']);
-                    // window.location.reload()
+                    window.location.reload()
                 }
             })
         }
@@ -404,5 +408,8 @@
 </div>
 <!--푸터영역-->
 <footer w3-include-html="footer.html"></footer>
+<script>
+    includeHTML();
+</script>
 </body>
 </html>
