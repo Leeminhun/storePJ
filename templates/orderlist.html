@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/order.css">
+    
     <script src="../static/js/common.js"></script>
     <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
     <title>엄마의 부엌 | 주문확인</title>
@@ -104,7 +106,7 @@
                         temp_html2 = ``;
 
                     }
-                    $("#orderTable").append(temp_html)
+                    $("#orderListDiv").append(temp_html)
                 }
             })
         }
@@ -164,28 +166,30 @@
             <option value="018">018</option>
             <option value="019">019</option>
         </select>
-        -
+        
         <input type='tel' class="form-control" id="phone2" maxlength="4">
-        -
+        
         <input type='tel' class="form-control" id="phone3" maxlength="4">
-        <button onclick="showOrderList()">조회</button>
+        <button type="button" class="btn btn-info" onclick="showOrderList()">조회하기</button>
     </div>
-    <div id="orderDiv">
-        <div class="order_inner">
-            <div>
-                <p>이름</p>
-                <p>주소</p>
-                <p>번호</p>
+    <div id="orderListDiv">
+        <div class="order_ListInner">
+            <div class="deli_adress">
+                <div>
+                    <span style="margin-left: 4px;">배송지</span>
+                    <a href ="javascript:void(0)" onclick="showdelivery(this)" attr-a ="test">배송조회</a>
+                </div>
+               <div>
+                   <li>이민훈</li>
+                   <li style="color:gray">010-0000-0000</li>
+                   <li>광주 서구 월드컵4강로 28번길 50-293 00아파트 312동 1101호</li>
+               </div>
             </div>
-            <img src="../static/img/trash.png" style="width: 30px; height: 30px;" />
-            <dl>
-                <dt>
-                    <div>
-                        <h1>감자조림(test)</h1>
+            <div class="deli_banchan">
+                        <h1>감자조림  <img src="../static/img/cross-sign.png" style="width: 15x; height: 15px; margin-bottom: 3px;" onclick=""/></h1>
                         <span>주문수량 : 10 개</span>
-                    </div>
-                </dt>
-            </dl>
+            </div>
+            
         </div>
         <ul class="title">
             <li class="title_p">
@@ -198,24 +202,23 @@
                     원</span>
             </li>
         </ul>
-        <p>
+        
+        <div>
+            <div class="to_price">
+                <li>
+                    총 주문가격
+                </li>
+                <li>
+                    <span><span style="color:darkblue">100000</span>원</span>
+                </li>
+            </div>
             <li>
-                총 가격 얼마
-            </li>
-            <li>
-                입금현황 : 대기대기대기
-            </li>
-            <li>
-                <!-- 버튼 호출 -->
-                <!-- <button type="button" value = "241560564195" onclick = showdelivery(+this.value) >241560564195</button> -->
-                배송현황 :
-                송장번호<a href="javascript:void(0);" onclick="showdelivery(this);" attr-a="test">241560564195</a>
-                
+                입금현황 : <span>미입금</span>
             </li>
             <li id = test>
                 
             </li>
-        </p>
+        </div>
 
 
     </div>

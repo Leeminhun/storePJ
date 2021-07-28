@@ -70,7 +70,11 @@ a {
 /*footer*/
 footer {
     margin-top  : 30px;
+    font-size: 15px;
     }
+footer p {
+    color: gray;
+}
 
 /*판매목록*/
 .list {
