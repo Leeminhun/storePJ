@@ -8,7 +8,8 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
     <!-- 다운로드받지 마시고 CDN 이용하듯 이대로 링크하세요. API 의 버그 수정 등의 변화를 일일히 적용할 필요가 없습니다. ssl 대응되므로 url 을 수정하지 마세요. -->
-    <script src="//xeno.work/roadzip/roadzip.min.js"></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://xeno.work/roadzip/daum.js"></script>
 
     <!--부트스트랩-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -420,7 +421,7 @@
         <!--우편번호 찾기 API -->
         <form>
             <div class="input-group mb-3">
-                <input type="text" class="XenoZipFinder form-control" placeholder="건물명, 동 번지 등 짧게 검색하세요.">
+                <input type="text" class="DaumZipFinder" placeholder="다음 주소 검색 API">
             </div>
             <div class="input-group mb-3">
                 <input class="form-control" type="text" id="postcode" name="zipcode" placeholder="우편번호">
