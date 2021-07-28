@@ -36,10 +36,16 @@
                     console.log(data)
                     for (let i = 0; i < data.length; i++) {
                         let data_name = data[i]['name']
-                        let data_addr = data[i]['addr']
+                        let data_addr = data[i]['address']
                         let data_phone = data[i]['phone']
-                        let data_listorder = data[i]['listorder']
-                        let data_priceall = data[i]['price_all']
+                        let data_listorder = data[i]['menu']
+                        let data_priceall = data[i]['price']
+                        let data_state = data[i]['state']
+                        let data_today = data[i]['today']
+                        let data_postmsg = data[i]['postmsg']
+                        let data_deliverynum = data[i]['deliverynum']
+                        let data_deliverycompany = data[i]['deliverycompany']
+
 
 
                         for (let a = 0; a < data_listorder.length; a++) {
@@ -81,6 +87,15 @@
                                         <p>
                                             <li>
                                                 총 가격 : ${data_priceall}
+                                            </li>            
+                                            <li>
+                                                입금현황 : ${data_state}
+                                            </li>
+                                            <li>
+                                                배송현황 : 송장번호<a href="javascript:void(0);" onclick="showdelivery(this);" attr-a="${data_deliverycompany}" attr-b= "${data_deliverynum}">${data_deliverynum}</a>
+                                            </li>
+                                            <li id = ${data_deliverynum}>
+                
                                             </li>
                                         </p>
 
@@ -95,16 +110,23 @@
             })
         }
 
-        //배송추적 API 
-        function showdelivery() {
+        //배송추적 API  241560564195 kr.lotte
+        function showdelivery(num) {
+            console.log(num)
+            console.log($(num).attr('attr-a'))
+            console.log($(num).attr('attr-b'))
+            let btag = $(num).attr('attr-b')
+            
             $.ajax({
                 type: "GET",
-                url: "https://apis.tracker.delivery/carriers/kr.lotte/tracks/241560564195",
+                url: "https://apis.tracker.delivery/carriers/"+$(num).attr('attr-a')+"/tracks/"+ 241560564195,
                 data: {},
                 success: function (response) {
                     let test = response['state']['text']
                     console.log(response)
                     console.log(test)
+                    let temp_html = `${test}`
+                    $("#"+btag).html(temp_html) 
                 }
             })
         }
@@ -123,7 +145,6 @@
         }
 
         $(document).ready(function () {
-            showdelivery();
             showdelivcom();
         });
     </script>
@@ -187,7 +208,14 @@
                 입금현황 : 대기대기대기
             </li>
             <li>
-                배송현황 : 송장번호몇번 몇번~
+                <!-- 버튼 호출 -->
+                <!-- <button type="button" value = "241560564195" onclick = showdelivery(+this.value) >241560564195</button> -->
+                배송현황 :
+                송장번호<a href="javascript:void(0);" onclick="showdelivery(this);" attr-a="test">241560564195</a>
+                
+            </li>
+            <li id = test>
+                
             </li>
         </p>
 

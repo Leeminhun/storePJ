@@ -13,6 +13,7 @@ from bson import json_util
 import html
 from flask import Flask, render_template, jsonify, request
 from wtforms.fields.simple import FileField
+import datetime
 
 # Create application
 app = Flask(__name__)
@@ -43,8 +44,10 @@ class menu_form(form.Form):
 # User admin
 # author 배성현
 class order_form(form.Form):
-    state = fields.SelectField ('주문 상태', choices= [('입금대기','입금대기'),('결제완료', '결제완료'),('상품준비중','상품준비중'),('배송중','배송중'),('배송완료','배송완료')])
-
+    state = fields.SelectField ('주문 상태', choices= [('입금확인중','입금확인중'),('결제완료', '결제완료'),('상품준비중','상품준비중'),('배송중','배송중'),('배송완료','배송완료')])
+    deliverynum = fields.StringField('송장번호')
+    deliverycompany = fields.SelectField ('택배 회사', choices= [('kr.chunilps','천일택배'),('kr.cjlogistics', 'CJ대한통운'),('kr.cupost','CU 편의점택배'),('kr.cvsnet','GS Postbox 택배'),('kr.cway','CWAY (Woori Express)'),('kr.daesin','대신택배'),('kr.epost','우체국 택배'),('kr.hanips','한의사랑택배'),('kr.hanjin','한진택배'),('kr.hdexp','합동택배'),('kr.homepick','홈픽'),('kr.honamlogis','한서호남택배'),('kr.ilyanglogis','일양로지스'),('kr.kdexp','경동택배'),('kr.kunyoung','건영택배'),('kr.logen','로젠택배'),('kr.lotte','롯데택배')])
+    
 
 class origin_form(form.Form):
     name = fields.StringField ('재료명')
@@ -62,8 +65,8 @@ class menu_view(ModelView):
 # User admin
 # author 배성현
 class order_view(ModelView):
-    column_list = ('name', 'menu', 'number', 'address', 'price', 'state','date' )
-    column_sortable_list = ('name', 'menu', 'number', 'address', 'price', 'state','date')
+    column_list = ('name', 'menu', 'phone', 'address','postcode', 'price', 'state' , 'date','postmsg' , 'today', 'deliverycompany', 'deliverynum')
+    column_sortable_list = ('name', 'menu', 'phone', 'address','postcode', 'price', 'state' , 'date','postmsg' , 'today' ,'deliverycompany', 'deliverynum')
     can_edit = True
 
     form = order_form
@@ -155,17 +158,21 @@ def ordersave():
     phone_receive = html.escape(request.form['phone'])
     orderlist_receive = request.form.getlist('orderlist[]')
     date_receive = html.escape(request.form['date'])
-    ero_receive = html.escape(request.form['ero'])
+    postmsg_receive = html.escape(request.form['ero'])
     priceall_receive = html.escape(request.form['price_all'])
     doc = {
         'name':name_receive,
-        'addr':addr_receive,
-        'code':code_receive,
+        'address':addr_receive,
+        'postcode':code_receive,
         'phone':phone_receive,
-        'orderlist':orderlist_receive,
+        'menu':orderlist_receive,
         'date':date_receive,
-        'ero':ero_receive,
-        'price_all':priceall_receive
+        'postmsg':postmsg_receive,
+        'price':priceall_receive,
+        'state': '입금확인중',
+        'today': datetime.datetime.now(),
+        'deliverycompany': '입력대기중.',
+        'deliverynum': '입력해주세요~'
     }
     # 오더 리스트의 0:매뉴이름 1:가격 2:수량
     print(doc)

@@ -171,55 +171,53 @@
 
                         // input hidden 코드 +, -, deleteMenu를 위해 추가 - 진회
                         temp_html += `
-        <div class="order_inner">
-            <input class="index" type="hidden" value=${index} />
-            <img src="../static/img/trash.png" style="width: 30px; height: 30px;" onclick="deleteMenu(this)"/>
-            <li>
-                <img src="${img_url}" alt="${menu}" >
-            </li>
-            <dl>
-                <dt>
-                    <div>
-                        <h1>${menu}</h1>
-                        <span>주문수량 : ${count} 개</span>
-                        <button onclick="updateCount(this,1)">+</button>
-                        <button onclick="updateCount(this,-1)">-</button>
-                    </div>
-                </dt>
-            </dl>
+                                <div class="order_inner">
+                                    <input class="index" type="hidden" value=${index} />
+                                    <img src="../static/img/trash.png" style="width: 30px; height: 30px;" onclick="deleteMenu(this)"/>
+                                    <li>
+                                        <img src="${img_url}" alt="${menu}" >
+                                    </li>
+                                    <dl>
+                                        <dt>
+                                            <div>
+                                                <h1>${menu}</h1>
+                                                <span>주문수량 : ${count} 개</span>
+                                                <button onclick="updateCount(this,1)">+</button>
+                                                <button onclick="updateCount(this,-1)">-</button>
+                                            </div>
+                                        </dt>
+                                    </dl>
 
-        </div>
+                                </div>
 
-            <ul class="title">
-                <li class="title_p">
-                    주문가격
-                </li>
-                <li>
-                    <span>
-                        <span>${price}</span>
+                                    <ul class="title">
+                                        <li class="title_p">
+                                            주문가격
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <span>${price}</span>
 
-                    원</span>
-                </li>
-            </ul>
-            <p>
+                                            원</span>
+                                        </li>
+                                    </ul>
+                                    <p>
 
-                </p>
-
-
+                                        </p>
 
 
-
-
-
-
-                        `;
+                                                `;
                     }
                 }
+                $("#orderDiv").append(temp_html)
+                temp_html2 = `<p>총 상품가격 ${price_all}원 입니다</p><br><p>배송비 4000원 포함</p><br> 
+                <p>총 결제하실 금액 ${price_all+4000}원`
+                $("#pricesum").html(temp_html2)
             }
-            $("#orderDiv").append(temp_html)
-            temp_html2 = `<p>총 상품가격 ${price_all}원 입니다</p><br><p>배송비 4000원 포함</p><br> 
-            <p>총 결제하실 금액 ${price_all+4000}원`
-            $("#pricesum").html(temp_html2)
+            else{
+                $("#pricesum").html("현재 장바구니가 비어있습니다.")
+            }
+            
         }
 
          /**
