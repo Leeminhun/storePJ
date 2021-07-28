@@ -46,8 +46,6 @@
                         let data_deliverynum = data[i]['deliverynum']
                         let data_deliverycompany = data[i]['deliverycompany']
 
-
-
                         for (let a = 0; a < data_listorder.length; a++) {
                             temp_html2 += `
 
@@ -93,6 +91,7 @@
                                             </li>
                                             <li>
                                                 배송현황 : 송장번호<a href="javascript:void(0);" onclick="showdelivery(this);" attr-a="${data_deliverycompany}" attr-b= "${data_deliverynum}">${data_deliverynum}</a>
+                                                <a href="https://tracker.delivery/#/${data_deliverycompany}/${data_deliverynum}" target="_blank">배송조회</a>
                                             </li>
                                             <li id = ${data_deliverynum}>
                 
@@ -170,7 +169,6 @@
         -
         <input type='tel' class="form-control" id="phone3" maxlength="4">
         <button onclick="showOrderList()">조회</button>
-        <a href="https://tracker.delivery/#/kr.hanjin/1111111111111" target="_blank">배송조회</a>
     </div>
     <div id="orderDiv">
         <div class="order_inner">
