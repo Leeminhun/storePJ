@@ -12,6 +12,7 @@ import json
 from bson import json_util
 import html
 from flask import Flask, render_template, jsonify, request
+from wtforms.fields.simple import FileField
 
 # Create application
 app = Flask(__name__)
@@ -45,6 +46,10 @@ class order_form(form.Form):
     state = fields.SelectField ('주문 상태', choices= [('입금대기','입금대기'),('결제완료', '결제완료'),('상품준비중','상품준비중'),('배송중','배송중'),('배송완료','배송완료')])
 
 
+class origin_form(form.Form):
+    name = fields.StringField ('재료명')
+    origin = fields.StringField ('원산지')
+
 # User admin
 # author 배성현
 class menu_view(ModelView):
@@ -63,10 +68,13 @@ class order_view(ModelView):
 
     form = order_form
 
+# User admin
+# author 배성현
+class origin_view(ModelView):
 
-    # def on_model_change(self, form, model, is_created):
-    #     user_id = model.get('user_id')
-    #     model['user_id'] = ObjectId(user_id)
+    column_list = ('name', 'origin')
+
+    form = origin_form
 
 # User admin
 # author 배성현
@@ -175,7 +183,8 @@ if __name__ == '__main__':
     # Add views
     admin.add_view(menu_view(db.menu, '상품관리', url='/Product_management'))
     admin.add_view(order_view(db.user, '주문내역', url='/Order_details'))
-
+    admin.add_view(origin_view(db.origin, '원산지표기', url='/Country_of_origin'))
+    
     # Start app
     app.run('0.0.0.0', port=5000, debug=True)
 
