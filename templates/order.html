@@ -421,10 +421,8 @@
         <!--우편번호 찾기 API -->
         <form>
             <div class="input-group mb-3">
-                <input type="text" class="DaumZipFinder" placeholder="다음 주소 검색 API">
-            </div>
-            <div class="input-group mb-3">
                 <input class="form-control" type="text" id="postcode" name="zipcode" placeholder="우편번호">
+                <button class="DaumZipFinder">우편번호찾기</button>
             </div>
             <div class="input-group mb-3">
                 <input class="form-control" type="text" id="address" name="addr" placeholder="주소">
@@ -442,7 +440,7 @@
 </div>
 <!-- form 아래쪽에 적용하면 되고, head 에 넣을경우 $(function() {}); 로 감싸세요. -->
 <script>
-    $('input.DaumZipFinder').each(DaumZipFinder);
+    $('button.DaumZipFinder').each(DaumZipFinder);
 </script>
 <script>
     includeHTML();
