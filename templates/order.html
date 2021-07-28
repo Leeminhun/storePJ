@@ -182,7 +182,7 @@
             <dl>
                 <dt>
                     <div>
-                        <h1>${menu} <img src="../static/img/trash.png" style="width: 20px; height: 20px; margin-left: 5px" onclick="deleteMenu(this)"/></h1>
+                        <h1>${menu} <img src="../static/img/cross-sign.png" style="width: 20px; height: 20px; margin-left: 5px" onclick="deleteMenu(this)"/></h1>
                         <img src="../static/img/minus.png" onclick="updateCount(this,-1)"><span>주문수량 : ${count} 개</span><img src="../static/img/plus.png" onclick="updateCount(this,1)">
                     </div>
                 </dt>
@@ -273,7 +273,7 @@
         function deleteMenu(e){
 
             //현재 버튼 누른 메뉴의 index값 불러와서 localStorage에서 삭제
-            let del_index = $(e).closest('div').find('.index').val();
+            let del_index = $(e).closest('div.order_inner').find('.index').val();
 
             localStorage.removeItem(del_index);
 
