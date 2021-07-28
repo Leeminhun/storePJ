@@ -273,7 +273,7 @@
         function deleteMenu(e){
 
             //현재 버튼 누른 메뉴의 index값 불러와서 localStorage에서 삭제
-            let del_index = $(e).closest('div').find('.index').val();
+            let del_index = $(e).closest('div.order_inner').find('.index').val();
 
             localStorage.removeItem(del_index);
 
