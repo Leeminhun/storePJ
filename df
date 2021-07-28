@@ -1,0 +1,189 @@
+[33mcommit e3337d09c775deae82372f101cdb70d22eed88c2[m[33m ([m[1;36mHEAD -> [m[1;32mmhSave[m[33m, [m[1;31morigin/mhSave[m[33m)[m
+Author: hotel <sparta@hotel>
+Date:   Sun Jul 25 15:45:26 2021 +0900
+
+    메인페이지 제작 0721
+
+[33mcommit 5c6eae97660b93383349b865181e281958af1184[m
+Author: hotel <sparta@hotel>
+Date:   Wed Jul 21 23:15:49 2021 +0900
+
+    메인페이지 제작 0721
+
+[33mcommit 5e7fc41792112ea58f47d13cc202c96f789e32bc[m
+Author: hotel <sparta@hotel>
+Date:   Wed Jul 21 23:13:46 2021 +0900
+
+    메인페이지 제작 0721
+
+[33mcommit 4a68118faaaf8c1512805b6a26f31fcab86eddae[m
+Author: hotel <sparta@hotel>
+Date:   Tue Jul 20 22:05:41 2021 +0900
+
+    브런치 테스트
+
+[33mcommit c4723fd37f98c3c5f1bca912ac2a2c93c266b707[m
+Merge: 3f7a208 7c6abac
+Author: hotel <sparta@hotel>
+Date:   Tue Jul 20 22:03:44 2021 +0900
+
+    Merge branch 'master' into mhSave
+    
+    # Conflicts:
+    #       app.py
+    #       templates/index.html
+
+[33mcommit 3f7a2085b64fd5ec4013ab355b315322ee2b89b9[m
+Author: hotel <sparta@hotel>
+Date:   Tue Jul 20 21:58:37 2021 +0900
+
+    브런치 테스트
+
+[33mcommit 806321050f0b4f3796e12453a12d0ad1b35241bf[m
+Author: hotel <sparta@hotel>
+Date:   Tue Jul 20 21:52:39 2021 +0900
+
+    커밋 테스트2
+
+[33mcommit 7c6abac13c2bd579bcfd512e0e3a5f05fbc66a93[m
+Merge: 395af92 b470f82
+Author: sum <suin961205@naver.com>
+Date:   Tue Jul 20 21:48:45 2021 +0900
+
+    Merge branch 'master' of https://github.com/Leeminhun/storePJ
+
+[33mcommit 395af92b6215befa0e74ff51ff2f676b5d9786f8[m
+Author: sum <suin961205@naver.com>
+Date:   Tue Jul 20 21:39:40 2021 +0900
+
+    branch test
+
+[33mcommit b470f8251bd47e84b73e4c4910c5e92fd6226809[m
+Author: bae-code <68859996+bae-code@users.noreply.github.com>
+Date:   Tue Jul 20 21:21:09 2021 +0900
+
+    change addmin page name
+
+[33mcommit ee39d542326e5a85eef9db4344d16bfac12c2b4d[m
+Author: sum <suin961205@naver.com>
+Date:   Tue Jul 20 21:19:54 2021 +0900
+
+    messge oo
+
+[33mcommit d88e57cb23c22b43f39ffc613e8bc29d8916931d[m
+Author: suinain <32919452+suinain@users.noreply.github.com>
+Date:   Tue Jul 20 20:42:01 2021 +0900
+
+    Update README.md
+
+[33mcommit 01903e66f17b79293ad9f1c0b6ff59c4ba8724d0[m
+Author: leubenia <86656581+leubenia@users.noreply.github.com>
+Date:   Tue Jul 20 20:40:02 2021 +0900
+
+    Create README.md
+
+[33mcommit aa7ac5bbc610acca705413e7a2eb5c9fc125474d[m
+Merge: 6476d07 a6f4dcd
+Author: bae-code <68859996+bae-code@users.noreply.github.com>
+Date:   Tue Jul 20 18:26:48 2021 +0900
+
+    Merge branch 'bae-code'
+
+[33mcommit a6f4dcdfa03a2d614731356c461189d6abbbc0eb[m
+Author: bae-code <68859996+bae-code@users.noreply.github.com>
+Date:   Tue Jul 20 18:24:35 2021 +0900
+
+    change admin theme
+
+[33mcommit 5a0bd0a1a9bc981d1c8caba197dbd2da756c48b5[m
+Author: bae-code <68859996+bae-code@users.noreply.github.com>
+Date:   Tue Jul 20 14:12:01 2021 +0900
+
+    add Adminpage
+
+[33mcommit 6476d075a3df269f3742cafe1c48a922cc76989e[m
+Merge: 9cebff6 18684b7
+Author: bae-code <68859996+bae-code@users.noreply.github.com>
+Date:   Mon Jul 19 22:41:54 2021 +0900
+
+    Merge branch 'bae-code'
+
+[33mcommit 18684b7207c870352bd328c0fca35f5bbf49f1ce[m
+Author: bae-code <68859996+bae-code@users.noreply.github.com>
+Date:   Mon Jul 19 22:35:50 2021 +0900
+
+    add pic
+
+[33mcommit 9cebff6c9902ec01f88e836bea6f684e273ad2df[m
+Author: Jin <kimjh620@naver.com>
+Date:   Mon Jul 19 20:44:54 2021 +0900
+
+    브랜치 테스트-bluenight
+
+[33mcommit 7b46ff715ea5c7c76c19ec0e879d7161be9c50b9[m
+Merge: 60d4914 46b65f1
+Author: bae-code <68859996+bae-code@users.noreply.github.com>
+Date:   Mon Jul 19 16:38:04 2021 +0900
+
+    Merge branch 'bae-code'
+
+[33mcommit 46b65f1883628a8ee4ba21b5fcc3f131e0134c87[m
+Author: bae-code <68859996+bae-code@users.noreply.github.com>
+Date:   Mon Jul 19 16:35:28 2021 +0900
+
+    test
+
+[33mcommit 60d4914f0735c05fccfb448f31cad166fb5e2a3d[m
+Merge: ab55228 a4c95dd
+Author: bae-code <68859996+bae-code@users.noreply.github.com>
+Date:   Mon Jul 19 16:33:25 2021 +0900
+
+    merge test
+
+[33mcommit a4c95dd07d3cec86807fa4e0d03eaef406ee437e[m
+Author: bae-code <68859996+bae-code@users.noreply.github.com>
+Date:   Mon Jul 19 16:29:28 2021 +0900
+
+    set
+
+[33mcommit ab5522822efd3a5fc3bec9a70523ff10715b73c4[m
+Author: Jin <kimjh620@naver.com>
+Date:   Mon Jul 19 10:11:45 2021 +0900
+
+    Fixed untracked files - /.idea
+
+[33mcommit 537e2c44b1740623f47db2f5419a8e1b6fb508d9[m
+Author: Jin <kimjh620@naver.com>
+Date:   Mon Jul 19 10:08:18 2021 +0900
+
+     push 테스트
+
+[33mcommit e56f1af0fde9d4a4d07d0b47c1ab14eecdb97eba[m
+Author: Jin <kimjh620@naver.com>
+Date:   Mon Jul 19 10:06:27 2021 +0900
+
+    Fixed untracked files
+
+[33mcommit ac92212066f6dab2bb43e5d4c9c107ed26881b1c[m
+Author: hotel <sparta@hotel>
+Date:   Sun Jul 18 23:31:40 2021 +0900
+
+    DT 커밋 테스트 html
+
+[33mcommit b59e5e451e11863ae37395ebdac753930b7e699f[m
+Author: hotel <sparta@hotel>
+Date:   Sun Jul 18 23:29:15 2021 +0900
+
+    DT 커밋 테스트
+
+[33mcommit 09c2d60425d1a9dbbb8255f88f4d234c7c5aa9d5[m
+Author: minhun <zozo4621@gmail.com>
+Date:   Sun Jul 18 23:00:46 2021 +0900
+
+    커밋 테스트2
+
+[33mcommit ef50faf64900b3a7fff8e74ea86a75f216775f20[m
+Author: minhun <zozo4621@gmail.com>
+Date:   Sun Jul 18 22:58:26 2021 +0900
+
+    커밋 테스트
