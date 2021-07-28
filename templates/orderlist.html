@@ -29,10 +29,10 @@
             $.ajax({
                 type: "POST",
                 url: "/orderlist/find",
-                data: { 'phone': phone },
+                data: { 'phone': phone},
                 success: function (response) {
-                    //console.log(response)
-                    const data = response['orderlist']
+                    const data1 = response['orderlist']
+                    let data = JSON.parse(data1)
                     console.log(data)
                     for (let i = 0; i < data.length; i++) {
                         let data_name = data[i]['name']
@@ -45,8 +45,8 @@
                         let data_postmsg = data[i]['postmsg']
                         let data_deliverynum = data[i]['deliverynum']
                         let data_deliverycompany = data[i]['deliverycompany']
-
-
+                        let data_id = data[i]['_id']['$oid']
+                        console.log(data_id)
 
                         for (let a = 0; a < data_listorder.length; a++) {
                             temp_html2 += `
@@ -82,7 +82,7 @@
                                             <p>${data_addr}</p>
                                             <p>${data_phone}</p>
                                         </div>
-                                        <img src="../static/img/trash.png" style="width: 30px; height: 30px;"/>
+                                        <a href="javascript:void(0);" onclick="deleorder(this);" attr-a="${data_id}"><img src="../static/img/trash.png" style="width: 30px; height: 30px;" /></a>
                                         ${temp_html2}
                                         <p>
                                             <li>
@@ -93,6 +93,7 @@
                                             </li>
                                             <li>
                                                 배송현황 : 송장번호<a href="javascript:void(0);" onclick="showdelivery(this);" attr-a="${data_deliverycompany}" attr-b= "${data_deliverynum}">${data_deliverynum}</a>
+                                                <a href="https://tracker.delivery/#/${data_deliverycompany}/${data_deliverynum}" target="_blank">배송조회</a>
                                             </li>
                                             <li id = ${data_deliverynum}>
                 
@@ -105,16 +106,16 @@
                         temp_html2 = ``;
 
                     }
-                    $("#orderTable").append(temp_html)
+                    $("#orderTable").html(temp_html)
                 }
             })
         }
 
         //배송추적 API  241560564195 kr.lotte
         function showdelivery(num) {
-            console.log(num)
-            console.log($(num).attr('attr-a'))
-            console.log($(num).attr('attr-b'))
+            //console.log(num)
+            //console.log($(num).attr('attr-a'))
+            //console.log($(num).attr('attr-b'))
             let btag = $(num).attr('attr-b')
             
             $.ajax({
@@ -123,8 +124,8 @@
                 data: {},
                 success: function (response) {
                     let test = response['state']['text']
-                    console.log(response)
-                    console.log(test)
+                    //console.log(response)
+                    //console.log(test)
                     let temp_html = `${test}`
                     $("#"+btag).html(temp_html) 
                 }
@@ -143,9 +144,24 @@
                 }
             })
         }
+        
+        
+        function deleorder(orderid) {
+            let menuid = $(orderid).attr('attr-a')
+            console.log(menuid)
+            $.ajax({
+                type: "POST",
+                url: "/orderlist/dele",
+                data: {'id': menuid},
+                success: function (response) {
+                    let test = response['message']
+                    showOrderList()
+                }
+            })
+        }
 
         $(document).ready(function () {
-            showdelivcom();
+            // showdelivcom();
         });
     </script>
 </head>
@@ -170,7 +186,6 @@
         -
         <input type='tel' class="form-control" id="phone3" maxlength="4">
         <button onclick="showOrderList()">조회</button>
-        <a href="https://tracker.delivery/#/kr.hanjin/1111111111111" target="_blank">배송조회</a>
     </div>
     <div id="orderDiv">
         <div class="order_inner">
@@ -179,7 +194,7 @@
                 <p>주소</p>
                 <p>번호</p>
             </div>
-            <img src="../static/img/trash.png" style="width: 30px; height: 30px;" />
+            <a href="javascript:void(0);" onclick="deleorder(this);" attr-a="test"><img src="../static/img/trash.png" style="width: 30px; height: 30px;" /></a>
             <dl>
                 <dt>
                     <div>
