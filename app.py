@@ -163,7 +163,7 @@ def ordersave():
     orderlist_receive = request.form.getlist('orderlist[]')
     date_receive = html.escape(request.form['date'])
     postmsg_receive = html.escape(request.form['ero'])
-    priceall_receive = html.escape(request.form['price_all'])
+    pricefinal_receive = html.escape(request.form['price_final'])
     doc = {
         'name':name_receive,
         'address':addr_receive,
@@ -172,7 +172,7 @@ def ordersave():
         'menu':orderlist_receive,
         'date':date_receive,
         'postmsg':postmsg_receive,
-        'price':priceall_receive,
+        'price':pricefinal_receive,
         'state': '입금확인중',
         'today': datetime.datetime.now(),
         'deliverycompany': '입력대기중.',
