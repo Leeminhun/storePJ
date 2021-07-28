@@ -135,6 +135,7 @@
                     "price_all":price_all
                 },
                 success: function (response) {
+                    window.localStorage.clear(); // 주문을 완료할 경우 장바구니 clear
                     alert(response['msg']);
                     window.location.reload()
                 }
