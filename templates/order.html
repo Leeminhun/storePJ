@@ -173,17 +173,14 @@
                         temp_html += `
         <div class="order_inner">
             <input class="index" type="hidden" value=${index} />
-            <img src="../static/img/trash.png" style="width: 30px; height: 30px;" onclick="deleteMenu(this)"/>
             <li>
                 <img src="${img_url}" alt="${menu}" >
             </li>
             <dl>
                 <dt>
                     <div>
-                        <h1>${menu}</h1>
-                        <span>주문수량 : ${count} 개</span>
-                        <button onclick="updateCount(this,1)">+</button>
-                        <button onclick="updateCount(this,-1)">-</button>
+                        <h1>${menu} <img src="../static/img/trash.png" style="width: 20px; height: 20px; margin-left: 5px" onclick="deleteMenu(this)"/></h1>
+                        <img src="../static/img/minus.png" onclick="updateCount(this,-1)"><span>주문수량 : ${count} 개</span><img src="../static/img/plus.png" onclick="updateCount(this,1)">
                     </div>
                 </dt>
             </dl>
@@ -329,18 +326,19 @@
 <div>
     <p>맘스키친 주문하기</p>
    <div id="orderDiv">
-       <!-- 장바구니에 있는 상품들 나오는 부분의 테스트코드
+       장바구니에 있는 상품들 나오는 부분의 테스트코드
         <div class="order_inner">
-            <img src="../static/img/trash.png" style="width: 30px; height: 30px;"/>
             <li>
-                <img src="../static/img/KakaoTalk_20210719_190856996_27.jpg" alt="" >
+                <img src="../static/img/KakaoTalk_20210719_190856996_27.jpg" alt="" class="banchan_img">
             </li>
 
             <dl>
                 <dt>
                     <div>
-                        <h1>감자조림(테스트)</h1>
-                        <span>주문수량 : 10 개</span>
+                        <div>
+                        <h1>감자조림 &nbsp;&nbsp;<img src="../static/img/cross-sign.png" style="width: 20px; height: 20px; margin-left: 5px" onclick="deleteMenu(this)"/></h1>
+                        <img src="../static/img/minus.png" onclick="updateCount(this,-1)"><span>주문수량 : 10 개</span><img src="../static/img/plus.png" onclick="updateCount(this,1)">
+
 
                     </div>
 
@@ -364,7 +362,7 @@
 
                 </p>
 
-       -->
+
       </div>
 
 

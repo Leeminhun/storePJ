@@ -21,24 +21,27 @@ a {
     color: darkgrey;
 }
 .navbar_logo i {
-    color: orange;
+    color: green;
 }
 
 .navbar_menu {
     display: flex;
     list-style: none;
     padding-left: 0;
+    text-decoration: none;
 }
 
 .navbar_menu li {
     padding : 8px 12px;
     font-size: 22px;
+    margin-bottom: 50px;
+    margin-left: -10px;
 }
 .navbar_menu li a {
     color: whitesmoke;
 }
 .navbar_menu li:hover {
-    background-color: orange;
+    background-color: green;
     border-radius: 3px;
 }
 
