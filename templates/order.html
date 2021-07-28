@@ -248,7 +248,7 @@
                     }
                 }
             }
-            $("#orderTable").append(temp_html)
+            $("#orderDiv").append(temp_html)
             temp_html2 = `<p>총 상품가격 ${price_all}원 입니다</p><br><p>배송비 4000원 포함</p><br> 
             <p>총 결제하실 금액 ${price_all+4000}원`
             $("#pricesum").html(temp_html2)
@@ -359,6 +359,7 @@
 <div>
     <p>맘스키친 주문하기</p>
    <div id="orderDiv">
+       <!-- 장바구니에 있는 상품들 나오는 부분의 테스트코드
         <div class="order_inner">
             <img src="../static/img/trash.png" style="width: 30px; height: 30px;"/>
             <li>
@@ -368,7 +369,7 @@
             <dl>
                 <dt>
                     <div>
-                        <h1>감자조림</h1>
+                        <h1>감자조림(테스트)</h1>
                         <span>주문수량 : 10 개</span>
 
                     </div>
@@ -395,6 +396,7 @@
 
 
       </div>
+      -->
 
 
     <p id = "pricesum"></p>
@@ -416,7 +418,7 @@
 
 <!--맘스키친 개인정보 입력 폼-->
 <div style="background-color : gray;" align="center">
-    <pre style="color : white">"선택하신 택배발송일 하루 전 17시까지 아래 계좌로 입금해주셔야 주문이 최종접수됩니다"
+    <pre style="color : white">선택하신 택배발송일 <b>하루 전 17시</b>까지<br/>아래 계좌로 입금해주셔야 주문이 <b>최종접수</b>됩니다.
     (계좌번호 : 하나 348-910231-61607 차민지)</pre>
 </div>
 <div style="width : 100%; margin: auto;" >
