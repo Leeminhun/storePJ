@@ -162,7 +162,7 @@ def ordersave():
         'addr':addr_receive,
         'code':code_receive,
         'phone':phone_receive,
-        'listorder':orderlist_receive,
+        'orderlist':orderlist_receive,
         'date':date_receive,
         'ero':ero_receive,
         'price_all':priceall_receive
@@ -182,7 +182,7 @@ if __name__ == '__main__':
     
     # Add views
     admin.add_view(menu_view(db.menu, '상품관리', url='/Product_management'))
-    admin.add_view(order_view(db.user, '주문내역', url='/Order_details'))
+    admin.add_view(order_view(db.order, '주문내역', url='/Order_details'))
     admin.add_view(origin_view(db.origin, '원산지표기', url='/Country_of_origin'))
     
     # Start app
