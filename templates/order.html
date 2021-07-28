@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <!-- 다운로드받지 마시고 CDN 이용하듯 이대로 링크하세요. API 의 버그 수정 등의 변화를 일일히 적용할 필요가 없습니다. ssl 대응되므로 url 을 수정하지 마세요. -->
+    <script src="//xeno.work/roadzip/roadzip.min.js"></script>
+
     <!--부트스트랩-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -43,46 +47,6 @@
             //console.log(year+'-'+month+'-'+date);
         }
 
-        //우편번호 찾기 API
-        function istest() {
-            new daum.Postcode({
-                oncomplete: function (data) {
-                    var addr = ''; // 주소 변수
-                    var extraAddr = ''; // 참고항목 변수
-                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                        addr = data.roadAddress;
-                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                        addr = data.jibunAddress;
-                    }
-                    // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                    if (data.userSelectedType === 'R') {
-                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                            extraAddr += data.bname;
-                        }
-                        // 건물명이 있고, 공동주택일 경우 추가한다.
-                        if (data.buildingName !== '' && data.apartment === 'Y') {
-                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                        }
-                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                        if (extraAddr !== '') {
-                            extraAddr = ' (' + extraAddr + ')';
-                        }
-                        // 조합된 참고항목을 해당 필드에 넣는다.
-                        document.getElementById("extraAddress").value = extraAddr;
-                    } else {
-                        document.getElementById("extraAddress").value = '';
-                    }
-                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                    document.getElementById('postcode').value = data.zonecode;
-                    document.getElementById("address").value = addr;
-                    // 커서를 상세주소 필드로 이동한다.
-                    document.getElementById("extraAddress").focus();
-                }
-            }).open();
-        }
 
         /**
          * @brief 로컬스토리지 장바구니와 입력받은 배송정보를 가져와 주문을 등록합니다
@@ -117,7 +81,7 @@
                 alert("주소를 입력해주세요!");
                 return false;
             }else if ( date == "") {
-                alert("날자를 입력해주세요");
+                alert("택배 발송일을 입력해주세요");
                 return false;
             } else if (ero == "") {
                 let answer = confirm("배송시 주의사항이 필요없으신가요?");
@@ -171,6 +135,7 @@
                     "price_all":price_all
                 },
                 success: function (response) {
+                    window.localStorage.clear(); // 주문을 완료할 경우 장바구니 clear
                     alert(response['msg']);
                     window.location.reload()
                 }
@@ -204,10 +169,11 @@
                         img_url = cartItem.img_url;
                         price_all += Number(price);
 
-                        // 주의: index 앞뒤로 공백이 있으면 삭제버튼에서 index값을 불러올 때 공백까지 불러와서 에러 발생
+                        // input hidden 코드 +, -, deleteMenu를 위해 추가 - 진회
                         temp_html += `
-                        <div class="order_inner">
-            <img src="../static/img/trash.png" style="width: 30px; height: 30px;" onclick="deleteAll()"/>
+        <div class="order_inner">
+            <input class="index" type="hidden" value=${index} />
+            <img src="../static/img/trash.png" style="width: 30px; height: 30px;" onclick="deleteMenu(this)"/>
             <li>
                 <img src="${img_url}" alt="${menu}" >
             </li>
@@ -216,6 +182,8 @@
                     <div>
                         <h1>${menu}</h1>
                         <span>주문수량 : ${count} 개</span>
+                        <button onclick="updateCount(this,1)">+</button>
+                        <button onclick="updateCount(this,-1)">-</button>
                     </div>
                 </dt>
             </dl>
@@ -264,7 +232,7 @@
          function updateCount(e, num){
 
             //현재 고치려고 하는 데이터의 index값 찾기
-            let target = $(e).closest('tr').find('.index').text();
+            let target = $(e).closest('div.order_inner').find('.index').val();
             //해당 index의 데이터 불러오기
             let cartItem = JSON.parse(localStorage.getItem(target))
             //가져온 데이터에서 수량값이 현재 1이거나 그 이하이고 마이너스버튼을 눌렀을 경우엔 안내메시지 띄우고 중단
@@ -298,8 +266,10 @@
          * @author 김진회
          */
         function deleteMenu(e){
+
             //현재 버튼 누른 메뉴의 index값 불러와서 localStorage에서 삭제
-            let del_index = $(e).closest('tr').find('.index').text();
+            let del_index = $(e).closest('div').find('.index').val();
+
             localStorage.removeItem(del_index);
 
             //localStorage의 남은 값들을 모두 불러와서 index를 앞쪽숫자부터 다시 부여해서 순서대로 재등록(index와 cart페이지의 for문이 정상적으로 돌도록)
@@ -394,9 +364,9 @@
 
                 </p>
 
-
+       -->
       </div>
-      -->
+
 
 
     <p id = "pricesum"></p>
@@ -442,21 +412,21 @@
             -
             <input type='tel' class="form-control" id="phone3" maxlength="4">
         </div>
-        <!--우편 API 해서 찾아보기 -->
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="우편번호 찾기를 눌러주세요" aria-label="address"
-                   aria-describedby="basic-addon1" id="postcode" readonly>
-            <button onclick="istest()" type="submit" class="btn btn-primary">우편번호 찾기</button>
-        </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">배송 주소</span>
+        <!--우편번호 찾기 API -->
+        <form>
+            <div class="input-group mb-3">
+                <input type="text" class="XenoZipFinder form-control" placeholder="건물명, 동 번지 등 짧게 검색하세요.">
             </div>
-            <input type="text" class="form-control" placeholder="주소" aria-label="address"
-                   aria-describedby="basic-addon1" id="address">
-            <input type="text" class="form-control" placeholder="상세주소" aria-label="address"
-                   aria-describedby="basic-addon1" id="extraAddress">
-        </div>
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" id="postcode" name="zipcode" placeholder="우편번호">
+            </div>
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" id="address" name="addr" placeholder="주소">
+            </div>
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" id="extraAddress" name="addr_remain" placeholder="상세주소">
+            </div>
+        </form>
     </form>
 
 </div>
@@ -464,6 +434,10 @@
     <!--주문 접수하기! 버튼 -->
     <button type="button" onclick="saveOrder()" class="btn btn-primary btn-lg btn-block">주문 접수하기!</button>
 </div>
+<!-- form 아래쪽에 적용하면 되고, head 에 넣을경우 $(function() {}); 로 감싸세요. -->
+<script>
+    $('input.XenoZipFinder').each(XenoZipFinder);
+</script>
 <script>
     includeHTML();
 </script>
