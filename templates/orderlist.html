@@ -14,6 +14,7 @@
     <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
     <title>엄마의 부엌 | 주문확인</title>
 
+    
     <script>
         /**
          * @brief 주문시 입력한 핸드폰번호로 해당 주문내역을 조회합니다.
@@ -46,8 +47,9 @@
                         let data_deliverynum = data[i]['deliverynum']
                         let data_deliverycompany = data[i]['deliverycompany']
                         let data_id = data[i]['_id']['$oid']
-                        console.log(data_id)
-
+                        let showlivery = showdelivery(data_deliverynum,data_deliverycompany)
+                        console.log(showlivery)
+                        $("#orderTable").html("")
                         for (let a = 0; a < data_listorder.length; a++) {
                             temp_html2 += `
 
@@ -75,7 +77,7 @@
                                         `
                         }
 
-                        temp_html += `
+                        temp_html = `
                                                 <div class="order_inner">
                                         <div>
                                             <p>${data_name}</p>
@@ -92,44 +94,45 @@
                                                 입금현황 : ${data_state}
                                             </li>
                                             <li>
-                                                배송현황 : 송장번호<a href="javascript:void(0);" onclick="showdelivery(this);" attr-a="${data_deliverycompany}" attr-b= "${data_deliverynum}">${data_deliverynum}</a>
+                                                배송현황 : 송장번호${data_deliverynum}
                                                 <a href="https://tracker.delivery/#/${data_deliverycompany}/${data_deliverynum}" target="_blank">배송조회</a>
                                             </li>
                                             <li id = ${data_deliverynum}>
-                
+                                                ${showlivery}
                                             </li>
                                         </p>
-
-                                
                                 </div>
                             `;
                         temp_html2 = ``;
+                        $("#orderTable").append(temp_html)
 
                     }
-                    $("#orderTable").html(temp_html)
+                   
                 }
             })
         }
 
+
+        // 배송현황 : 송장번호<a href="javascript:void(0);" onclick="showdelivery(this);" attr-a="${data_deliverycompany}" attr-b= "${data_deliverynum}">${data_deliverynum}</a>
         //배송추적 API  241560564195 kr.lotte
-        function showdelivery(num) {
+        function showdelivery(num,company) {
             //console.log(num)
             //console.log($(num).attr('attr-a'))
-            //console.log($(num).attr('attr-b'))
-            let btag = $(num).attr('attr-b')
-            
+            //console.log(company)
+            let test = ''
             $.ajax({
                 type: "GET",
-                url: "https://apis.tracker.delivery/carriers/"+$(num).attr('attr-a')+"/tracks/"+ 241560564195,
+                url: "https://apis.tracker.delivery/carriers/"+company+"/tracks/"+ num,
+                async: false,
                 data: {},
                 success: function (response) {
-                    let test = response['state']['text']
-                    //console.log(response)
-                    //console.log(test)
-                    let temp_html = `${test}`
-                    $("#"+btag).html(temp_html) 
+                    test = response['progresses'][0]['description']
+                    console.log(test)
+                    //$("#"+btag).html(temp_html) 
                 }
             })
+            return test
+            
         }
 
         //배송추적 API 택배회사 목록.
