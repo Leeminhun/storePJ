@@ -204,10 +204,11 @@
                         img_url = cartItem.img_url;
                         price_all += Number(price);
 
-                        // 주의: index 앞뒤로 공백이 있으면 삭제버튼에서 index값을 불러올 때 공백까지 불러와서 에러 발생
+                        // input hidden 코드 +, -, deleteMenu를 위해 추가 - 진회
                         temp_html += `
-                        <div class="order_inner">
-            <img src="../static/img/trash.png" style="width: 30px; height: 30px;" onclick="deleteAll()"/>
+        <div class="order_inner">
+            <input class="index" type="hidden" value=${index} />
+            <img src="../static/img/trash.png" style="width: 30px; height: 30px;" onclick="deleteMenu(this)"/>
             <li>
                 <img src="${img_url}" alt="${menu}" >
             </li>
@@ -216,6 +217,8 @@
                     <div>
                         <h1>${menu}</h1>
                         <span>주문수량 : ${count} 개</span>
+                        <button onclick="updateCount(this,1)">+</button>
+                        <button onclick="updateCount(this,-1)">-</button>
                     </div>
                 </dt>
             </dl>
@@ -264,7 +267,7 @@
          function updateCount(e, num){
 
             //현재 고치려고 하는 데이터의 index값 찾기
-            let target = $(e).closest('tr').find('.index').text();
+            let target = $(e).closest('div.order_inner').find('.index').val();
             //해당 index의 데이터 불러오기
             let cartItem = JSON.parse(localStorage.getItem(target))
             //가져온 데이터에서 수량값이 현재 1이거나 그 이하이고 마이너스버튼을 눌렀을 경우엔 안내메시지 띄우고 중단
@@ -298,8 +301,10 @@
          * @author 김진회
          */
         function deleteMenu(e){
+
             //현재 버튼 누른 메뉴의 index값 불러와서 localStorage에서 삭제
-            let del_index = $(e).closest('tr').find('.index').text();
+            let del_index = $(e).closest('div').find('.index').val();
+
             localStorage.removeItem(del_index);
 
             //localStorage의 남은 값들을 모두 불러와서 index를 앞쪽숫자부터 다시 부여해서 순서대로 재등록(index와 cart페이지의 for문이 정상적으로 돌도록)
