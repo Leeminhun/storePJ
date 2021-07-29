@@ -145,6 +145,9 @@ def find_orderlist():
     
     return jsonify({'orderlist':dumps(orderlist), 'msg':'조회완료!'})
 
+@app.route('/manager')
+def manager():
+    return render_template('manager_main.html')
 
 @app.route('/details')
 def details():
