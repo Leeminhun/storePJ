@@ -59,7 +59,7 @@ class origin_form(form.Form):
 # author 배성현
 class menu_view(ModelView):
 
-    column_list = ('img', 'menu', 'price','category') #db에서 불러올때 사용하는 key값
+    column_list = ('img', 'menu', 'price','category','hide') #db에서 불러올때 사용하는 key값
     
 
     form = menu_form
