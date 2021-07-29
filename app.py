@@ -38,7 +38,7 @@ class menu_form(form.Form):
     price = fields.StringField('가격')
     category = fields.SelectField('카테고리', choices= [('김치', '김치'),
                 ('기본반찬/나물', '기본반찬/나물'), ('국/탕/찌개', '국/탕/찌개'), ('조림/구이', '조림/구이'), ('튀김/전', '튀김/전'), ('도시락', '도시락'), ('제사/명절','제사/명절')])
-    hide = fields.SelectField('숨김/보임', choices= [('0','보임'), ('1','숨김')] )
+    hide = fields.SelectField('숨김/보임 (1/0)', choices= [('0','보임'), ('1','숨김')] )
 
     # DB에 저장할때 사용하는 key = fields.StringField('name') < value 값이 저장되는 inputbox
 
@@ -59,7 +59,7 @@ class origin_form(form.Form):
 # author 배성현
 class menu_view(ModelView):
 
-    column_list = ('img', 'menu', 'price','category') #db에서 불러올때 사용하는 key값
+    column_list = ('img', 'menu', 'price','category','hide') #db에서 불러올때 사용하는 key값
     
 
     form = menu_form
