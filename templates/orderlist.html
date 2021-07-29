@@ -37,7 +37,7 @@
                     $("#orderListDiv").html("")
                     const data1 = response['orderlist']
                     let data = JSON.parse(data1)
-                    console.log(data)
+                    //console.log(data)
                     for (let i = 0; i < data.length; i++) {
                         let data_name = data[i]['name']
                         let data_addr = data[i]['address']
@@ -51,7 +51,7 @@
                         let data_deliverycompany = data[i]['deliverycompany']
                         let data_id = data[i]['_id']['$oid']
                         let showlivery = showdelivery(data_deliverynum, data_deliverycompany)
-                        console.log(data_deliverynum)
+                        //console.log(data_deliverynum)
                         let delivery_check = ``
                         let delivery_state = ``
                         if(data_deliverynum !== '입력해주세요~'){

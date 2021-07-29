@@ -161,6 +161,7 @@
             let index = 0;
             let img_url = '';
             let price_all = 0;
+            let price_final = 0;
             if (localStorage.length > 0) {
                 for (let i = 1; i < localStorage.length+1; i++) {
                     if(localStorage.getItem(i) !== null){
@@ -213,7 +214,7 @@
                 price_final = price_all + 4000;
                 $("#orderDiv").append(temp_html)
                 temp_html2 = `<p>총 상품가격 ${price_all}원 입니다</p><br><p>배송비 4000원 포함</p><br> 
-                <p>총 결제하실 금액 ${price_final+4000}원`
+                <p>총 결제하실 금액 ${price_final}원`
                 $("#pricesum").html(temp_html2)
             }
             else{
