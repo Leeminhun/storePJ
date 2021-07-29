@@ -100,11 +100,11 @@ def main():
     return render_template('index.html')
 
 @app.route('/header.html')
-def dotest():
+def header():
     return render_template('header.html')
 
 @app.route('/footer.html')
-def do1test():
+def footer():
     return render_template('footer.html')
 
 # 일단 보류
@@ -134,18 +134,17 @@ def dele_orderlist():
         msg = '삭제완료!'
     else:
         msg = '결제가 완료되어 삭제가 불가능합니다. 전화 문의부탁드립니다.'
-    
 
     return jsonify({'msg':msg})
+
 
 @app.route('/orderlist/find', methods=['POST'])
 def find_orderlist():
     phone = request.form['phone']
     orderlist = list(db.order.find({'phone':phone}))
     
-    
-    
     return jsonify({'orderlist':dumps(orderlist), 'msg':'조회완료!'})
+
 
 @app.route('/details')
 def details():
