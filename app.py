@@ -25,7 +25,7 @@ app.config['SECRET_KEY'] = '123456790'
 # 로컬환경 테스트시 DB연결 코드
 conn = MongoClient()
 # 서버측 DB연결 코드
-# conn = MongoClient('localhost', 27017)
+#conn = MongoClient('mongodb://test:test@localhost', 27017)
 db = conn.bdd
 
 
