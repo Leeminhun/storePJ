@@ -203,7 +203,7 @@ def ordersave():
     print(doc)
     db.order.insert_one(doc)
 
-    return jsonify({'msg':'이름: '+name_receive})
+    return jsonify({'msg': name_receive+'님의 주문이 완료되었습니다. 계좌입금 부탁드립니다!'})
 
 
 
