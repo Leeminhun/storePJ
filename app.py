@@ -121,11 +121,22 @@ def order():
 def orderlist():
     return render_template('orderlist.html')
 
+@app.route('/orderlist/dele',methods=['POST'])
+def dele_orderlist():
+    id = request.form['id']
+    db.order.delete_one({'_id':ObjectId(id)})
+    print(id)
+
+    return jsonify({'msg':'삭제완료!'})
+
 @app.route('/orderlist/find', methods=['POST'])
 def find_orderlist():
     phone = request.form['phone']
-    orderlist = list(db.order.find({'phone':phone}, {'_id': False}))
-    return jsonify({'orderlist':orderlist, 'msg':'조회완료!'})
+    orderlist = list(db.order.find({'phone':phone}))
+    
+    
+    
+    return jsonify({'orderlist':dumps(orderlist), 'msg':'조회완료!'})
 
 @app.route('/details')
 def details():
@@ -143,6 +154,7 @@ def details_get():
 @app.route('/maps')
 def kakaomaps():
     return render_template('maps.html')
+    
 
 @app.route('/mypage/do', methods=['GET'])
 def post_test():
