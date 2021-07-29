@@ -11,6 +11,12 @@ li {
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
+
+}
+.order_title p{
+     margin-top: 15px;
+    text-align: center;
+    font-size: 20px;
 }
 .order_inner {
     position: relative;
@@ -113,4 +119,14 @@ li {
 
 .to_price li span {
     margin : 5px
+}
+.tracker {
+    display: inline-flex;
+    width: 80%;
+    margin: auto;
+}
+
+.tracker img{
+    width: 30px;
+    height: 30px;
 }
