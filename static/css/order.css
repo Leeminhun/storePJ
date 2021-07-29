@@ -5,6 +5,13 @@ body{
 li {
     list-style: none;
 }
+.order_title {
+    background-color: whitesmoke;
+    border: 1px solid black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
 .order_inner {
     position: relative;
     display: flex;
