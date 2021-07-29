@@ -22,8 +22,10 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '123456790'
 
 # Create models
+# 로컬환경 테스트시 DB연결 코드
 conn = MongoClient()
-conn = MongoClient('localhost', 27017)
+# 서버측 DB연결 코드
+# conn = MongoClient('localhost', 27017)
 db = conn.bdd
 
 
