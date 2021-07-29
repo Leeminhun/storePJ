@@ -51,8 +51,16 @@
                         let data_deliverycompany = data[i]['deliverycompany']
                         let data_id = data[i]['_id']['$oid']
                         let showlivery = showdelivery(data_deliverynum, data_deliverycompany)
-                        console.log(showlivery)
-                        
+                        console.log(data_deliverynum)
+                        let delivery_check = ``
+                        let delivery_state = ``
+                        if(data_deliverynum !== '입력해주세요~'){
+                            delivery_check  = `<a href="https://tracker.delivery/#/${data_deliverycompany}/${data_deliverynum}" target="_blank">배송조회(자세히)</a>`
+                            delivery_state = `${showlivery}`
+                        }else{
+                            delivery_check =``
+                            delivery_state = ``
+                        }
                         for (let a = 0; a < data_listorder.length; a++) {
                             temp_html2 += `
                                         <div class="deli_banchan">
@@ -78,28 +86,28 @@
                         <div class="order_ListInner">
             <div class="deli_adress">
                 <div>
-                    <span style="margin-left: 4px;">배송지</span>
-                    <a href="https://tracker.delivery/#/${data_deliverycompany}/${data_deliverynum}" target="_blank">배송조회(자세히)</a>
+                    <span style="margin-left: 4px;">배송 정보</span>${delivery_check}
+                    
                 </div>
                <div>
                    <li>${data_name} <a href="javascript:void(0);" onclick="deleorder(this);" attr-a="${data_id}"><img src="../static/img/cross-sign.png" style="width: 15x; height: 15px; margin-bottom: 3px;"/></a></li>
                    <li style="color:gray">${data_phone}</li>
                    <li>${data_addr}</li>
-                   <li>${showlivery}</li>
+                   <li>${delivery_state}</li>
                </div>
             </div>
             ${temp_html2}
         <div>
             <div class="to_price">
                 <li>
-                    총 주문가격 (배송비 4000원 포함)
+                    총 결제금액 (배송비 4000원 포함)
                 </li>
                 <li>
                     <span><span style="color:darkblue">${data_priceall}</span>원</span>
                 </li>
             </div>
             <li>
-                입금현황 : <span>${data_state}</span>
+                주문상태 : <span>${data_state}</span>
             </li>
             <li id = test>
                 
@@ -151,7 +159,7 @@
             })
         }
 
-
+        //주문 삭제 선택한 주문만 삭제합니다.
         function deleorder(orderid) {
             let menuid = $(orderid).attr('attr-a')
             console.log(menuid)
@@ -162,7 +170,8 @@
                     url: "/orderlist/dele",
                     data: { 'id': menuid },
                     success: function (response) {
-                        let test = response['message']
+                        let msg = response['msg']
+                        alert(msg)
                         showOrderList()
                     }
                 })
@@ -197,7 +206,14 @@
         <button type="button" class="btn btn-info" onclick="showOrderList()">조회하기</button>
     </div>
     <div id="orderListDiv">
-        <div class="order_ListInner">
+        <div class="deli_adress">
+            <div>
+                <span style="margin-left: 4px;">주문시 입력한 전화번호로 주문조회가 가능합니다.</span>
+            </div>
+        </div>
+        
+        
+        <!-- <div class="order_ListInner">
             <div class="deli_adress">
                 <div>
                     <span style="margin-left: 4px;">배송지</span>
@@ -243,7 +259,7 @@
             <li id=test>
 
             </li>
-        </div>
+        </div> -->
 
 
     </div>

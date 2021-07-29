@@ -124,10 +124,17 @@ def orderlist():
 @app.route('/orderlist/dele',methods=['POST'])
 def dele_orderlist():
     id = request.form['id']
-    db.order.delete_one({'_id':ObjectId(id)})
-    print(id)
+    msg = ''
+    deleid = list(db.order.find({'_id':ObjectId(id)}))
+    print(deleid[0]['state'])
+    if deleid[0]['state'] == '입금확인중':
+        db.order.delete_one({'_id':ObjectId(id)})
+        msg = '삭제완료!'
+    else:
+        msg = '결제가 완료되어 삭제가 불가능합니다. 전화 문의부탁드립니다.'
+    
 
-    return jsonify({'msg':'삭제완료!'})
+    return jsonify({'msg':msg})
 
 @app.route('/orderlist/find', methods=['POST'])
 def find_orderlist():

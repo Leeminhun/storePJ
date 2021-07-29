@@ -207,11 +207,6 @@
 
 
 
-
-
-
-
-
                         `;
                     }
                 }
@@ -222,7 +217,11 @@
                 $("#pricesum").html(temp_html2)
             }
             else{
-                $("#pricesum").html("현재 장바구니가 비어있습니다.")
+                temp_html =`<div class="order_inner">
+                        장바구니가 비어있습니다.
+                    <div>
+                    `
+                $("#pricesum").html(temp_html)
             }
             
         }
@@ -335,7 +334,7 @@
     <p>맘스키친 주문하기</p>
    <div id="orderDiv">
       
-        <div class="order_inner">
+        <!-- <div class="order_inner">
             <li>
                 <img src="../static/img/KakaoTalk_20210719_190856996_27.jpg" alt="" class="banchan_img">
             </li>
@@ -370,9 +369,8 @@
 
                 </p>
 
-
+            -->
       </div>
-
 
 
     <p id = "pricesum"></p>
