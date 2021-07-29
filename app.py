@@ -131,6 +131,14 @@ def find_orderlist():
 def details():
     return render_template('details.html')
 
+@app.route('/details/get', methods=['GET'])
+def details_get():
+    test = list(db.menu.find({},{'_id': False}))
+    #test = [doc for doc in db.user.find({},{'_id': False})]
+    print(test)
+    return jsonify({'data': dumps(test)})
+    raise TypeError('타입 에러 확인')
+
 
 @app.route('/maps')
 def kakaomaps():
@@ -199,5 +207,4 @@ if __name__ == '__main__':
     # Start app
     app.run('0.0.0.0', port=5000, debug=True)
 
-    
     

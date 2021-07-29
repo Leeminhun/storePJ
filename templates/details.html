@@ -13,13 +13,73 @@
     <script src="../static/js/common.js"> </script>
     <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
     <title>엄마의 부엌 | 원산지</title>
+    <script>
+        $(document).ready(function () {
+            showDetails();
+        
+        });
+
+
+        function showDetails(){
+            
+            let test_html = '';
+            let origin = '';
+            let food_name = '';
+
+            //조건식에 뭘 넣어야하나;;-->
+            if(data.length > 0){
+                for(let p = 0; p < data.length; p++){
+                    $.ajax({
+                        type: 'GET',
+                        url: '/details/get?sample_give=국산',
+                        data: {},
+                        success: function (response) {
+                            let articles = response['data'];
+                            let a = JSON.parse(articles)
+                            //console.log(a)
+                            let temp_html = ``;
+                            for (let i = 0; i < a.length; i++) {
+                                let catagory = a[i]["catagory"]
+                                let name = a[i]['name']
+                                let origin = a[i]['origin']
+                            }
+                        }
+    
+                    })
+                }
+            }   
+                    test_html += `<td> ${catagory} + ${name} +':'+ ${origin}</td>`;
+                }
+                $("#emptyTable").append(test_html);
+            }else{
+                test_html += `<p>원산지를 준비중입니다</p>
+                <img src="../static/img/waiting.gif">`;
+
+                $("#emptySpace").append(test_html);
+            }
+            
+        }
+
+        // ajax로 서버(app.py)에 요청보내고, 
+        //서버측app.py에서 그 요청을 받아서 db에서 find해서 db에 저장된
+        // 원산지정보 데이터들을 돌려주면, 
+        //그 데이터 받아다가 HTML로 뿌려주시는 거에요~
+    
+        
+    </script>
 </head>
 <body>
 <header w3-include-html="header.html"></header>
-
-<p> 준비 중입니다. </p>
-
-
+<div id="emptySpace"></div>
+<table>
+    <thead>
+        <th></th>
+        <th></th>
+        <th></th>
+    </thead>
+    <tbody id="emptyTable">
+    </tbody>
+</table>
 <!--푸터영역-->
 <footer w3-include-html="footer.html"></footer>
 <script>
