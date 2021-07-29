@@ -11,12 +11,12 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../static/css/common.css">
     <link rel="stylesheet" type="text/css" href="../static/css/order.css">
-    
+
     <script src="../static/js/common.js"></script>
     <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
     <title>엄마의 부엌 | 주문확인</title>
 
-    
+
     <script>
         /**
          * @brief 주문시 입력한 핸드폰번호로 해당 주문내역을 조회합니다.
@@ -32,8 +32,9 @@
             $.ajax({
                 type: "POST",
                 url: "/orderlist/find",
-                data: { 'phone': phone},
+                data: { 'phone': phone },
                 success: function (response) {
+                    $("#orderListDiv").html("")
                     const data1 = response['orderlist']
                     let data = JSON.parse(data1)
                     console.log(data)
@@ -49,67 +50,67 @@
                         let data_deliverynum = data[i]['deliverynum']
                         let data_deliverycompany = data[i]['deliverycompany']
                         let data_id = data[i]['_id']['$oid']
-                        let showlivery = showdelivery(data_deliverynum,data_deliverycompany)
+                        let showlivery = showdelivery(data_deliverynum, data_deliverycompany)
                         console.log(showlivery)
-                        $("#orderTable").html("")
+                        
                         for (let a = 0; a < data_listorder.length; a++) {
                             temp_html2 += `
-
-                                            <dl>
-                                                <dt>
-                                                    <div>
-                                                        <h1>${data_listorder[a].split(',')[0]}</h1>
-                                                        <span>주문수량 : ${data_listorder[a].split(',')[2]} 개</span>
-                                                    </div>
-                                                </dt>
-                                            </dl>
+                                        <div class="deli_banchan">
+                                            <h1>${data_listorder[a].split(',')[0]}  </h1>
+                                            <span>주문수량 : ${data_listorder[a].split(',')[2]} 개</span>
                                         </div>
-                                        <ul class="title">
-                                            <li class="title_p">
-                                                주문가격
-                                            </li>
-                                            <li>
-                                                <span>
-                                                    <span>${data_listorder[a].split(',')[1]}</span>
+                                    </div>
+                                    <ul class="title">
+                                        <li class="title_p">
+                                            주문가격
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <span>${data_listorder[a].split(',')[1]}</span>
 
-                                                    원</span>
-                                            </li>
-                                        </ul>
-
+                                                원</span>
+                                        </li>
+                                    </ul>
                                         `
                         }
 
                         temp_html = `
-                                                <div class="order_inner">
-                                        <div>
-                                            <p>${data_name}</p>
-                                            <p>${data_addr}</p>
-                                            <p>${data_phone}</p>
-                                        </div>
-                                        <a href="javascript:void(0);" onclick="deleorder(this);" attr-a="${data_id}"><img src="../static/img/trash.png" style="width: 30px; height: 30px;" /></a>
-                                        ${temp_html2}
-                                        <p>
-                                            <li>
-                                                총 가격 : ${data_priceall}
-                                            </li>            
-                                            <li>
-                                                입금현황 : ${data_state}
-                                            </li>
-                                            <li>
-                                                배송현황 : 송장번호${data_deliverynum}
-                                                <a href="https://tracker.delivery/#/${data_deliverycompany}/${data_deliverynum}" target="_blank">배송조회</a>
-                                            </li>
-                                            <li id = ${data_deliverynum}>
-                                                ${showlivery}
-                                            </li>
-                                        </p>
-                                </div>
+                        <div class="order_ListInner">
+            <div class="deli_adress">
+                <div>
+                    <span style="margin-left: 4px;">배송지</span>
+                    <a href="https://tracker.delivery/#/${data_deliverycompany}/${data_deliverynum}" target="_blank">배송조회(자세히)</a>
+                </div>
+               <div>
+                   <li>${data_name} <a href="javascript:void(0);" onclick="deleorder(this);" attr-a="${data_id}"><img src="../static/img/cross-sign.png" style="width: 15x; height: 15px; margin-bottom: 3px;"/></a></li>
+                   <li style="color:gray">${data_phone}</li>
+                   <li>${data_addr}</li>
+                   <li>${showlivery}</li>
+               </div>
+            </div>
+            ${temp_html2}
+        <div>
+            <div class="to_price">
+                <li>
+                    총 주문가격 (배송비 4000원 포함)
+                </li>
+                <li>
+                    <span><span style="color:darkblue">${data_priceall}</span>원</span>
+                </li>
+            </div>
+            <li>
+                입금현황 : <span>${data_state}</span>
+            </li>
+            <li id = test>
+                
+            </li>
+        </div>
                             `;
                         temp_html2 = ``;
-                        $("#orderTable").append(temp_html)
+                        $("#orderListDiv").append(temp_html)
 
                     }
-                   
+
                 }
             })
         }
@@ -117,14 +118,14 @@
 
         // 배송현황 : 송장번호<a href="javascript:void(0);" onclick="showdelivery(this);" attr-a="${data_deliverycompany}" attr-b= "${data_deliverynum}">${data_deliverynum}</a>
         //배송추적 API  241560564195 kr.lotte
-        function showdelivery(num,company) {
+        function showdelivery(num, company) {
             //console.log(num)
             //console.log($(num).attr('attr-a'))
             //console.log(company)
             let test = ''
             $.ajax({
                 type: "GET",
-                url: "https://apis.tracker.delivery/carriers/"+company+"/tracks/"+ num,
+                url: "https://apis.tracker.delivery/carriers/" + company + "/tracks/" + num,
                 async: false,
                 data: {},
                 success: function (response) {
@@ -134,7 +135,7 @@
                 }
             })
             return test
-            
+
         }
 
         //배송추적 API 택배회사 목록.
@@ -149,20 +150,23 @@
                 }
             })
         }
-        
-        
+
+
         function deleorder(orderid) {
             let menuid = $(orderid).attr('attr-a')
             console.log(menuid)
-            $.ajax({
-                type: "POST",
-                url: "/orderlist/dele",
-                data: {'id': menuid},
-                success: function (response) {
-                    let test = response['message']
-                    showOrderList()
-                }
-            })
+            let ans = confirm("주문이 완전히 삭제됩니다 정말 주문을 취소하시겠습니까?")
+            if(ans){
+                $.ajax({
+                    type: "POST",
+                    url: "/orderlist/dele",
+                    data: { 'id': menuid },
+                    success: function (response) {
+                        let test = response['message']
+                        showOrderList()
+                    }
+                })
+            }  
         }
 
         $(document).ready(function () {
@@ -186,9 +190,9 @@
             <option value="018">018</option>
             <option value="019">019</option>
         </select>
-        
+
         <input type='tel' class="form-control" id="phone2" maxlength="4">
-        
+
         <input type='tel' class="form-control" id="phone3" maxlength="4">
         <button type="button" class="btn btn-info" onclick="showOrderList()">조회하기</button>
     </div>
@@ -197,19 +201,20 @@
             <div class="deli_adress">
                 <div>
                     <span style="margin-left: 4px;">배송지</span>
-                    <a href ="javascript:void(0)" onclick="showdelivery(this)" attr-a ="test">배송조회</a>
+                    <a href="javascript:void(0)" onclick="showdelivery(this)" attr-a="test">배송조회</a>
                 </div>
-               <div>
-                   <li>이민훈</li>
-                   <li style="color:gray">010-0000-0000</li>
-                   <li>광주 서구 월드컵4강로 28번길 50-293 00아파트 312동 1101호</li>
-               </div>
+                <div>
+                    <li>이민훈</li>
+                    <li style="color:gray">010-0000-0000</li>
+                    <li>광주 서구 월드컵4강로 28번길 50-293 00아파트 312동 1101호</li>
+                </div>
             </div>
             <div class="deli_banchan">
-                        <h1>감자조림  <img src="../static/img/cross-sign.png" style="width: 15x; height: 15px; margin-bottom: 3px;" onclick=""/></h1>
-                        <span>주문수량 : 10 개</span>
+                <h1>감자조림 <img src="../static/img/cross-sign.png" style="width: 15x; height: 15px; margin-bottom: 3px;"
+                        onclick="" /></h1>
+                <span>주문수량 : 10 개</span>
             </div>
-            
+
         </div>
         <ul class="title">
             <li class="title_p">
@@ -222,7 +227,7 @@
                     원</span>
             </li>
         </ul>
-        
+
         <div>
             <div class="to_price">
                 <li>
@@ -235,16 +240,13 @@
             <li>
                 입금현황 : <span>미입금</span>
             </li>
-            <li id = test>
-                
+            <li id=test>
+
             </li>
         </div>
 
 
     </div>
-    <table id="orderTable">
-
-    </table>
 
     <footer w3-include-html="footer.html"></footer>
     <script>
