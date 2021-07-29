@@ -1,6 +1,4 @@
-body{
-    background-color: lightgray;
-}
+
 
 li {
     list-style: none;
@@ -10,9 +8,6 @@ li {
     display: flex;
     height: 120px;
     margin-left: 0px;
-    background-color: whitesmoke;
-    border: 1px solid black;
-    border-radius: 5px;
 }
 .order_inner dl dt div {
     width: 185%;
@@ -41,69 +36,22 @@ li {
     width: 100px;
     height: 100px;
     margin-left: 10px;
-    margin-top: 10px;
 }
 .title{
     justify-content: space-between;
     position: relative;
     display: flex;
     background-color: lightblue;
-    border : 1px solid black;
     border-radius: 2px;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .title li {
-    margin-right: 4px;
+    margin-right: 20px;
 }
 .title_p {
     font-weight: bold;
-    font-size: 16px;
-    margin-left: -36px;
+    font-size: 18px;
+    margin-left: -25px;
 }
 
-/*orderList*/
-.deli_adress {
-    background-color: whitesmoke;
-}
-.deli_adress div {
-    border:1px solid rgb(85, 85, 80);
-    border-radius: 5px;
-    
-}
-
-.deli_adress ul {
-    margin-left: -35px;
-    border : 1px solid black;
-    border-radius: 10px;
-}
-.deli_banchan {
-    border: 1px solid black;
-    border-radius: 5px;
-   
-}
-.deli_banchan{
-    background-color: whitesmoke;
-    margin-top: 20px;
-}
-.deli_banchan h1{
-    font-size: 20px;
-}
-.deli_banchan span {
-    text-align: right;
-    display: block;
-    position: inherit
-}
-
-.to_price {
-    background-color: whitesmoke;
-    border: 1px solid black;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    height: 40px;
-}
-
-.to_price li span {
-    margin : 5px
-}
