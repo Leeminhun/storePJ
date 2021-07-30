@@ -20,6 +20,10 @@
     <link rel="stylesheet" type="text/css" href="../static/css/common.css">
     <script src="../static/js/common.js"></script>
     <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
+    <!-- 다운로드받지 마시고 CDN 이용하듯 이대로 링크하세요. API 의 버그 수정 등의 변화를 일일히 적용할 필요가 없습니다. ssl 대응되므로 url 을 수정하지 마세요. -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://xeno.work/roadzip/daum.js"></script>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
@@ -58,7 +62,7 @@
 <body class="bodycs">
 <!-- <header w3-include-html = "header.html"></herder> -->
 <header w3-include-html="header.html"></header>
-    <form action="" method="post">
+    <form action="" method="post" id="joinform">
         <div class="input-group mb-3">
             ID : <input type="text" class="form-control" name="userid" />
         </div>
@@ -96,11 +100,14 @@
             </div>
         </form>
         <!--우편번호 찾기 API 끝 -->
-        <button type="submit" class="btn btn-info">회원가입하기</button>
+        <button type="submit" class="btn btn-info" form="joinform">회원가입하기</button>
     </form>
 
 
-
+<!-- form 아래쪽에 적용하면 되고, head 에 넣을경우 $(function() {}); 로 감싸세요. -->
+<script>
+    $('button.DaumZipFinder').each(DaumZipFinder);
+</script>
 <script>
     includeHTML();
 </script>
