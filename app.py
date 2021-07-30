@@ -196,7 +196,7 @@ def member_join():
         userid = request.form.get("userid", type=str)
         pw = request.form.get("userPW", type=str)
         phone = request.form.get("phone1", type=str)+"-"+request.form.get("phone2", type=str)+"-"+request.form.get("phone3", type=str)
-        postcode = request.form.get("postcode", type=str)
+        postcode = request.form.get("zipcode", type=str)
         addr = request.form.get("addr", type=str)
         extraAddr = request.form.get("addr_remain", type=str)
 
