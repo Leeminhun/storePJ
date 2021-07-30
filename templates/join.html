@@ -69,7 +69,7 @@
             <input type="password" class="form-control" name="confirmPW" id="pwCheck" onchange="isSame()" /> <span id="same"></span>
         </div>
         <div class="input-group mb-3">
-            <select class="custom-select" id="phone1">
+            <select class="custom-select" name="phone1" id="phone1">
                 <option value="010" selected>010</option>
                 <option value="011">011</option>
                 <option value="016">016</option>
@@ -78,9 +78,9 @@
                 <option value="019">019</option>
             </select>
             -
-            <input type='tel' class="form-control" id="phone2" maxlength="4">
+            <input type='tel' class="form-control" name="phone2" id="phone2" maxlength="4">
             -
-            <input type='tel' class="form-control" id="phone3" maxlength="4">
+            <input type='tel' class="form-control" name="phone3" id="phone3" maxlength="4">
         </div>
         <!--우편번호 찾기 API -->
         <form>
@@ -96,7 +96,7 @@
             </div>
         </form>
         <!--우편번호 찾기 API 끝 -->
-        <button type="submit">회원가입하기</button>
+        <button type="submit" class="btn btn-info">회원가입하기</button>
     </form>
 
 

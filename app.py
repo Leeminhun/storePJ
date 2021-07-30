@@ -172,6 +172,9 @@ def member_join():
     if request.method == "POST":
         userid = request.form.get("userid", type=str)
         pw = request.form.get("userPW", type=str)
+        phone = request.form.get("phone1", type=str)+"-"+request.form.get("phone2", type=str)+"-"+request.form.get("phone3", type=str)
+        postcode = request.form.get("postcode", type=str)
+        addr = request.form.get("addr", type=str)+" "+request.form.get("addr_remain", type=str)
 
         if userid == "":
             flash("ID를 입력해주세요")
@@ -189,6 +192,9 @@ def member_join():
         to_db = {
             "userid": userid,
             "pw": generate_password_hash(pw),
+            "phone": phone,
+            "postcode": postcode,
+            "address": addr,
         }
         users.insert_one(to_db)
         last_signup = users.find().sort("_id", -1).limit(5)
