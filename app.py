@@ -38,44 +38,6 @@ mongo = PyMongo(app)
 app.secret_key = 'supersupersecret'
 #########################################################
 
-@app.route("/join", methods=["GET", "POST"])
-def member_join():
-    if request.method == "POST":
-        userid = request.form.get("userid", type=str)
-        pw = request.form.get("userPW", type=str)
-
-        if userid == "":
-            flash("Please Input ID")
-            return render_template("join.html")
-        elif pw == "":
-            flash("Please Input PW")
-            return render_template("join.html")
-
-        users = mongo.db.users
-        check_cnt = users.find({"userid": userid}).count()
-        if check_cnt > 0:
-            flash("It is a registered userid")
-            return render_template("join.html")
-
-        to_db = {
-            "userid": userid,
-            "pw": generate_password_hash(pw),
-        }
-        to_db_signup = users.insert_one(to_db)
-        last_signup = users.find().sort("_id", -1).limit(5)
-        for _ in last_signup:
-            print(_)
-
-        flash("가입해주셔서 감사합니다!")
-        return render_template("index.html")
-    else:
-        return render_template("join.html")
-
-# if __name__ == "__main__":
-#     web_bulletin.run(host='0.0.0.0', debug=True, port=9999)
-
-
-
 
 # Create dummy secrey key so we can use sessions
 app.config['SECRET_KEY'] = '123456790'
@@ -173,25 +135,56 @@ def footer():
 # 로그인기능 및 페이지 구현
 # author 김진회
 @app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        name = request.form['userid']
-        password = request.form['password']
-        try:
-            if (name in userinfo):
-                #2번을 해보세요!
-                session["logged_in"] = True
-                    #3번을 해보세요!
-                return render_template('loggedin.html')
-                    #4번을 해보세요!
-            else:
-                return '비밀번호가 틀립니다.'
-            return '등록된 아이디가 아닙니다.'
-        except:
-            return '잘못된 접근입니다.'
-    else:
-        return render_template('login.html')
+def member_login():
+    if request.method == 'GET':
+        return render_template('index.html')
+    elif request.method == 'POST':
+        userid = request.form.get("userid", type=str)
+        pw = request.form.get("userPW", type=str)
 
+        if userid == "":
+            flash("아이디를 입력하세요")
+            return render_template('index.html')
+        elif pw == "":
+            flash("비밀번호를를 입력하세요")
+            return render_template('index.html')
+        else:
+            return '등록된 아이디가 아닙니다.'
+
+
+
+@app.route("/join", methods=["GET", "POST"])
+def member_join():
+    if request.method == "POST":
+        userid = request.form.get("userid", type=str)
+        pw = request.form.get("userPW", type=str)
+
+        if userid == "":
+            flash("ID를 입력해주세요")
+            return render_template("join.html")
+        elif pw == "":
+            flash("패스워드를 입력해주세요")
+            return render_template("join.html")
+
+        users = mongo.db.users
+        check_cnt = users.find({"userid": userid}).count()
+        if check_cnt > 0:
+            flash("이미 존재하는 아이디입니다.")
+            return render_template("join.html")
+
+        to_db = {
+            "userid": userid,
+            "pw": generate_password_hash(pw),
+        }
+        to_db_signup = users.insert_one(to_db)
+        last_signup = users.find().sort("_id", -1).limit(5)
+        for _ in last_signup:
+            print(_)
+
+        flash("가입해주셔서 감사합니다!")
+        return render_template("index.html")
+    else:
+        return render_template("join.html")
 
 # @app.route('/join', methods=['GET', 'POST'])
 # def join():
