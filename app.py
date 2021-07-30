@@ -83,6 +83,11 @@ class origin_form(form.Form):
     name = fields.StringField ('재료명')
     origin = fields.StringField ('원산지')
 
+class user_form(form.Form):
+    pw = fields.StringField ('비밀번호 변경 , 수정?')
+    # 구현해야할지 말아야할지?
+
+
 # User admin
 # author 배성현
 class menu_view(ModelView):
@@ -109,6 +114,11 @@ class origin_view(ModelView):
 
     form = origin_form
 
+class user_view(ModelView):
+
+    column_list = ('userid', 'pw', 'phone', 'postcode', 'address', 'extraAddress')
+
+    form = user_form
 # User admin
 # author 배성현
 class JSONEncoder(json.JSONEncoder):
@@ -331,6 +341,7 @@ if __name__ == '__main__':
     admin.add_view(menu_view(db.menu, '상품관리', url='/Product_management'))
     admin.add_view(order_view(db.order, '주문내역', url='/Order_details'))
     admin.add_view(origin_view(db.origin, '원산지표기', url='/Country_of_origin'))
+    admin.add_view(user_view(db.users, '회원 정보', url='/moms_users'))
     
     # Start app
     app.run('0.0.0.0', port=5000, debug=True)
