@@ -59,10 +59,44 @@
 <!-- <header w3-include-html = "header.html"></herder> -->
 <header w3-include-html="header.html"></header>
     <form action="" method="post">
-        <p>ID : <input type="text" name="userid" /></p>
-        <p>PW : <input type="password" name="userPW" id="pw" onchange="isSame()" /></p>
-        <p>PW : <input type="password" name="confirmPW" id="pwCheck" onchange="isSame()" /> <span id="same"></span></p>
-        <p><input type="submit" value="회원가입" /></p>
+        <div class="input-group mb-3">
+            ID : <input type="text" class="form-control" name="userid" />
+        </div>
+        <div class="input-group mb-3">
+            PW : <input type="password" class="form-control" name="userPW" id="pw" onchange="isSame()" />
+        </div>
+        <div class="input-group mb-3">PW(check) :
+            <input type="password" class="form-control" name="confirmPW" id="pwCheck" onchange="isSame()" /> <span id="same"></span>
+        </div>
+        <div class="input-group mb-3">
+            <select class="custom-select" id="phone1">
+                <option value="010" selected>010</option>
+                <option value="011">011</option>
+                <option value="016">016</option>
+                <option value="017">017</option>
+                <option value="018">018</option>
+                <option value="019">019</option>
+            </select>
+            -
+            <input type='tel' class="form-control" id="phone2" maxlength="4">
+            -
+            <input type='tel' class="form-control" id="phone3" maxlength="4">
+        </div>
+        <!--우편번호 찾기 API -->
+        <form>
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" id="postcode" name="zipcode" placeholder="우편번호">
+                <button type="button" class="btn btn-info DaumZipFinder">우편번호찾기</button>
+            </div>
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" id="address" name="addr" placeholder="주소">
+            </div>
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" id="extraAddress" name="addr_remain" placeholder="상세주소">
+            </div>
+        </form>
+        <!--우편번호 찾기 API 끝 -->
+        <button type="submit">회원가입하기</button>
     </form>
 
 
