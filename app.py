@@ -14,12 +14,10 @@ import html
 from flask import Flask, render_template, jsonify, request, session, url_for, redirect, flash
 from flask_pymongo import PyMongo
 from wtforms.fields.simple import FileField
-import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 #도도 임포트
 import datetime
-import jwt
 
 #회원가입 비밀번호 암호화를 위해 werkzeug import
 
