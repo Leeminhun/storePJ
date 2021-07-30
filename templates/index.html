@@ -184,12 +184,16 @@
 <header w3-include-html="header.html"></header>
 <div class="list">
     <div>
-        <form action = "/login" method="POST">
+        {%if userid%}
+            {{userid}} <button type="button" onclick="location.href='/logout' ">로그 아웃</button> 
+        {%else%}<form action = "/" method="POST">
             ID: <input type="text" name="userid"/>
             PASSWORD: <input type="password" name="userPW">
             <button type="submit" class="btn btn-info">로그인</button>
             <a href="/join"><button type="button" class="btn btn-info">회원가입</button></a>
-        </form>
+            </form>
+        {%endif%}
+        
 
     </div>
     <label>판매 목록</label>

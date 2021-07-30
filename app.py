@@ -17,6 +17,10 @@ from wtforms.fields.simple import FileField
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
+#도도 임포트
+import datetime
+import jwt
+
 #회원가입 비밀번호 암호화를 위해 werkzeug import
 
 # Create application
@@ -125,10 +129,9 @@ class JSONEncoder(json.JSONEncoder):
 
 @app.route('/')
 def main():
-    if session.get('logged_in'):
-        return render_template('loggedin.html')
-    else:
-        return render_template('index.html')
+    id = session.get('logged_in')
+    
+    return render_template('index.html', userid = id)
 
 @app.route('/header.html')
 def header():
@@ -142,7 +145,7 @@ def footer():
 # 로그인기능 및 페이지 구현
 # author 김진회
 # session["logged_in"] = True 를 넣어주면 로그인 성공한 이후의 상황이 됨.
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def member_login():
     if request.method == 'GET':
         return render_template('index.html')
@@ -165,16 +168,17 @@ def member_login():
                 flash("아이디가 존재하지 않습니다.")
                 return render_template('index.html')
             elif check_password_hash(id_check["pw"],pw):
-                session["logged_in"] = True
-                return render_template('loggedin.html')
+                session["logged_in"] = userid
+                return render_template('index.html' , userid = userid)
             else:
                 flash("비밀번호가 틀렸습니다.")
                 return render_template('index.html')
+            
 
-@app.route("/logout", methods=["POST"])
+@app.route("/logout", methods=["GET"])
 def logout():
-    session['logged_in'] = False
-    return render_template('index.html')
+    session.pop('logged_in',None)
+    return redirect('/')
 
 @app.route("/join", methods=["GET", "POST"])
 def member_join():
@@ -229,7 +233,14 @@ def member_join():
 
 @app.route('/order')
 def order():
-    return render_template('order.html')
+    id = session.get('logged_in')
+    id_find = db.users.find_one({"userid": id})
+    id_set = id_find['userid']
+    phone_find = id_find['phone']
+    phone_find = id_find['userid']
+    
+    
+    return render_template('order.html', userid = id)
 
 @app.route('/orderlist')
 def orderlist():
