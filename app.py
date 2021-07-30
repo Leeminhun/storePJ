@@ -123,6 +123,8 @@ class JSONEncoder(json.JSONEncoder):
     
 # Flask views
 
+# author 김진회
+# 세션에 logged_in값이 true면 로그인 상태
 @app.route('/')
 def main():
     if session.get('logged_in'):
@@ -159,13 +161,15 @@ def member_login():
         else:
             users = mongo.db.users
             id_check = users.find_one({"userid": userid})
-            print(id_check["pw"])
-            print(generate_password_hash(pw))
+            #print(id_check["pw"])
+            #print(generate_password_hash(pw))
             if id_check is None:
                 flash("아이디가 존재하지 않습니다.")
                 return render_template('index.html')
             elif check_password_hash(id_check["pw"],pw):
                 session["logged_in"] = True
+                session["now_login_id"] = id_check["userid"]
+                print(session)
                 return render_template('loggedin.html')
             else:
                 flash("비밀번호가 틀렸습니다.")
