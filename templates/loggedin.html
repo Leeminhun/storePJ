@@ -76,7 +76,7 @@
             alert(menu + ": 장바구니에 들어갔어요!")
         }
 
-        function testjax() {
+        function showMenus() {
             $.ajax({
                 type: 'GET',
                 url: '/mypage/do?sample_give=샘플데이터',
@@ -162,7 +162,7 @@
         }
 
         $(document).ready(function () {
-            testjax();
+            showMenus();
         });
     </script>
 
@@ -173,20 +173,14 @@
 <!-- <header w3-include-html = "header.html"></herder> -->
 <header w3-include-html="header.html"></header>
 <div class="list">
-    <div>
-        <form action = "/login" method="POST">
-            ID: <input type="text" name="userid"/>
-            PASSWORD: <input type="password" name="password">
-            <button type="submit" class="btn btn-info">로그인</button>
-            <a href="/join"><button type="button" class="btn btn-info">회원가입</button></a>
-        </form>
-
-    </div>
+    <form>
+        <button type="submit" class="btn btn-info">로그아웃</button>
+    </form>
     <label>판매 목록</label>
     <br>
 
     <div class="sell_list">
-        <select id="banchan_list" onchange="testjax()">
+        <select id="banchan_list" onchange="showMenus()">
             <option value="all" selected>전체</option>
             <option value="kimchi">김치</option>
             <option value="namul">기본반찬/나물</option>

@@ -1,0 +1,77 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            alert("{{messages[-1]}}")
+        </script>
+    {% endif %}
+{% endwith %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <script src="../static/js/common.js"></script>
+    <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>엄마의 부엌 | Mom's Kitchen</title>
+
+    <script>
+
+        /*
+        * @brief 비밀번호 입력을 두번 똑같이 했는지 체크
+        * @author 김진회
+        * @출처 https://twinparadox.tistory.com/200
+         */
+        function isSame() {
+            const pw = document.getElementById('pw').value;
+            if (pw.length < 5 || pw.length > 20) {
+                window.alert('비밀번호는 최소 5자 이상, 20자 미만으로 설정해주세요.');
+                document.getElementById('pw').value=document.getElementById('pwCheck').value='';
+                document.getElementById('same').innerHTML='';
+            }
+            if(document.getElementById('pw').value!='' && document.getElementById('pwCheck').value!='') {
+                if(document.getElementById('pw').value==document.getElementById('pwCheck').value) {
+                    document.getElementById('same').innerHTML='비밀번호가 일치합니다.';
+                    document.getElementById('same').style.color='blue';
+                }
+                else {
+                    document.getElementById('same').innerHTML='비밀번호가 일치하지 않습니다.';
+                    document.getElementById('same').style.color='red';
+                }
+            }
+        }
+
+    </script>
+</head>
+
+<body class="bodycs">
+<!-- <header w3-include-html = "header.html"></herder> -->
+<header w3-include-html="header.html"></header>
+    <form action="" method="post">
+        <p>ID : <input type="text" name="userid" /></p>
+        <p>PW : <input type="password" name="userPW" id="pw" onchange="isSame()" /></p>
+        <p>PW : <input type="password" name="confirmPW" id="pwCheck" onchange="isSame()" /> <span id="same"></span></p>
+        <p><input type="submit" value="회원가입" /></p>
+    </form>
+
+
+
+<script>
+    includeHTML();
+</script>
+
+<footer w3-include-html="footer.html"></footer>
+</body>
+
+</html>

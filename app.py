@@ -11,12 +11,71 @@ from bson.json_util import dumps
 import json
 from bson import json_util
 import html
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, session, url_for, redirect, flash
+from flask_pymongo import PyMongo
 from wtforms.fields.simple import FileField
 import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
+
+#회원가입 비밀번호 암호화를 위해 werkzeug import
 
 # Create application
 app = Flask(__name__)
+
+# 로그인 기능 구현을 위한 코드(아래 시크릿키와 어떻게 다른지 잘 모름)
+# author 김진회
+app.secret_key = 'super secret key'
+app.config['SESSION_TYPE'] = 'filesystem'
+userinfo = {'bluenight':'superpassword1'}
+
+#########################################################
+# Flask 선언, mongodb와 연결
+#web_bulletin = Flask(__name__, template_folder="templates")
+app.config["MONGO_URI"] = "mongodb://localhost:27017/bdd"
+app.config['SECRET_KEY'] = 'psswrd'
+mongo = PyMongo(app)
+
+app.secret_key = 'supersupersecret'
+#########################################################
+
+@app.route("/join", methods=["GET", "POST"])
+def member_join():
+    if request.method == "POST":
+        userid = request.form.get("userid", type=str)
+        pw = request.form.get("userPW", type=str)
+
+        if userid == "":
+            flash("Please Input ID")
+            return render_template("join.html")
+        elif pw == "":
+            flash("Please Input PW")
+            return render_template("join.html")
+
+        users = mongo.db.users
+        check_cnt = users.find({"userid": userid}).count()
+        if check_cnt > 0:
+            flash("It is a registered userid")
+            return render_template("join.html")
+
+        to_db = {
+            "userid": userid,
+            "pw": generate_password_hash(pw),
+        }
+        to_db_signup = users.insert_one(to_db)
+        last_signup = users.find().sort("_id", -1).limit(5)
+        for _ in last_signup:
+            print(_)
+
+        flash("가입해주셔서 감사합니다!")
+        return render_template("index.html")
+    else:
+        return render_template("join.html")
+
+# if __name__ == "__main__":
+#     web_bulletin.run(host='0.0.0.0', debug=True, port=9999)
+
+
+
 
 # Create dummy secrey key so we can use sessions
 app.config['SECRET_KEY'] = '123456790'
@@ -97,7 +156,10 @@ class JSONEncoder(json.JSONEncoder):
 
 @app.route('/')
 def main():
-    return render_template('index.html')
+    if session.get('logged_in'):
+        return render_template('loggedin.html')
+    else:
+        return render_template('index.html')
 
 @app.route('/header.html')
 def header():
@@ -106,6 +168,34 @@ def header():
 @app.route('/footer.html')
 def footer():
     return render_template('footer.html')
+
+
+# 로그인기능 및 페이지 구현
+# author 김진회
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        name = request.form['userid']
+        password = request.form['password']
+        try:
+            if (name in userinfo):
+                #2번을 해보세요!
+                session["logged_in"] = True
+                    #3번을 해보세요!
+                return render_template('loggedin.html')
+                    #4번을 해보세요!
+            else:
+                return '비밀번호가 틀립니다.'
+            return '등록된 아이디가 아닙니다.'
+        except:
+            return '잘못된 접근입니다.'
+    else:
+        return render_template('login.html')
+
+
+# @app.route('/join', methods=['GET', 'POST'])
+# def join():
+#     return render_template('join.html')
 
 # 일단 보류
 # @app.route('/habit_s', methods=['GET'])
@@ -163,7 +253,6 @@ def kakaomaps():
 def post_test():
     test = list(db.menu.find({},{'_id': False}))
     #test = [doc for doc in db.user.find({},{'_id': False})]
-    print(test)
     return jsonify({'data': dumps(test)})
     raise TypeError('타입 에러 확인')
 
@@ -202,7 +291,7 @@ def ordersave():
         'deliverynum': '입력해주세요~'
     }
     # 오더 리스트의 0:매뉴이름 1:가격 2:수량
-    print(doc)
+    # print(doc)
     db.order.insert_one(doc)
 
     return jsonify({'msg': name_receive+'님의 주문이 완료되었습니다. 계좌입금 부탁드립니다!'})
