@@ -86,10 +86,10 @@
             alert(menu + ": 장바구니에 들어갔어요!")
         }
 
-        function testjax() {
+        function showMenus() {
             $.ajax({
                 type: 'GET',
-                url: '/mypage/do?sample_give=샘플데이터',
+                url: '/mypage/do',
                 data: {},
                 success: function (response) {
                     let articles = response['data'];
@@ -172,7 +172,7 @@
         }
 
         $(document).ready(function () {
-            testjax();
+            showMenus();
         });
     </script>
 
@@ -196,7 +196,7 @@
     <br>
 
     <div class="sell_list">
-        <select id="banchan_list" onchange="testjax()">
+        <select id="banchan_list" onchange="showMenus()">
             <option value="all" selected>전체</option>
             <option value="kimchi">김치</option>
             <option value="namul">기본반찬/나물</option>

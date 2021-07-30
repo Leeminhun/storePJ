@@ -24,15 +24,13 @@ app = Flask(__name__)
 
 # 로그인 기능 구현을 위한 코드(아래 시크릿키와 어떻게 다른지 잘 모름)
 # author 김진회
-app.secret_key = 'super secret key'
+#app.secret_key = 'super secret key'
 app.config['SESSION_TYPE'] = 'filesystem'
-userinfo = {'bluenight':'superpassword1'}
-
 #########################################################
 # Flask 선언, mongodb와 연결
 #web_bulletin = Flask(__name__, template_folder="templates")
 app.config["MONGO_URI"] = "mongodb://localhost:27017/bdd"
-app.config['SECRET_KEY'] = 'psswrd'
+#app.config['SECRET_KEY'] = 'psswrd'
 mongo = PyMongo(app)
 
 app.secret_key = 'supersupersecret'
@@ -134,6 +132,7 @@ def footer():
 
 # 로그인기능 및 페이지 구현
 # author 김진회
+# session["logged_in"] = True 를 넣어주면 로그인 성공한 이후의 상황이 됨.
 @app.route('/login', methods=['GET', 'POST'])
 def member_login():
     if request.method == 'GET':
@@ -146,12 +145,27 @@ def member_login():
             flash("아이디를 입력하세요")
             return render_template('index.html')
         elif pw == "":
-            flash("비밀번호를를 입력하세요")
+            flash("비밀번호를 입력하세요")
             return render_template('index.html')
         else:
-            return '등록된 아이디가 아닙니다.'
+            users = mongo.db.users
+            id_check = users.find_one({"userid": userid})
+            print(id_check["pw"])
+            print(generate_password_hash(pw))
+            if id_check is None:
+                flash("아이디가 존재하지 않습니다.")
+                return render_template('index.html')
+            elif check_password_hash(id_check["pw"],pw):
+                session["logged_in"] = True
+                return render_template('loggedin.html')
+            else:
+                flash("비밀번호가 틀렸습니다.")
+                return render_template('index.html')
 
-
+@app.route("/logout", methods=["POST"])
+def logout():
+    session['logged_in'] = False
+    return render_template('index.html')
 
 @app.route("/join", methods=["GET", "POST"])
 def member_join():
@@ -176,12 +190,12 @@ def member_join():
             "userid": userid,
             "pw": generate_password_hash(pw),
         }
-        to_db_signup = users.insert_one(to_db)
+        users.insert_one(to_db)
         last_signup = users.find().sort("_id", -1).limit(5)
         for _ in last_signup:
             print(_)
 
-        flash("가입해주셔서 감사합니다!")
+        flash("가입이 완료되었습니다. 감사합니다!")
         return render_template("index.html")
     else:
         return render_template("join.html")
