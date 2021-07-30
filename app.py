@@ -25,11 +25,22 @@ app = Flask(__name__)
 # 로그인 기능 구현을 위한 코드(아래 시크릿키와 어떻게 다른지 잘 모름)
 # author 김진회
 #app.secret_key = 'super secret key'
-app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_TYPE'] = 'filesystem' # 아 이거 뭐지? 모르겠음 - 진회
 #########################################################
 # Flask 선언, mongodb와 연결
-#web_bulletin = Flask(__name__, template_folder="templates")
+# 로컬환경 테스트시 DB연결 코드 pymongo용
+conn = MongoClient()
+# 서버측 DB연결 코드 pymongo용
+#conn = MongoClient('mongodb://test:test@localhost', 27017)
+
+db = conn.bdd
+
+
+# 로컬환경 테스트시 DB연결 코드 flask_pymongo용
 app.config["MONGO_URI"] = "mongodb://localhost:27017/bdd"
+# 서버측 DB연결 코드 flask_pymongo용
+#app.config["MONGO_URI"] = "mongodb:///test:test@localhost:27017/bdd"
+
 #app.config['SECRET_KEY'] = 'psswrd'
 mongo = PyMongo(app)
 
@@ -41,11 +52,9 @@ app.secret_key = 'supersupersecret'
 app.config['SECRET_KEY'] = '123456790'
 
 # Create models
-# 로컬환경 테스트시 DB연결 코드
-conn = MongoClient()
-# 서버측 DB연결 코드
-#conn = MongoClient('mongodb://test:test@localhost', 27017)
-db = conn.bdd
+
+
+
 
 
 
