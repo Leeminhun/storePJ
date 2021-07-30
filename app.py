@@ -197,6 +197,7 @@ def member_join():
     if request.method == "POST":
         userid = request.form.get("userid", type=str)
         pw = request.form.get("userPW", type=str)
+        name = request.form.get("name", type=str)
         phone = request.form.get("phone1", type=str)+"-"+request.form.get("phone2", type=str)+"-"+request.form.get("phone3", type=str)
         postcode = request.form.get("zipcode", type=str)
         addr = request.form.get("addr", type=str)
@@ -218,6 +219,7 @@ def member_join():
         to_db = {
             "userid": userid,
             "pw": generate_password_hash(pw),
+            "name": name,
             "phone": phone,
             "postcode": postcode,
             "address": addr,
