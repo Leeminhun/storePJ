@@ -252,7 +252,7 @@ def order():
     id = session.get('logged_in')
     if id is not None:
         id_find = db.users.find_one({"userid": id})
-        id_set = id_find['userid']
+        name_set = id_find['name']
         phone_set = id_find['phone']
         postcode_find = id_find['postcode']
         address_find = id_find['address']
@@ -263,7 +263,7 @@ def order():
         print(address_find,exaddress_find)
         
         return render_template('order.html',
-                            id = id_set, 
+                            name = name_set, 
                             phone1 = phone1, 
                             phone2 = phone2, 
                             phone3 = phone3, 
