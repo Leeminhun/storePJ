@@ -87,6 +87,11 @@ class origin_form(form.Form):
     name = fields.StringField ('재료명')
     origin = fields.StringField ('원산지')
 
+class user_form(form.Form):
+    pw = fields.StringField ('비밀번호 변경 , 수정?')
+    # 구현해야할지 말아야할지?
+
+
 # User admin
 # author 배성현
 class menu_view(ModelView):
@@ -113,6 +118,11 @@ class origin_view(ModelView):
 
     form = origin_form
 
+class user_view(ModelView):
+
+    column_list = ('userid', 'pw', 'phone', 'postcode', 'address', 'extraAddress')
+
+    form = user_form
 # User admin
 # author 배성현
 class JSONEncoder(json.JSONEncoder):
@@ -127,6 +137,8 @@ class JSONEncoder(json.JSONEncoder):
     
 # Flask views
 
+# author 김진회
+# 세션에 logged_in값이 true면 로그인 상태
 @app.route('/')
 def main():
     id = session.get('logged_in')
@@ -162,8 +174,8 @@ def member_login():
         else:
             users = mongo.db.users
             id_check = users.find_one({"userid": userid})
-            print(id_check["pw"])
-            print(generate_password_hash(pw))
+            #print(id_check["pw"])
+            #print(generate_password_hash(pw))
             if id_check is None:
                 flash("아이디가 존재하지 않습니다.")
                 return render_template('index.html')
@@ -186,8 +198,9 @@ def member_join():
         userid = request.form.get("userid", type=str)
         pw = request.form.get("userPW", type=str)
         phone = request.form.get("phone1", type=str)+"-"+request.form.get("phone2", type=str)+"-"+request.form.get("phone3", type=str)
-        postcode = request.form.get("postcode", type=str)
-        addr = request.form.get("addr", type=str)+" "+request.form.get("addr_remain", type=str)
+        postcode = request.form.get("zipcode", type=str)
+        addr = request.form.get("addr", type=str)
+        extraAddr = request.form.get("addr_remain", type=str)
 
         if userid == "":
             flash("ID를 입력해주세요")
@@ -208,6 +221,7 @@ def member_join():
             "phone": phone,
             "postcode": postcode,
             "address": addr,
+            "extraAddress": extraAddr,
         }
         users.insert_one(to_db)
         last_signup = users.find().sort("_id", -1).limit(5)
@@ -340,6 +354,7 @@ if __name__ == '__main__':
     admin.add_view(menu_view(db.menu, '상품관리', url='/Product_management'))
     admin.add_view(order_view(db.order, '주문내역', url='/Order_details'))
     admin.add_view(origin_view(db.origin, '원산지표기', url='/Country_of_origin'))
+    admin.add_view(user_view(db.users, '회원 정보', url='/moms_users'))
     
     # Start app
     app.run('0.0.0.0', port=5000, debug=True)
