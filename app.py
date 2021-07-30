@@ -43,7 +43,7 @@ db = conn.bdd
 # 로컬환경 테스트시 DB연결 코드 flask_pymongo용
 app.config["MONGO_URI"] = "mongodb://localhost:27017/bdd"
 # 서버측 DB연결 코드 flask_pymongo용
-#app.config["MONGO_URI"] = "mongodb:///test:test@localhost:27017/bdd"
+#app.config["MONGO_URI"] = "mongodb://test:test@localhost:27017/bdd"
 
 #app.config['SECRET_KEY'] = 'psswrd'
 mongo = PyMongo(app)
