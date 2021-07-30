@@ -88,7 +88,7 @@ class origin_form(form.Form):
     origin = fields.StringField ('원산지')
 
 class user_form(form.Form):
-    pw = fields.StringField ('비밀번호 변경 , 수정?')
+    pw = fields.StringField ('비밀번호 변경')
     # 구현해야할지 말아야할지?
 
 
