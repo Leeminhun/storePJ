@@ -248,13 +248,27 @@ def member_join():
 @app.route('/order')
 def order():
     id = session.get('logged_in')
-    id_find = db.users.find_one({"userid": id})
-    id_set = id_find['userid']
-    phone_find = id_find['phone']
-    phone_find = id_find['userid']
-    
-    
-    return render_template('order.html', userid = id)
+    if id is not None:
+        id_find = db.users.find_one({"userid": id})
+        id_set = id_find['userid']
+        phone_set = id_find['phone']
+        postcode_find = id_find['postcode']
+        address_find = id_find['address']
+        exaddress_find = id_find['extraAddress']
+        phone1 = phone_set.split('-')[0]
+        phone2 = phone_set.split('-')[1]
+        phone3 = phone_set.split('-')[2]
+        print(address_find,exaddress_find)
+        
+        return render_template('order.html',
+                            id = id_set, 
+                            phone1 = phone1, 
+                            phone2 = phone2, 
+                            phone3 = phone3, 
+                            postcode =postcode_find,
+                            address = address_find,
+                            exaddress = exaddress_find)
+    return render_template('order.html')
 
 @app.route('/orderlist')
 def orderlist():

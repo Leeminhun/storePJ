@@ -401,34 +401,46 @@
     <form action="#">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="이름을 입력해주세요" aria-label="name"
-                   aria-describedby="basic-addon1" id="name">
+                   aria-describedby="basic-addon1" id="name" value={{id}}>
         </div>
 
         <div class="input-group mb-3">
+                
             <select class="custom-select" id="phone1">
+                {%if id%}
+                <option value="010"{% if phone1 == '010' %} selected {%endif%}>010</option>
+                <option value="011"{% if phone1 == '011' %} selected {%endif%}>011</option>
+                <option value="016"{% if phone1 == '016' %} selected {%endif%}>016</option>
+                <option value="017"{% if phone1 == '017' %} selected {%endif%}>017</option>
+                <option value="018"{% if phone1 == '018' %} selected {%endif%}>018</option>
+                <option value="019"{% if phone1 == '019' %} selected {%endif%}>019</option>
+                {%else%}
                 <option value="010" selected>010</option>
                 <option value="011">011</option>
                 <option value="016">016</option>
                 <option value="017">017</option>
                 <option value="018">018</option>
                 <option value="019">019</option>
+                {%endif%}
+                
             </select>
             -
-            <input type='tel' class="form-control" id="phone2" maxlength="4">
+            <input type='tel' class="form-control" id="phone2" maxlength="4" value={{phone2}}>
             -
-            <input type='tel' class="form-control" id="phone3" maxlength="4">
+            <input type='tel' class="form-control" id="phone3" maxlength="4" value={{phone3}}>
         </div>
         <!--우편번호 찾기 API -->
+        
         <form>
             <div class="input-group mb-3">
-                <input class="form-control" type="text" id="postcode" name="zipcode" placeholder="우편번호">
+                <input class="form-control" type="text" id="postcode" name="zipcode" placeholder="우편번호" value={{postcode}}>
                 <button type="button" class="btn btn-info DaumZipFinder">우편번호찾기</button>
             </div>
             <div class="input-group mb-3">
-                <input class="form-control" type="text" id="address" name="addr" placeholder="주소">
+                <input class="form-control" type="text" id="address" name="addr" placeholder="주소" value="{{address}}">
             </div>
             <div class="input-group mb-3">
-                <input class="form-control" type="text" id="extraAddress" name="addr_remain" placeholder="상세주소">
+                <input class="form-control" type="text" id="extraAddress" name="addr_remain" placeholder="상세주소" value='{{exaddress}}'>
             </div>
         </form>
     </form>
