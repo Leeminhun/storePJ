@@ -273,7 +273,8 @@ def order():
 ##주문조회
 @app.route('/orderlist')
 def orderlist():
-    return render_template('orderlist.html')
+    id = session.get('logged_in')
+    return render_template('orderlist.html', userid = id)
 ##주문조회 삭제
 @app.route('/orderlist/dele',methods=['POST'])
 def dele_orderlist():

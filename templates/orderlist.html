@@ -188,7 +188,12 @@
     <header w3-include-html="header.html"></header>
 
     <div class="input-group mb-3">
-        <div class="input-group-prepend">
+        {%if userid%}
+                {{userid}}
+                <script>
+                    showOrderList();
+                </script>
+        {%else%}<div class="input-group-prepend">
             <label class="input-group-text">전화번호 </label>
         </div>
         <select class="custom-select" id="phone1">
@@ -204,6 +209,7 @@
 
         <input type='tel' class="form-control" id="phone3" maxlength="4">
         <button type="button" class="btn btn-info" onclick="showOrderList()">조회하기</button>
+        {%endif%}
     </div>
     <div id="orderListDiv">
         <div class="deli_adress">
