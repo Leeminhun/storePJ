@@ -291,20 +291,23 @@ def dele_orderlist():
 
 @app.route('/orderlist/find', methods=['POST'])
 def find_orderlist():
-    
-    
     id = session.get('logged_in')
     if id is not None:
-        iddb = list(db.users.find({'phone':id}))[0]['orderlisttest']
-        test = []
-        for a in iddb:
-            test.append(a)
+        test = list(db.users.find({'userid':id}))[0]['orderlisttest']
+        
+        test1 = []
+        
+        for a in test:
+            test1.append(list(db.order.find({'_id':ObjectId(a)})))
+        print(test1)
+        return jsonify({'orderlist':dumps(test1), 'msg':'조회완료!'})
     else:
         phone = request.form['phone']
         orderlist = list(db.order.find({'phone':phone}))
+        return jsonify({'orderlist':dumps(orderlist), 'msg':'조회완료!'})
     
     
-    return jsonify({'orderlist':dumps(orderlist), 'msg':'조회완료!'})
+    
 
 @app.route('/manager')
 def manager():
