@@ -14,12 +14,10 @@ import html
 from flask import Flask, render_template, jsonify, request, session, url_for, redirect, flash
 from flask_pymongo import PyMongo
 from wtforms.fields.simple import FileField
-import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 #도도 임포트
 import datetime
-import jwt
 
 #회원가입 비밀번호 암호화를 위해 werkzeug import
 
@@ -43,7 +41,7 @@ db = conn.bdd
 # 로컬환경 테스트시 DB연결 코드 flask_pymongo용
 app.config["MONGO_URI"] = "mongodb://localhost:27017/bdd"
 # 서버측 DB연결 코드 flask_pymongo용
-#app.config["MONGO_URI"] = "mongodb:///test:test@localhost:27017/bdd"
+#app.config["MONGO_URI"] = "mongodb://test:test@localhost:27017/bdd"
 
 #app.config['SECRET_KEY'] = 'psswrd'
 mongo = PyMongo(app)
