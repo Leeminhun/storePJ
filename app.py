@@ -184,12 +184,12 @@ def member_login():
                 flash("비밀번호가 틀렸습니다.")
                 return render_template('index.html')
             
-
+## 로그아웃
 @app.route("/logout", methods=["GET"])
 def logout():
     session.pop('logged_in',None)
     return redirect('/')
-
+## 회원가입
 @app.route("/join", methods=["GET", "POST"])
 def member_join():
     if request.method == "POST":
@@ -222,6 +222,7 @@ def member_join():
             "postcode": postcode,
             "address": addr,
             "extraAddress": extraAddr,
+            "orderlisttest":[]
         }
         users.insert_one(to_db)
         last_signup = users.find().sort("_id", -1).limit(5)
@@ -244,7 +245,7 @@ def member_join():
 
 #     return jsonify({'all_order': orders})
 
-
+## 주문페이지
 @app.route('/order')
 def order():
     id = session.get('logged_in')
@@ -269,11 +270,11 @@ def order():
                             address = address_find,
                             exaddress = exaddress_find)
     return render_template('order.html')
-
+##주문조회
 @app.route('/orderlist')
 def orderlist():
     return render_template('orderlist.html')
-
+##주문조회 삭제
 @app.route('/orderlist/dele',methods=['POST'])
 def dele_orderlist():
     id = request.form['id']
@@ -288,7 +289,7 @@ def dele_orderlist():
 
     return jsonify({'msg':msg})
 
-
+## 주문조회 찾기
 @app.route('/orderlist/find', methods=['POST'])
 def find_orderlist():
     id = session.get('logged_in')
@@ -296,9 +297,9 @@ def find_orderlist():
         test = list(db.users.find({'userid':id}))[0]['orderlisttest']
         
         test1 = []
-        
+
         for a in test:
-            test1.append(list(db.order.find({'_id':ObjectId(a)})))
+            test1.append(list(db.order.find({'_id':ObjectId(a)}))[0])
         print(test1)
         return jsonify({'orderlist':dumps(test1), 'msg':'조회완료!'})
     else:
