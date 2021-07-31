@@ -280,12 +280,23 @@ def dele_orderlist():
     id = request.form['id']
     msg = ''
     deleid = list(db.order.find({'_id':ObjectId(id)}))
-    print(deleid[0]['state'])
-    if deleid[0]['state'] == '입금확인중':
-        db.order.delete_one({'_id':ObjectId(id)})
-        msg = '삭제완료!'
-    else:
-        msg = '결제가 완료되어 삭제가 불가능합니다. 전화 문의부탁드립니다.'
+    #print(deleid[0]['state'])
+    
+    userid = session.get('logged_in')
+    if userid is not None:
+        if deleid[0]['state'] == '입금확인중':
+            test = list(db.users.find({'userid':userid}))[0]['orderlisttest']
+            test.remove(ObjectId(id))
+            db.users.update_one({'userid':userid},{'$set':{'orderlisttest':test}})
+            msg = '삭제완료!'
+        else:
+            msg = '결제가 완료되어 삭제가 불가능합니다. 전화 문의부탁드립니다.'
+    else :
+        if deleid[0]['state'] == '입금확인중':
+            db.order.delete_one({'_id':ObjectId(id)})
+            msg = '삭제완료!'
+        else:
+            msg = '결제가 완료되어 삭제가 불가능합니다. 전화 문의부탁드립니다.'
 
     return jsonify({'msg':msg})
 
@@ -300,7 +311,7 @@ def find_orderlist():
 
         for a in test:
             test1.append(list(db.order.find({'_id':ObjectId(a)}))[0])
-        print(test1)
+        #print(test1)
         return jsonify({'orderlist':dumps(test1), 'msg':'조회완료!'})
     else:
         phone = request.form['phone']
