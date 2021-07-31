@@ -45,7 +45,7 @@ db = conn.bdd
 #app.config["MONGO_URI"] = "mongodb://test:test@localhost:27017/bdd"
 
 #app.config['SECRET_KEY'] = 'psswrd'
-mongo = PyMongo(app)
+#mongo = PyMongo(app)
 
 app.secret_key = 'supersupersecret'
 #########################################################
