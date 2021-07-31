@@ -295,6 +295,12 @@ def dele_orderlist():
 def find_orderlist():
     phone = request.form['phone']
     orderlist = list(db.order.find({'phone':phone}))
+    id = session.get('logged_in')
+    iddb = list(db.users.find({'phone':id}))[0]['orderlisttest']
+    test = []
+    for a in iddb:
+        test.append(a)
+    
     
     return jsonify({'orderlist':dumps(orderlist), 'msg':'조회완료!'})
 
@@ -356,6 +362,15 @@ def ordersave():
     # 오더 리스트의 0:매뉴이름 1:가격 2:수량
     # print(doc)
     db.order.insert_one(doc)
+    a = list(db.order.find(doc))
+    print(a[0]['_id'])
+    ab =[]
+    id = session.get('logged_in')
+    if id is not None:
+        test = list(db.users.find({'userid':id}))[0]['orderlisttest']
+        test.append(a[0]['_id'])
+        db.users.update_one({'userid':id},{'$set':{'orderlisttest':test}})
+    
 
     return jsonify({'msg': name_receive+'님의 주문이 완료되었습니다. 계좌입금 부탁드립니다!'})
 
