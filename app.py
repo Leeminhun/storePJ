@@ -56,10 +56,6 @@ app.config['SECRET_KEY'] = '123456790'
 # Create models
 
 
-
-
-
-
 # User admin
 # author 배성현
 class menu_form(form.Form):
