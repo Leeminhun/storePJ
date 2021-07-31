@@ -118,7 +118,14 @@
                         $("#orderListDiv").append(temp_html)
 
                     }
-
+                    if(data.length == 0){
+                        temp_html = `<div class="deli_adress">
+                                        <div>
+                                            <span style="margin-left: 4px;">주문 목록이 없네요 오홓홓</span>
+                                        </div>
+                                    </div>`
+                        $("#orderListDiv").html(temp_html)
+                    }
                 }
             })
         }
