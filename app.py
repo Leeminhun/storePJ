@@ -12,7 +12,7 @@ import json
 from bson import json_util
 import html
 from flask import Flask, render_template, jsonify, request, session, url_for, redirect, flash
-from flask_pymongo import PyMongo
+
 from wtforms.fields.simple import FileField
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -39,12 +39,12 @@ db = conn.bdd
 
 
 # 로컬환경 테스트시 DB연결 코드 flask_pymongo용
-app.config["MONGO_URI"] = "mongodb://localhost:27017/bdd"
+# app.config["MONGO_URI"] = "mongodb://localhost:27017/bdd"
 # 서버측 DB연결 코드 flask_pymongo용
 #app.config["MONGO_URI"] = "mongodb://test:test@localhost:27017/bdd"
 
 #app.config['SECRET_KEY'] = 'psswrd'
-mongo = PyMongo(app)
+# mongo = PyMongo(app)
 
 app.secret_key = 'supersupersecret'
 #########################################################
@@ -170,7 +170,7 @@ def member_login():
             flash("비밀번호를 입력하세요")
             return render_template('index.html')
         else:
-            users = mongo.db.users
+            users = db.users
             id_check = users.find_one({"userid": userid})
             #print(id_check["pw"])
             #print(generate_password_hash(pw))
@@ -208,7 +208,7 @@ def member_join():
             flash("패스워드를 입력해주세요")
             return render_template("join.html")
 
-        users = mongo.db.users
+        users = db.users
         check_cnt = users.find({"userid": userid}).count()
         if check_cnt > 0:
             flash("이미 존재하는 아이디입니다.")
