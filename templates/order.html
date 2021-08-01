@@ -161,6 +161,7 @@
             let index = 0;
             let img_url = '';
             let price_all = 0;
+            let price_final = 0;
             if (localStorage.length > 0) {
                 for (let i = 1; i < localStorage.length+1; i++) {
                     if(localStorage.getItem(i) !== null){
@@ -207,22 +208,21 @@
 
 
 
-
-
-
-
-
                         `;
                     }
                 }
                 price_final = price_all + 4000;
                 $("#orderDiv").append(temp_html)
                 temp_html2 = `<p>총 상품가격 ${price_all}원 입니다</p><br><p>배송비 4000원 포함</p><br> 
-                <p>총 결제하실 금액 ${price_final+4000}원`
+                <p>총 결제하실 금액 ${price_final}원`
                 $("#pricesum").html(temp_html2)
             }
             else{
-                $("#pricesum").html("현재 장바구니가 비어있습니다.")
+                temp_html =`<div class="order_inner" >
+                        <p style="margin: 45px auto ">장바구니가 비어있습니다.</p>
+                    <div>
+                    `
+                $("#pricesum").html(temp_html)
             }
             
         }
@@ -332,10 +332,12 @@
 
 <!--맘스키친 주문하기-->
 <div>
+    <div class="order_title">
     <p>맘스키친 주문하기</p>
-   <div id="orderDiv">
+    </div>
+        <div id="orderDiv">
       
-        <div class="order_inner">
+        <!-- <div class="order_inner">
             <li>
                 <img src="../static/img/KakaoTalk_20210719_190856996_27.jpg" alt="" class="banchan_img">
             </li>
@@ -370,9 +372,8 @@
 
                 </p>
 
-
+            -->
       </div>
-
 
 
     <p id = "pricesum"></p>
@@ -400,34 +401,46 @@
     <form action="#">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="이름을 입력해주세요" aria-label="name"
-                   aria-describedby="basic-addon1" id="name">
+                   aria-describedby="basic-addon1" id="name" value={{name}}>
         </div>
 
         <div class="input-group mb-3">
+                
             <select class="custom-select" id="phone1">
+                {%if id%}
+                <option value="010"{% if phone1 == '010' %} selected {%endif%}>010</option>
+                <option value="011"{% if phone1 == '011' %} selected {%endif%}>011</option>
+                <option value="016"{% if phone1 == '016' %} selected {%endif%}>016</option>
+                <option value="017"{% if phone1 == '017' %} selected {%endif%}>017</option>
+                <option value="018"{% if phone1 == '018' %} selected {%endif%}>018</option>
+                <option value="019"{% if phone1 == '019' %} selected {%endif%}>019</option>
+                {%else%}
                 <option value="010" selected>010</option>
                 <option value="011">011</option>
                 <option value="016">016</option>
                 <option value="017">017</option>
                 <option value="018">018</option>
                 <option value="019">019</option>
+                {%endif%}
+                
             </select>
             -
-            <input type='tel' class="form-control" id="phone2" maxlength="4">
+            <input type='tel' class="form-control" id="phone2" maxlength="4" value={{phone2}}>
             -
-            <input type='tel' class="form-control" id="phone3" maxlength="4">
+            <input type='tel' class="form-control" id="phone3" maxlength="4" value={{phone3}}>
         </div>
         <!--우편번호 찾기 API -->
+        
         <form>
             <div class="input-group mb-3">
-                <input class="form-control" type="text" id="postcode" name="zipcode" placeholder="우편번호">
-                <button type="button" class="btn btn-success DaumZipFinder">우편번호찾기</button>
+                <input class="form-control" type="text" id="postcode" name="zipcode" placeholder="우편번호" value={{postcode}}>
+                <button type="button" class="btn btn-info DaumZipFinder">우편번호찾기</button>
             </div>
             <div class="input-group mb-3">
-                <input class="form-control" type="text" id="address" name="addr" placeholder="주소">
+                <input class="form-control" type="text" id="address" name="addr" placeholder="주소" value="{{address}}">
             </div>
             <div class="input-group mb-3">
-                <input class="form-control" type="text" id="extraAddress" name="addr_remain" placeholder="상세주소">
+                <input class="form-control" type="text" id="extraAddress" name="addr_remain" placeholder="상세주소" value='{{exaddress}}'>
             </div>
         </form>
     </form>

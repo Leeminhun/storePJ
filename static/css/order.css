@@ -5,6 +5,19 @@ body{
 li {
     list-style: none;
 }
+.order_title {
+    background-color: whitesmoke;
+    border: 1px solid black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+
+}
+.order_title p{
+     margin-top: 15px;
+    text-align: center;
+    font-size: 20px;
+}
 .order_inner {
     position: relative;
     display: flex;
@@ -106,4 +119,14 @@ li {
 
 .to_price li span {
     margin : 5px
+}
+.tracker {
+    display: inline-flex;
+    width: 80%;
+    margin: auto;
+}
+
+.tracker img{
+    width: 30px;
+    height: 30px;
 }

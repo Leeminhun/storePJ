@@ -1,0 +1,139 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            alert("{{messages[-1]}}")
+        </script>
+    {% endif %}
+{% endwith %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <script src="../static/js/common.js"></script>
+    <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
+    <!-- 다운로드받지 마시고 CDN 이용하듯 이대로 링크하세요. API 의 버그 수정 등의 변화를 일일히 적용할 필요가 없습니다. ssl 대응되므로 url 을 수정하지 마세요. -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://xeno.work/roadzip/daum.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>엄마의 부엌 | Mom's Kitchen</title>
+
+    <script>
+
+        /*
+        * @brief 비밀번호 입력을 두번 똑같이 했는지 체크
+        * @author 김진회
+        * @출처 https://twinparadox.tistory.com/200
+         */
+        function isSame() {
+            const pw = document.getElementById('pw').value;
+            if (pw.length < 5 || pw.length > 20) {
+                window.alert('비밀번호는 최소 5자 이상, 20자 미만으로 설정해주세요.');
+                document.getElementById('pw').value=document.getElementById('pwCheck').value='';
+                document.getElementById('same').innerHTML='';
+            }
+            if(document.getElementById('pw').value!='' && document.getElementById('pwCheck').value!='') {
+                if(document.getElementById('pw').value==document.getElementById('pwCheck').value) {
+                    document.getElementById('same').innerHTML='비밀번호가 일치합니다.';
+                    document.getElementById('same').style.color='blue';
+                }
+                else {
+                    document.getElementById('same').innerHTML='비밀번호가 일치하지 않습니다.';
+                    document.getElementById('same').style.color='red';
+                }
+            }
+        }
+        /*
+        * @brief 아이디 중복체크
+        * @author 김진회
+        */
+        function checkSameId(){
+            let userid = $('input[name=userid]').val()
+            console.log(userid)
+            $.ajax({
+                type: "POST",
+                url: "/join/checkid",
+                data: {'userid': userid},
+                success: function (response) {
+                    alert(response['msg'])
+
+                }
+            })
+        }
+
+    </script>
+</head>
+
+<body class="bodycs">
+<!-- <header w3-include-html = "header.html"></herder> -->
+<header w3-include-html="header.html"></header>
+    <form action="" method="post" id="joinform">
+        <div class="input-group mb-3">
+            ID : <input type="text" class="form-control" name="userid" />
+            <button type="button" class="btn btn-info" onclick="checkSameId()">아이디 중복체크</button>
+        </div>
+        <div class="input-group mb-3">
+            PW : <input type="password" class="form-control" name="userPW" id="pw" onchange="isSame()" />
+        </div>
+        <div class="input-group mb-3">PW(check) :
+            <input type="password" class="form-control" name="confirmPW" id="pwCheck" onchange="isSame()" /> <span id="same"></span>
+        </div>
+        <div class="input-group mb-3">
+            이름 : <input type="text" class="form-control" name="name" />
+        </div>
+        <div class="input-group mb-3">
+            <select class="custom-select" name="phone1" id="phone1">
+                <option value="010" selected>010</option>
+                <option value="011">011</option>
+                <option value="016">016</option>
+                <option value="017">017</option>
+                <option value="018">018</option>
+                <option value="019">019</option>
+            </select>
+            -
+            <input type='tel' class="form-control" name="phone2" id="phone2" maxlength="4">
+            -
+            <input type='tel' class="form-control" name="phone3" id="phone3" maxlength="4">
+        </div>
+        <!--우편번호 찾기 API -->
+        <form>
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" id="postcode" name="zipcode" placeholder="우편번호">
+                <button type="button" class="btn btn-info DaumZipFinder">우편번호찾기</button>
+            </div>
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" id="address" name="addr" placeholder="주소">
+            </div>
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" id="extraAddress" name="addr_remain" placeholder="상세주소">
+            </div>
+        </form>
+        <!--우편번호 찾기 API 끝 -->
+        <button type="submit" class="btn btn-info" form="joinform">회원가입하기</button>
+    </form>
+
+
+<!-- form 아래쪽에 적용하면 되고, head 에 넣을경우 $(function() {}); 로 감싸세요. -->
+<script>
+    $('button.DaumZipFinder').each(DaumZipFinder);
+</script>
+<script>
+    includeHTML();
+</script>
+
+<footer w3-include-html="footer.html"></footer>
+</body>
+
+</html>
