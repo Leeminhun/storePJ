@@ -287,7 +287,10 @@ def dele_orderlist():
     if userid is not None:
         if deleid[0]['state'] == '입금확인중':
             test = list(db.users.find({'userid':userid}))[0]['orderlisttest']
+            print(test)
             test.remove(ObjectId(id))
+            print(id)
+            print(test)
             db.users.update_one({'userid':userid},{'$set':{'orderlisttest':test}})
             db.order.delete_one({'_id':ObjectId(id)})
             msg = '삭제완료!'
@@ -310,7 +313,6 @@ def find_orderlist():
         test = list(db.users.find({'userid':id}))[0]['orderlisttest']
         
         test1 = []
-
         for a in test:
             test1.append(list(db.order.find({'_id':ObjectId(a)}))[0])
         #print(test1)
