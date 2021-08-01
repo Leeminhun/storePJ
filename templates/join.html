@@ -60,7 +60,7 @@
         * @author 김진회
         */
         function checkSameId(){
-            let userid = $('input[name=userid]').val()
+            let userid = $('#userid').val()
             console.log(userid)
             $.ajax({
                 type: "POST",
@@ -81,7 +81,7 @@
 <header w3-include-html="header.html"></header>
     <form action="" method="post" id="joinform">
         <div class="input-group mb-3">
-            ID : <input type="text" class="form-control" name="userid" />
+            ID : <input type="text" class="form-control" name="userid" id="userid"/>
             <button type="button" class="btn btn-info" onclick="checkSameId()">아이디 중복체크</button>
         </div>
         <div class="input-group mb-3">
