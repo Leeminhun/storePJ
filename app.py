@@ -173,8 +173,8 @@ def member_login():
         else:
             users = db.users
             id_check = users.find_one({"userid": userid})
-            #print(id_check["pw"])
-            #print(generate_password_hash(pw))
+            print(id_check["pw"])
+            print(generate_password_hash(pw))
             if id_check is None:
                 flash("아이디가 존재하지 않습니다.")
                 return render_template('index.html')
