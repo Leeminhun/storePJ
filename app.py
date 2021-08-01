@@ -190,6 +190,7 @@ def member_login():
 def logout():
     session.pop('logged_in',None)
     return redirect('/')
+
 ## 회원가입
 @app.route("/join", methods=["GET", "POST"])
 def member_join():
@@ -235,6 +236,18 @@ def member_join():
     else:
         return render_template("join.html")
 
+## 회원가입 아이디 중복체크
+@app.route("/join/checkid", methods=["POST"])
+def join_id_check():
+    userid = request.form['userid']
+    check_cnt = db.users.find({"userid": userid}).count()
+    if check_cnt > 0:
+        msg = "이미 존재하는 아이디입니다."
+    else:
+        msg = "이용 가능한 아이디입니다."
+    return jsonify({'msg':msg})
+
+
 # @app.route('/join', methods=['GET', 'POST'])
 # def join():
 #     return render_template('join.html')
@@ -271,11 +284,13 @@ def order():
                             address = address_find,
                             exaddress = exaddress_find)
     return render_template('order.html')
+
 ##주문조회
 @app.route('/orderlist')
 def orderlist():
     id = session.get('logged_in')
     return render_template('orderlist.html', userid = id)
+
 ##주문조회 삭제
 @app.route('/orderlist/dele',methods=['POST'])
 def dele_orderlist():

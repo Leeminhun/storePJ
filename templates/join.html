@@ -55,6 +55,23 @@
                 }
             }
         }
+        /*
+        * @brief 아이디 중복체크
+        * @author 김진회
+        */
+        function checkSameId(){
+            let userid = $('input[name=userid]').val()
+            console.log(userid)
+            $.ajax({
+                type: "POST",
+                url: "/join/checkid",
+                data: {'userid': userid},
+                success: function (response) {
+                    alert(response['msg'])
+
+                }
+            })
+        }
 
     </script>
 </head>
@@ -65,6 +82,7 @@
     <form action="" method="post" id="joinform">
         <div class="input-group mb-3">
             ID : <input type="text" class="form-control" name="userid" />
+            <button type="button" class="btn btn-info" onclick="checkSameId()">아이디 중복체크</button>
         </div>
         <div class="input-group mb-3">
             PW : <input type="password" class="form-control" name="userPW" id="pw" onchange="isSame()" />
