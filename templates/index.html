@@ -185,7 +185,7 @@
 <div class="list">
     <div>
         {%if userid%}
-            {{userid}} <button type="button" onclick="location.href='/logout' ">로그 아웃</button> 
+            {{userid}} <button type="button" class="btn btn-info" onclick="location.href='/logout' ">로그아웃</button>
         {%else%}<form action = "/" method="POST">
             ID: <input type="text" name="userid"/>
             PASSWORD: <input type="password" name="userPW">
