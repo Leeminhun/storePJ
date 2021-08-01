@@ -247,6 +247,42 @@ def join_id_check():
         msg = "이용 가능한 아이디입니다."
     return jsonify({'msg':msg})
 
+## 회원정보변경
+@app.route("/modify", methods=["GET", "POST"])
+def member_modify():
+    if request.method == "POST":
+        update_id = session.get('logged_in')
+
+        userid = request.form.get("userid", type=str)
+        pw = request.form.get("userPW", type=str)
+        name = request.form.get("name", type=str)
+        phone = request.form.get("phone1", type=str)+"-"+request.form.get("phone2", type=str)+"-"+request.form.get("phone3", type=str)
+        postcode = request.form.get("zipcode", type=str)
+        addr = request.form.get("addr", type=str)
+        extraAddr = request.form.get("addr_remain", type=str)
+
+        if pw == "":
+            flash("패스워드를 입력해주세요")
+            return render_template("modify.html")
+
+        users = db.users
+        to_db = {
+                "pw": generate_password_hash(pw),
+                "name": name,
+                "phone": phone,
+                "postcode": postcode,
+                "address": addr,
+                "extraAddress": extraAddr,
+            }
+        users.update_one({'userid': update_id}, {'$set': to_db})
+        last_signup = users.find().sort("_id", -1).limit(5)
+        for _ in last_signup:
+            print(_)
+
+        flash("변경이 완료되었습니다.")
+        return render_template("index.html", userid = update_id)
+    else:
+        return render_template("modify.html")
 
 # @app.route('/join', methods=['GET', 'POST'])
 # def join():
