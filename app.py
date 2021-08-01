@@ -12,7 +12,7 @@ import json
 from bson import json_util
 import html
 from flask import Flask, render_template, jsonify, request, session, url_for, redirect, flash
-from flask_pymongo import PyMongo
+# from flask_pymongo import PyMongo
 from wtforms.fields.simple import FileField
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -38,13 +38,14 @@ conn = MongoClient()
 db = conn.bdd
 
 
+##안 쓰는 코드
 # 로컬환경 테스트시 DB연결 코드 flask_pymongo용
-app.config["MONGO_URI"] = "mongodb://localhost:27017/bdd"
+#app.config["MONGO_URI"] = "mongodb://localhost:27017/bdd"
 # 서버측 DB연결 코드 flask_pymongo용
 #app.config["MONGO_URI"] = "mongodb://test:test@localhost:27017/bdd"
 
 #app.config['SECRET_KEY'] = 'psswrd'
-mongo = PyMongo(app)
+#mongo = PyMongo(app)
 
 app.secret_key = 'supersupersecret'
 #########################################################
@@ -170,7 +171,7 @@ def member_login():
             flash("비밀번호를 입력하세요")
             return render_template('index.html')
         else:
-            users = mongo.db.users
+            users = db.users
             id_check = users.find_one({"userid": userid})
             #print(id_check["pw"])
             #print(generate_password_hash(pw))
@@ -189,6 +190,7 @@ def member_login():
 def logout():
     session.pop('logged_in',None)
     return redirect('/')
+
 ## 회원가입
 @app.route("/join", methods=["GET", "POST"])
 def member_join():
@@ -208,7 +210,7 @@ def member_join():
             flash("패스워드를 입력해주세요")
             return render_template("join.html")
 
-        users = mongo.db.users
+        users = db.users
         check_cnt = users.find({"userid": userid}).count()
         if check_cnt > 0:
             flash("이미 존재하는 아이디입니다.")
@@ -233,6 +235,54 @@ def member_join():
         return render_template("index.html")
     else:
         return render_template("join.html")
+
+## 회원가입 아이디 중복체크
+@app.route("/join/checkid", methods=["POST"])
+def join_id_check():
+    userid = request.form['userid']
+    check_cnt = db.users.find({"userid": userid}).count()
+    if check_cnt > 0:
+        msg = "이미 존재하는 아이디입니다."
+    else:
+        msg = "이용 가능한 아이디입니다."
+    return jsonify({'msg':msg})
+
+## 회원정보변경
+@app.route("/modify", methods=["GET", "POST"])
+def member_modify():
+    if request.method == "POST":
+        update_id = session.get('logged_in')
+
+        userid = request.form.get("userid", type=str)
+        pw = request.form.get("userPW", type=str)
+        name = request.form.get("name", type=str)
+        phone = request.form.get("phone1", type=str)+"-"+request.form.get("phone2", type=str)+"-"+request.form.get("phone3", type=str)
+        postcode = request.form.get("zipcode", type=str)
+        addr = request.form.get("addr", type=str)
+        extraAddr = request.form.get("addr_remain", type=str)
+
+        if pw == "":
+            flash("패스워드를 입력해주세요")
+            return render_template("modify.html")
+
+        users = db.users
+        to_db = {
+                "pw": generate_password_hash(pw),
+                "name": name,
+                "phone": phone,
+                "postcode": postcode,
+                "address": addr,
+                "extraAddress": extraAddr,
+            }
+        users.update_one({'userid': update_id}, {'$set': to_db})
+        last_signup = users.find().sort("_id", -1).limit(5)
+        for _ in last_signup:
+            print(_)
+
+        flash("변경이 완료되었습니다.")
+        return render_template("index.html", userid = update_id)
+    else:
+        return render_template("modify.html")
 
 # @app.route('/join', methods=['GET', 'POST'])
 # def join():
@@ -270,11 +320,13 @@ def order():
                             address = address_find,
                             exaddress = exaddress_find)
     return render_template('order.html')
+
 ##주문조회
 @app.route('/orderlist')
 def orderlist():
     id = session.get('logged_in')
     return render_template('orderlist.html', userid = id)
+
 ##주문조회 삭제
 @app.route('/orderlist/dele',methods=['POST'])
 def dele_orderlist():

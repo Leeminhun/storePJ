@@ -55,23 +55,6 @@
                 }
             }
         }
-        /*
-        * @brief 아이디 중복체크
-        * @author 김진회
-        */
-        function checkSameId(){
-            let userid = $('input[name=userid]').val()
-            console.log(userid)
-            $.ajax({
-                type: "POST",
-                url: "/join/checkid",
-                data: {'userid': userid},
-                success: function (response) {
-                    alert(response['msg'])
-
-                }
-            })
-        }
 
     </script>
 </head>
@@ -79,11 +62,8 @@
 <body class="bodycs">
 <!-- <header w3-include-html = "header.html"></herder> -->
 <header w3-include-html="header.html"></header>
-    <form action="" method="post" id="joinform">
-        <div class="input-group mb-3">
-            ID : <input type="text" class="form-control" name="userid" />
-            <button type="button" class="btn btn-info" onclick="checkSameId()">아이디 중복체크</button>
-        </div>
+    <form action="" method="post" id="modifyform">
+        <input type="hidden" name="userid" value="">
         <div class="input-group mb-3">
             PW : <input type="password" class="form-control" name="userPW" id="pw" onchange="isSame()" />
         </div>
@@ -121,7 +101,7 @@
             </div>
         </form>
         <!--우편번호 찾기 API 끝 -->
-        <button type="submit" class="btn btn-info" form="joinform">회원가입하기</button>
+        <button type="submit" class="btn btn-info" form="modifyform">정보변경하기</button>
     </form>
 
 
