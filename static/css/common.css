@@ -67,6 +67,9 @@ a {
     font-size: 24px;
     color: orange;
 }
+.btn_login {
+    width: 90px;
+}
 /*footer*/
 footer {
     margin-top  : 30px;
