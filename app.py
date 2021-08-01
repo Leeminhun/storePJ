@@ -146,7 +146,8 @@ def main():
 
 @app.route('/header.html')
 def header():
-    return render_template('header.html')
+    id = session.get('logged_in')
+    return render_template('header.html', userid = id)
 
 @app.route('/footer.html')
 def footer():

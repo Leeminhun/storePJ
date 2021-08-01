@@ -183,22 +183,6 @@
 <!-- <header w3-include-html = "header.html"></herder> -->
 <header w3-include-html="header.html"></header>
 <div class="list">
-    <div>
-        {%if userid%}
-            <span>{{userid}}</span> 님 환영합니다 <br>
-            <button type="button" class="btn btn-info" onclick="location.href='/modify' ">회원정보변경</button>
-            <button type="button" class="btn btn-info" onclick="location.href='/logout' ">로그아웃</button>
-        {%else%}<form action = "/" method="POST">
-            <input type="text" name="userid" placeholder="아이디"/>
-            <input type="password" name="userPW" placeholder="비밀번호">
-            <button type="submit" class="btn btn-info" style="width: 90px">로그인</button>
-            <a href="/join"><button type="button" class="btn btn-info">회원가입</button></a>
-            </form>
-        {%endif%}
-
-
-    </div>
-
     <label>판매 목록</label>
     <br>
 
