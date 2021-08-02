@@ -61,7 +61,13 @@
         */
         function checkSameId(){
             let userid = $('#userid').val()
-            console.log(userid)
+            //console.log($('#userid').val())
+            if(userid == "")
+            {
+                alert("아이디를 입력해주세요!")
+                return false;
+            }
+            //console.log(typeof(userid))
             $.ajax({
                 type: "POST",
                 url: "/join/checkid",
