@@ -388,10 +388,8 @@ def details():
 
 @app.route('/details/get', methods=['GET'])
 def details_get():
-    test = list(db.menu.find({},{'_id': False}))
-    #test = [doc for doc in db.user.find({},{'_id': False})]
-    print(test)
-    return jsonify({'data': dumps(test)})
+    originList =  list(db.origin.find({}, {'_id':False}))
+    return jsonify({'originList': originList})
     raise TypeError('타입 에러 확인')
 
 
