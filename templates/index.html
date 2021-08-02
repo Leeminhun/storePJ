@@ -119,7 +119,7 @@
                                     <a target="_blank" href="#" class="card-title">${menu}</a>
                                     <p class="card-text">가격 : <span class="price">${price}</span></p>
                                     <p class="card-text comment">수량 : <span class="count">1</span></p>
-                                    <button onclick="addToCart(this)" style="margin: auto;display: block;width: 50%">담기</button>
+                                    <button onclick="addToCart(this)" class="btn btn-info" style="margin: auto;display: block;width: 50%">담기</button>
                                     </div>
                                 </div>
                                 `
@@ -134,7 +134,7 @@
                                     <a target="_blank" href="#" class="card-title">${menu}</a>
                                     <p class="card-text">가격 : <span class="price">${price}</span></p>
                                     <p class="card-text comment">수량 : <span class="count">1</span></p>
-                                    <button onclick="addToCart(this)" style="margin: auto;display: block;width: 50%">담기</button>
+                                    <button onclick="addToCart(this)" class="btn btn-info" style="margin: auto;display: block;width: 50%">담기</button>
                                     </div>
                                 </div>
                                 `
@@ -183,11 +183,23 @@
 <!-- <header w3-include-html = "header.html"></herder> -->
 <header w3-include-html="header.html"></header>
 <div class="list">
-    <label>판매 목록</label>
-    <br>
+    <!-- <label>판매 목록</label>
+    <br> -->
+
 
     <div class="sell_list">
-        <select id="banchan_list" onchange="showMenus()">
+        <!-- Example single danger button
+        <div class="btn-group">
+          <button type="button"  data-bs-toggle="dropdown" aria-expanded="false">
+            Action
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>-->
+        <select id="banchan_list" class="btn btn-info" onchange="showMenus()">
             <option value="all" selected>전체</option>
             <option value="kimchi">김치</option>
             <option value="namul">기본반찬/나물</option>

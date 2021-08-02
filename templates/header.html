@@ -1,14 +1,14 @@
 <nav id="navbar">
            <ul class="navbar_menu">
                  {%if userid%}
-            <span>{{userid}}님 <br>환영합니다</span>  <br>
-            <button type="button" class="btn btn-info" onclick="location.href='/modify'" style="height: 33px; font-size: 13px">정보수정</button>
-            <button type="button" class="btn btn-info" onclick="location.href='/logout' " style="height: 33px; font-size: 13px">로그아웃</button>
+            <span style="color: white; font-size:0.9rem" >{{userid}}님 <br>환영합니다</span>  <br>
+            <button type="button" class="btn btn-secondary" onclick="location.href='/modify'" style="height: 33px; font-size: 13px">정보수정</button>
+            <button type="button" class="btn btn-light" onclick="location.href='/logout' " style="height: 33px; font-size: 13px">로그아웃</button>
         {%else%}<form action = "/" method="POST">
             <input type="text" name="userid" placeholder="아이디" style="width: 100px;" />
             <input type="password" name="userPW" placeholder="비밀번호" style="width: 100px;">
-            <button type="submit" class="btn btn-info" style="width: 90px; height: 33px; font-size: 13px;">로그인</button>
-            <a href="/join"><button type="button" class="btn btn-info" style="width: 90px; height: 33px; font-size: 13px;">회원가입</button></a>
+            <button type="submit" class="btn btn-secondary" style="width: 90px; height: 33px; font-size: 13px;">로그인</button>
+            <a href="/join"><button type="button" class="btn btn-light" style="width: 90px; height: 33px; font-size: 13px;">회원가입</button></a>
             </form>
         {%endif%}
             </ul>
