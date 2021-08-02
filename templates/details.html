@@ -13,6 +13,15 @@
     <script src="../static/js/common.js"> </script>
     <script src="https://kit.fontawesome.com/447b429f54.js" crossorigin="anonymous"></script>
     <title>엄마의 부엌 | 원산지</title>
+    <style>
+        td, th {
+            border: 1px solid; padding : 10px 5px;
+        }
+
+        th{
+            background-color: teal; color: white;
+        }
+    </style>
     <script>
         $(document).ready(function () {
             showDetails();
@@ -21,61 +30,52 @@
 
 
         function showDetails(){
-            
-            let test_html = '';
-            let origin = '';
-            let food_name = '';
 
-            //조건식에 뭘 넣어야하나;;-->
-            if(data.length > 0){
-                for(let p = 0; p < data.length; p++){
-                    $.ajax({
+            $.ajax({
                         type: 'GET',
-                        url: '/details/get?sample_give=국산',
+                        url: '/details/get',
                         data: {},
                         success: function (response) {
-                            let articles = response['data'];
-                            let a = JSON.parse(articles)
-                            //console.log(a)
-                            let temp_html = ``;
-                            for (let i = 0; i < a.length; i++) {
-                                let catagory = a[i]["catagory"]
-                                let name = a[i]['name']
-                                let origin = a[i]['origin']
+                            let originList = response['originList']
+                            let name ='';
+                            let origin = '';
+                            
+                            console.log(response);
+                            console.log(originList);
+
+                            let test_html = ``; 
+
+                            for(let i =0; i<originList.length; i++){
+                                name = originList[i]['name'];
+                                origin = originList[i]['origin'];
+                            
+                                console.log(name + origin)
+                                
+                                
+                                        test_html += `<tr>
+                                            <td> ${name} </td>
+                                            <td> ${origin}</td>
+                                        </tr>`;
+            
+                   
                             }
+                            $('#emptyTable').append(test_html)
                         }
     
                     })
                 }
-            }   
-                    test_html += `<td> ${catagory} + ${name} +':'+ ${origin}</td>`;
-                }
-                $("#emptyTable").append(test_html);
-            }else{
-                test_html += `<p>원산지를 준비중입니다</p>
-                <img src="../static/img/waiting.gif">`;
+              
+                    
 
-                $("#emptySpace").append(test_html);
-            }
-            
-        }
-
-        // ajax로 서버(app.py)에 요청보내고, 
-        //서버측app.py에서 그 요청을 받아서 db에서 find해서 db에 저장된
-        // 원산지정보 데이터들을 돌려주면, 
-        //그 데이터 받아다가 HTML로 뿌려주시는 거에요~
-    
-        
     </script>
 </head>
 <body>
 <header w3-include-html="header.html"></header>
-<div id="emptySpace"></div>
-<table>
+<div id="emptySpace" style="margin-top: 50px;"></div>
+<table style="width: 50%; margin: auto; text-align: center; border: 2px solid; border-collapse:collapse;">
     <thead>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th>이름</th>
+        <th>원산지</th>
     </thead>
     <tbody id="emptyTable">
     </tbody>
