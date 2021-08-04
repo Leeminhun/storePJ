@@ -182,23 +182,8 @@
 <body class="bodycs">
 <!-- <header w3-include-html = "header.html"></herder> -->
 <header w3-include-html="header.html"></header>
-<div class="list">
-    <!-- <label>판매 목록</label>
-    <br> -->
-
-
+<nav class="list">
     <div class="sell_list">
-        <!-- Example single danger button
-        <div class="btn-group">
-          <button type="button"  data-bs-toggle="dropdown" aria-expanded="false">
-            Action
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </div>-->
         <select id="banchan_list" class="btn btn-info" onchange="showMenus()">
             <option value="all" selected>전체</option>
             <option value="kimchi">김치</option>
@@ -210,9 +195,10 @@
             <option value="jesa">제사/명절</option>
         </select>
     </div>
-</div>
+</nav>
 <hr>
 <div id="cards-box" class="menu_card">
+
 </div>
 <script>
     includeHTML();
