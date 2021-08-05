@@ -141,7 +141,6 @@ class JSONEncoder(json.JSONEncoder):
 @app.route('/')
 def main():
     id = session.get('logged_in')
-    
     return render_template('index.html', userid = id)
 
 @app.route('/header.html')
@@ -156,35 +155,37 @@ def footer():
 
 # 로그인기능 및 페이지 구현
 # author 김진회
+# modifier 이민훈 2021.08.05
 # session["logged_in"] = True 를 넣어주면 로그인 성공한 이후의 상황이 됨.
-@app.route('/', methods=['GET', 'POST'])
+# 로그인 페이지 별도 개설로 인해, 링크 및 render_template 페이지 변경
+@app.route('/login_main', methods=['GET', 'POST'])
 def member_login():
     if request.method == 'GET':
-        return render_template('index.html')
+        return render_template('login_page.html')
     elif request.method == 'POST':
         userid = request.form.get("userid", type=str)
         pw = request.form.get("userPW", type=str)
 
         if userid == "":
             flash("아이디를 입력하세요")
-            return render_template('index.html')
+            return render_template('login_page.html')
         elif pw == "":
             flash("비밀번호를 입력하세요")
-            return render_template('index.html')
+            return render_template('login_page.html')
         else:
             users = db.users
             id_check = users.find_one({"userid": userid})
-            print(id_check["pw"])
-            print(generate_password_hash(pw))
+            # print(id_check["pw"])
+            # print(generate_password_hash(pw))
             if id_check is None:
                 flash("아이디가 존재하지 않습니다.")
-                return render_template('index.html')
+                return render_template('login_page.html')
             elif check_password_hash(id_check["pw"],pw):
                 session["logged_in"] = userid
                 return render_template('index.html' , userid = userid)
             else:
                 flash("비밀번호가 틀렸습니다.")
-                return render_template('index.html')
+                return render_template('login_page.html')
             
 ## 로그아웃
 @app.route("/logout", methods=["GET"])

@@ -7,6 +7,7 @@ a {
     text-decoration: none;
     color: red;
 }
+
 #navbar {
     display: flex;
     justify-content: space-between;
@@ -34,17 +35,11 @@ a {
 }
 
 .navbar_menu li {
-    padding : 8px 12px;
-    font-size: 22px;
-    margin-bottom: 50px;
-    margin-left: -10px;
+    padding : 34px 10px;
+    font-size: 17px;
 }
 .navbar_menu li a {
     color: whitesmoke;
-}
-.navbar_menu li:hover {
-    background-color: green;
-    border-radius: 3px;
 }
 
 .navbar_icons{
@@ -85,6 +80,8 @@ footer p {
 .list {
     text-align: center;
     margin-top: 30px;
+    position: sticky;
+    top: 0vh;
 }
 #banchan_list{  
     width: 60%;
@@ -93,9 +90,7 @@ footer p {
     
 }
 
-#banchan_list option{
-
-}
+/*회원가입*/
 /* header 모바일 화면
 @media screen and (max-width : 768px){
     .navbar {
